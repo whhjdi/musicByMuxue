@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav"><header-bar></header-bar></div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -17,9 +17,6 @@ export default {
 #nprogress {
   .bar {
     background: #fff !important;
-  }
-  .spinner {
-    display: none !important;
   }
 }
 </style>

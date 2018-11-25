@@ -3,13 +3,20 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import fastclick from "fastclick";
+import NProgress from "nprogress";
+import fetch from "./api/fetch.js";
+import VueLazyload from "vue-lazyload";
 import "normalize.css";
 import "./assets/css/reset.css";
-import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 Vue.config.productionTip = false;
 fastclick.attach(document.body);
-
+NProgress.configure({
+  showSpinner: false
+});
+Vue.prototype.$fetch = fetch;
+Vue.prototype.$NProgress = NProgress;
+Vue.use(VueLazyload);
 router.beforeEach((to, from, next) => {
   NProgress.start();
   next();
