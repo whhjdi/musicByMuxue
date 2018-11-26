@@ -15,6 +15,20 @@ class Recommend {
       }
     });
   }
+  static newSong() {
+    return fetch("newSong", {
+      params: {
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
+  static dj() {
+    return fetch("dj", {
+      params: {
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Recommend;

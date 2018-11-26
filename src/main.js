@@ -9,6 +9,7 @@ import VueLazyload from "vue-lazyload";
 import "normalize.css";
 import "./assets/css/reset.css";
 import "nprogress/nprogress.css";
+import "./assets/css/border-1px.css";
 import VConsole from "vconsole";
 Vue.config.productionTip = false;
 fastclick.attach(document.body);
