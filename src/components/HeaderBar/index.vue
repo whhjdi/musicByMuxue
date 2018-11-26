@@ -40,7 +40,6 @@ export default {
   font-size: 22px;
   padding: 5px 0 10px 0;
   background: linear-gradient(135deg, #d93e35 0%, #e3453a 50%, #e94a3e 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d93e35', endColorstr='#e94a3e',GradientType=1 );
   .top {
     display: flex;
     justify-content: space-between;

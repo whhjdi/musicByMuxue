@@ -45,7 +45,7 @@ export default {
     },
     setBanner(res) {
       this.$NProgress.done();
-      this.banners = res.banners.splice(4);
+      this.banners = res.banners;
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -69,7 +69,12 @@ export default {
     .slide-bg {
       width: 100%;
       height: 200px;
-      background: #e3453a;
+      background: linear-gradient(
+        to right,
+        #dd4137 0%,
+        #e4463a 50%,
+        #e8483c 100%
+      );
       position: fixed;
       top: 0;
       z-index: -1;
