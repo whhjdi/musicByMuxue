@@ -13,6 +13,8 @@
 
 <script>
 import Artist from "../../api/artist.js";
+const HOT_NAME = "热门";
+const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
   components: {},
@@ -26,8 +28,27 @@ export default {
   computed: {},
   methods: {
     setArtists(res) {
-      this.singers = res.list.artists;
+      console.log(res);
+
+      this.singers = res.artists;
       this.$NProgress.done();
+    },
+    normalizeSinger(list) {
+      let map = {
+        hot: {
+          title: HOT_NAME,
+          item: []
+        }
+      };
+      list.forEach((item, index) => {
+        if (index < HOT_SINGER_LENGTH) {
+          map.item.push({
+            id: item.id,
+            name: item.name,
+            avatar: item.picUrl
+          });
+        }
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

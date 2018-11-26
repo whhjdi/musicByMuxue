@@ -4,6 +4,7 @@ class Artist {
   static singer() {
     return fetch("artist", {
       params: {
+        limit: 100,
         xhrFields: { withCredentials: true }
       }
     });

@@ -5,7 +5,7 @@ const urls = {
   personalized: "/personalized",
   newSong: "/personalized/newsong",
   dj: "/personalized/djprogram",
-  artist: "/toplist/artist"
+  artist: "/top/artists"
 };
 
 for (let key in urls) {
