@@ -1,7 +1,8 @@
 const host = "http://192.168.123.63:3000";
 // const host = "http://120.79.162.149:3000";
 const urls = {
-  banner: "/banner"
+  banner: "/banner",
+  personalized: "/personalized"
 };
 
 for (let key in urls) {

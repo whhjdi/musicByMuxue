@@ -13,13 +13,19 @@
         </slide>
       </div>
       <div class="slide-bg"></div>
+      <div class="recommend-list">
+        <h1 class="title">推荐歌单</h1>
+        <ul>
+          <li></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Slide from "../../components/Slide";
-import fetch from "../../api/fetch.js";
+import Recommend from "../../api/recommend.js";
 export default {
   name: "home",
   components: {
@@ -35,17 +41,13 @@ export default {
   computed: {},
   methods: {
     getBanner() {
-      fetch("banner", {
-        params: {
-          xhrFields: { withCredentials: true }
-        }
-      }).then(res => {
+      Recommend.banner().then(res => {
         this.setBanner(res);
       });
     },
     setBanner(res) {
       this.$NProgress.done();
-      this.banners = res.banners;
+      this.banners = res.banners.splice(5);
     }
   },
   beforeRouteEnter(to, from, next) {

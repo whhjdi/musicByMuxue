@@ -43,7 +43,7 @@ export default {
     initDots() {
       this.dots = new Array(this.children.length);
     },
-    setSlideWidth() {
+    setSlideWidth(isResize) {
       this.children = this.$refs.slideGroup.children;
       let width = 0;
       let slideWidth = this.$refs.slide.clientWidth;
@@ -52,7 +52,7 @@ export default {
         child.style.width = slideWidth + "px";
         width += slideWidth;
       }
-      if (this.loop) {
+      if (this.loop && !isResize) {
         width += 2 * slideWidth;
       }
       this.$refs.slideGroup.style.width = width + "px";
@@ -67,18 +67,42 @@ export default {
           threshold: 0.3,
           speed: 400
         },
-        snapSpeed: 400,
-        bounce: false,
-        stopPropagation: true,
-        click: true
+        bounce: false //当滚动超过边缘的时候会有一小段回弹动画。设置为 true 则开启动画。
       });
       this.onScrollEnd();
+      this.onTouchEnd();
+      this.onBeforeScrollStart();
     },
     onScrollEnd() {
       this.slideScroll.on("scrollEnd", () => {
         let pageIndex = this.slideScroll.getCurrentPage().pageX;
         this.currentIndex = pageIndex;
+        if (this.autoPlay) {
+          this.play();
+        }
       });
+    },
+    onTouchEnd() {
+      this.slideScroll.on("touchEnd", () => {
+        if (this.autoPlay) {
+          this.play();
+        }
+      });
+    },
+    onBeforeScrollStart() {
+      this.slideScroll.on("beforeScrollStart", () => {
+        if (this.autoPlay) {
+          clearTimeout(this.timer);
+        }
+      });
+    },
+    play() {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        this.slideScroll.next();
+      }, this.interval);
     }
   },
   created() {},
@@ -87,7 +111,17 @@ export default {
       this.setSlideWidth();
       this.initDots();
       this.initSlide();
+      if (this.autoPlay) {
+        this.play();
+      }
     }, 20);
+    window.addEventListener("resize", () => {
+      if (!this.slideScroll) {
+        return;
+      }
+      this.setSlideWidth(true);
+      this.slideScroll.refresh();
+    });
   }
 };
 </script>
