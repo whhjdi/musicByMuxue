@@ -1,7 +1,14 @@
 <template>
   <div class="slide" ref="slide">
     <div class="slide-group" ref="slideGroup"><slot></slot></div>
-    <div class="dot"></div>
+    <div class="dots">
+      <span
+        class="dot"
+        v-for="(dot, index) in dots"
+        :key="index"
+        :class="{ active: currentIndex === index }"
+      ></span>
+    </div>
   </div>
 </template>
 
@@ -25,17 +32,23 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      dots: [],
+      currentIndex: 0
+    };
   },
   watch: {},
   computed: {},
   methods: {
+    initDots() {
+      this.dots = new Array(this.children.length);
+    },
     setSlideWidth() {
-      let children = this.$refs.slideGroup.children;
+      this.children = this.$refs.slideGroup.children;
       let width = 0;
       let slideWidth = this.$refs.slide.clientWidth;
-      for (let i = 0; i < children.length; i++) {
-        let child = children[i];
+      for (let i = 0; i < this.children.length; i++) {
+        let child = this.children[i];
         child.style.width = slideWidth + "px";
         width += slideWidth;
       }
@@ -59,12 +72,20 @@ export default {
         stopPropagation: true,
         click: true
       });
+      this.onScrollEnd();
+    },
+    onScrollEnd() {
+      this.slideScroll.on("scrollEnd", () => {
+        let pageIndex = this.slideScroll.getCurrentPage().pageX;
+        this.currentIndex = pageIndex;
+      });
     }
   },
   created() {},
   mounted() {
     setTimeout(() => {
       this.setSlideWidth();
+      this.initDots();
       this.initSlide();
     }, 20);
   }
@@ -74,6 +95,7 @@ export default {
 .slide {
   min-height: 1px;
   overflow: hidden;
+  position: relative;
   .slide-group {
     display: flex;
     flex-wrap: nowrap;
@@ -83,6 +105,29 @@ export default {
         display: block;
         width: 100%;
         border-radius: 5px;
+      }
+    }
+  }
+  .dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    z-index: 9;
+    text-align: center;
+    font-size: 0;
+    .dot {
+      display: inline-block;
+      margin: 0 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: all 0.3s;
+      &.active {
+        width: 20px;
+        border-radius: 5px;
+        background: #fff;
       }
     }
   }
