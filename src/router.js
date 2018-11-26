@@ -20,9 +20,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ "./views/Rank")
     },
     {
-      path: "/singer",
-      name: "singer",
-      component: () => import(/* webpackChunkName: "about" */ "./views/Singer")
+      path: "/artist",
+      name: "artist",
+      component: () => import(/* webpackChunkName: "about" */ "./views/Artist")
     }
   ]
 });

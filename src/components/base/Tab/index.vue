@@ -11,7 +11,7 @@
     <router-link tag="div" class="tab-item" :to="{ name: 'rank' }"
       ><span @click="itemClicked">排行榜</span></router-link
     >
-    <router-link tag="div" class="tab-item" :to="{ name: 'singer' }"
+    <router-link tag="div" class="tab-item" :to="{ name: 'artist' }"
       ><span @click="itemClicked">歌手</span></router-link
     >
     <div class="line" ref="line"></div>
