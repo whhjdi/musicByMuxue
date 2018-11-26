@@ -49,10 +49,14 @@ export default {
         scrollX: true,
         scrollY: false,
         momentum: false,
-        snap: true,
-        snapLoop: this.loop,
-        snapThreshold: 0.3,
+        snap: {
+          loop: this.loop,
+          threshold: 0.3,
+          speed: 400
+        },
         snapSpeed: 400,
+        bounce: false,
+        stopPropagation: true,
         click: true
       });
     }
@@ -74,9 +78,11 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     .slide-item {
+      padding: 0 5px;
       .slide-img {
         display: block;
         width: 100%;
+        border-radius: 5px;
       }
     }
   }

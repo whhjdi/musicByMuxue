@@ -1,8 +1,8 @@
 <template>
   <div class="home" ref="home">
     <div class="wrapper">
-      <div class="slides">
-        <slide :autoPlay="true" :interval="3000" :loop="false">
+      <div class="slides" v-if="this.banners && this.banners.length">
+        <slide :autoPlay="true" :interval="3000" :loop="true">
           <div
             v-for="banner in banners"
             :key="banner.targetId"
@@ -12,6 +12,7 @@
           </div>
         </slide>
       </div>
+      <div class="slide-bg"></div>
     </div>
   </div>
 </template>
@@ -64,5 +65,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home {
+  .wrapper {
+    .slide-bg {
+      width: 100%;
+      height: 200px;
+      background: #e3453a;
+      position: fixed;
+      top: 0;
+      z-index: -1;
+    }
+  }
 }
 </style>
