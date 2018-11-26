@@ -67,36 +67,19 @@ export default {
       });
     },
     setBanner(res) {
-      this.$NProgress.done();
       this.banners = res.banners.splice(5);
-    },
-    getPersonalized() {
-      Recommend.personalized().then(res => {
-        this.setPersonalized(res);
-      });
     },
     setPersonalized(res) {
       this.personalized = res.result;
     },
-    getNewSong() {
-      Recommend.newSong().then(res => {
-        this.setNewSong(res);
-      });
-    },
     setNewSong(res) {
       this.newSong = res.result;
-    },
-    getDj() {
-      Recommend.dj().then(res => {
-        this.setDj(res);
-      });
     },
     setDj(res) {
       this.dj = res.result;
     },
     setAllRecommend(res) {
-      let [banner, personalized, newSong, dj] = res;
-      this.setBanner(banner);
+      let [personalized, newSong, dj] = res;
       this.setPersonalized(personalized);
       this.setNewSong(newSong);
       this.setDj(dj);
@@ -106,22 +89,22 @@ export default {
     if (from.name) {
       getAllRecommend().then(res => {
         next(vm => {
+          vm.getBanner();
           vm.setAllRecommend(res);
+          vm.$NProgress.done();
         });
       });
     } else {
       next(vm => {
+        vm.getBanner();
         getAllRecommend().then(res => {
           vm.setAllRecommend(res);
+          vm.$NProgress.done();
         });
       });
     }
-  }
-  // created() {
-  //   this.getPersonalized();
-  //   this.getBanner();
-  //   this.getNewSong();
-  // }
+  },
+  created() {}
 };
 </script>
 <style lang="scss" scoped>
