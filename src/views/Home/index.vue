@@ -24,18 +24,12 @@
 
 <script>
 import Slide from "../../components/Recommend/Slide";
+import { getAllRecommend } from "../../utils";
 import Recommend from "../../api/recommend.js";
 import Scroll from "../../components/base/Scroll";
 import Personalized from "../../components/Recommend/Personalized";
 import NewSong from "../../components/Recommend/NewSong";
 import Dj from "../../components/Recommend/Dj";
-function getAll() {
-  let p1 = Recommend.banner();
-  let p2 = Recommend.personalized();
-  let p3 = Recommend.newSong();
-  let p4 = Recommend.dj();
-  return Promise.all([p1, p2, p3, p4]);
-}
 export default {
   name: "home",
   components: {
@@ -100,36 +94,26 @@ export default {
     setDj(res) {
       this.dj = res.result;
     },
-    onPullingDown() {
-      setTimeout(() => {
-        getAll().then(res => {
-          let [banner, personalized, newSong, dj] = res;
-          this.setBanner(banner);
-          this.setPersonalized(personalized);
-          this.setNewSong(newSong);
-          this.setDj(dj);
-        });
-      }, 2000);
+    setAllRecommend(res) {
+      let [banner, personalized, newSong, dj] = res;
+      this.setBanner(banner);
+      this.setPersonalized(personalized);
+      this.setNewSong(newSong);
+      this.setDj(dj);
     }
   },
   beforeRouteEnter(to, from, next) {
     if (from.name) {
-      getAll().then(res => {
+      getAllRecommend().then(res => {
         next(vm => {
-          let [banner, personalized, newSong, dj] = res;
-          vm.setBanner(banner);
-          vm.setPersonalized(personalized);
-          vm.setNewSong(newSong);
-          vm.setDj(dj);
+          vm.setAllRecommend(res);
         });
       });
     } else {
       next(vm => {
-        vm.getBanner();
-        vm.getPersonalized();
-        vm.getNewSong();
-        vm.getDj();
-        return;
+        getAllRecommend().then(res => {
+          vm.setAllRecommend(res);
+        });
       });
     }
   }
