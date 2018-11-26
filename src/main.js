@@ -9,6 +9,7 @@ import VueLazyload from "vue-lazyload";
 import "normalize.css";
 import "./assets/css/reset.css";
 import "nprogress/nprogress.css";
+import VConsole from "vconsole";
 Vue.config.productionTip = false;
 fastclick.attach(document.body);
 NProgress.configure({
@@ -21,7 +22,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
   next();
 });
-
+new VConsole();
 new Vue({
   router,
   store,
