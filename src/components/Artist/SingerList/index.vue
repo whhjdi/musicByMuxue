@@ -33,6 +33,7 @@
       class="cart-list"
       @touchstart.stop.prevent="onTouchStart"
       @touchmove.stop.prevent="onTouchMove"
+      @touchend.stop.prevent="onTouchEnd"
     >
       <ul class="cart-wrapper">
         <li
@@ -45,6 +46,7 @@
           {{ item }}
         </li>
       </ul>
+      <div class="mask" v-show="showText">{{ text }}</div>
     </div>
   </Scroll>
 </template>
@@ -65,7 +67,9 @@ export default {
   data() {
     return {
       scrollY: -1,
-      currentIndex: 0
+      currentIndex: 0,
+      showText: false,
+      text: ""
     };
   },
   computed: {
@@ -82,6 +86,7 @@ export default {
       this.touch.y1 = firstTouch.pageY;
       this.touch.anthorIndex = index;
       this.scrollTo(index, 500);
+      this.showText = true;
     },
     onTouchMove(e) {
       let firstTouch = e.touches[0];
@@ -90,7 +95,21 @@ export default {
       let anthorindex = parseInt(this.touch.anthorIndex) + delta;
       this.scrollTo(anthorindex, 0);
     },
+    onTouchEnd() {
+      this.showText = false;
+    },
     scrollTo(index, time) {
+      if (!index && index !== 0) {
+        return;
+      }
+      if (index < 0) {
+        index = 0;
+      } else if (index > this.listHeight.length - 2) {
+        index = this.listHeight.length;
+        this.showText = false;
+      }
+      this.text = this.cartList[index];
+      this.scrollY = -this.listHeight[index];
       this.$refs.singerList.scrollToElement(
         this.$refs.singerGroup[index],
         time
@@ -133,11 +152,12 @@ export default {
         let height2 = listHeight[i + 1];
         if (-newY >= height1 && -newY < height2) {
           this.currentIndex = i;
-          console.log(this.currentIndex);
           return;
         }
+        if (-newY >= height2) {
+          this.currentIndex = listHeight.length - 2;
+        }
       }
-      this.currentIndex = listHeight.length - 2;
     }
   },
   created() {
@@ -187,7 +207,7 @@ export default {
   .cart-list {
     position: absolute;
     right: 2px;
-    top: 10%;
+    bottom: 20%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     padding: 8px 0;
@@ -205,6 +225,21 @@ export default {
           color: red;
         }
       }
+    }
+    .mask {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 18px;
+      text-align: center;
+      color: #fff;
+      position: fixed;
+      background: #e3453a;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 300ms;
     }
   }
 }
