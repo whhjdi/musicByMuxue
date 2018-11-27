@@ -10,6 +10,7 @@ import Artist from "../../api/artist.js";
 import Singer from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
+import { mapMutations } from "vuex";
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
@@ -24,6 +25,9 @@ export default {
   watch: {},
   computed: {},
   methods: {
+    ...mapMutations({
+      setSinger: "setSinger"
+    }),
     setArtists(res) {
       let singer = res.list.artists;
       this.setPinyin(singer);
@@ -93,6 +97,7 @@ export default {
       this.$router.push({
         path: `/artist/${singer.id}`
       });
+      this.setSinger(singer);
     }
   },
   beforeRouteEnter(to, from, next) {

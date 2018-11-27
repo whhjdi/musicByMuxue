@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SingerDetail",
   components: {},
@@ -11,9 +12,13 @@ export default {
     return {};
   },
   watch: {},
-  computed: {},
+  computed: {
+    ...mapGetters(["singer"])
+  },
   methods: {},
-  created() {},
+  created() {
+    console.log(this.singer);
+  },
   mounted() {}
 };
 </script>
@@ -24,7 +29,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #000;
   z-index: 1;
 }
 .slide-enter-active,
