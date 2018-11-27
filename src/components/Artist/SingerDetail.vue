@@ -4,6 +4,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Artist from "@/api/artist.js";
 export default {
   name: "SingerDetail",
   components: {},
@@ -15,11 +16,17 @@ export default {
   computed: {
     ...mapGetters(["singer"])
   },
-  methods: {},
-  created() {
-    console.log(this.singer);
+  methods: {
+    getDeatil(id) {
+      Artist.singerDetail(id).then(res => {
+        console.log(res);
+      });
+    }
   },
-  mounted() {}
+  created() {},
+  mounted() {
+    this.getDeatil(this.singer.id);
+  }
 };
 </script>
 <style lang="scss" scoped>
