@@ -17,7 +17,7 @@
 import Artist from "../../api/artist.js";
 import Singer from "../../utils";
 import pinyin from "pinyin";
-const HOT_NAME = "热门";
+const HOT_NAME = "热";
 const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
@@ -41,8 +41,7 @@ export default {
     setPinyin(singer) {
       console.log(
         pinyin("蔡", {
-          style: pinyin.STYLE_FIRST_LETTER,
-          heteronym: true
+          style: pinyin.STYLE_FIRST_LETTER
         })
       );
 
@@ -72,19 +71,21 @@ export default {
           );
         }
         const key = item.py;
-        if (!map[key]) {
-          map[key] = {
-            title: key,
-            items: []
-          };
+        if (key != "蔡") {
+          if (!map[key]) {
+            map[key] = {
+              title: key,
+              items: []
+            };
+          }
+          map[key].items.push(
+            new Singer({
+              id: item.id,
+              name: item.name,
+              avatar: item.picUrl
+            })
+          );
         }
-        map[key].items.push(
-          new Singer({
-            id: item.id,
-            name: item.name,
-            avatar: item.picUrl
-          })
-        );
       });
       return map;
     }
