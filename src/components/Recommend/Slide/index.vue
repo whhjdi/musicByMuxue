@@ -67,7 +67,7 @@ export default {
           threshold: 0.3,
           speed: 400
         },
-        bounce: false //当滚动超过边缘的时候会有一小段回弹动画。设置为 true 则开启动画。
+        bounce: true //当滚动超过边缘的时候会有一小段回弹动画。设置为 true 则开启动画。
       });
       this.onScrollEnd();
       this.onTouchEnd();
@@ -97,6 +97,8 @@ export default {
       });
     },
     play() {
+      console.log(1);
+
       if (this.timer) {
         clearTimeout(this.timer);
       }

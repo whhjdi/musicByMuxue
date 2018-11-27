@@ -6,7 +6,7 @@
           <slide :autoPlay="true" :interval="3000" :loop="true">
             <div
               v-for="banner in banners"
-              :key="banner.targetId"
+              :key="banner.imageUrl"
               class="slide-item"
             >
               <img :src="banner.imageUrl" alt="" class="slide-img" />
