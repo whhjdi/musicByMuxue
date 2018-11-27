@@ -8,6 +8,14 @@ class Artist {
       }
     });
   }
+  static singerDetail(id) {
+    return fetch("singerDetail", {
+      params: {
+        id,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Artist;
