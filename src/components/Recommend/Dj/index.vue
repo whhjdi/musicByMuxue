@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "NewSong",
+  name: "Dj",
   components: {},
   props: {
     list: {

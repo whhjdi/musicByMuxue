@@ -97,8 +97,6 @@ export default {
       });
     },
     play() {
-      console.log(1);
-
       if (this.timer) {
         clearTimeout(this.timer);
       }
