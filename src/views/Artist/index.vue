@@ -1,12 +1,15 @@
 <template>
-  <div class="artist"><singer-list :singers="singers"></singer-list></div>
+  <div class="artist">
+    <singer-list :singers="singers" @selectSinger="chooseSinger"></singer-list>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 import Artist from "../../api/artist.js";
 import Singer from "../../utils";
 import pinyin from "pinyin";
-import SingerList from "../../components/Artist/SingerList";
+import SingerList from "../../components/Artist/SingerList.vue";
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
@@ -84,6 +87,12 @@ export default {
         return a.title.charCodeAt(0) - b.title.charCodeAt(0);
       });
       return hot.concat(ret);
+    },
+    chooseSinger(singer) {
+      this.$NProgress.start();
+      this.$router.push({
+        path: `/artist/${singer.id}`
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

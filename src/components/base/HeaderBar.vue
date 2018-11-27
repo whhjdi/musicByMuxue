@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Tab from "../Tab";
+import Tab from "./Tab.vue";
 export default {
   name: "HeaderBar",
   components: { Tab },

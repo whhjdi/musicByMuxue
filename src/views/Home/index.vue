@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import Slide from "../../components/Recommend/Slide";
+import Slide from "../../components/Recommend/Slide.vue";
 import { getAllRecommend } from "../../utils";
 import Recommend from "../../api/recommend.js";
-import Scroll from "../../components/base/Scroll";
-import Personalized from "../../components/Recommend/Personalized";
-import NewSong from "../../components/Recommend/NewSong";
-import Dj from "../../components/Recommend/Dj";
-import Loading from "../../components/base/Loading";
+import Scroll from "../../components/base/Scroll.vue";
+import Personalized from "../../components/Recommend/Personalized.vue";
+import NewSong from "../../components/Recommend/NewSong.vue";
+import Dj from "../../components/Recommend/Dj.vue";
+import Loading from "../../components/base/Loading.vue";
 export default {
   name: "home",
   components: {

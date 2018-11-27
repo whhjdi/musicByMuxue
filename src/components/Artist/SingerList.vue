@@ -20,6 +20,7 @@
             v-for="singer in singerGroup.items"
             :key="singer.id"
             class="singer-item"
+            @click="selectSinger(singer);"
           >
             <img v-lazy="singer.avatar" alt="" class="pic" />
             <div class="left  border-bottom">
@@ -48,13 +49,17 @@
       </ul>
       <div class="mask" v-show="showText">{{ text }}</div>
     </div>
+    <div class="list-fixed" v-show="fixedTitle" ref="fixed">
+      <h2 class="fixed-title">{{ fixedTitle }}</h2>
+    </div>
   </Scroll>
 </template>
 
 <script>
-import Scroll from "../../base/Scroll";
+import Scroll from "../base/Scroll.vue";
 import { getData } from "@/utils";
 const ANCHOR_HEIGHT = 18;
+const TITLE_HEIGHT = 20;
 export default {
   name: "SingerList",
   components: { Scroll },
@@ -69,7 +74,8 @@ export default {
       scrollY: -1,
       currentIndex: 0,
       showText: false,
-      text: ""
+      text: "",
+      diff: -1
     };
   },
   computed: {
@@ -77,6 +83,14 @@ export default {
       return this.singers.map(group => {
         return group.title.substr(0, 1);
       });
+    },
+    fixedTitle() {
+      if (this.scrollY > 0) {
+        return "";
+      }
+      return this.singers[this.currentIndex]
+        ? this.singers[this.currentIndex].title
+        : "";
     }
   },
   methods: {
@@ -130,6 +144,9 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
+    },
+    selectSinger(data) {
+      this.$emit("selectSinger", data);
     }
   },
   watch: {
@@ -152,12 +169,24 @@ export default {
         let height2 = listHeight[i + 1];
         if (-newY >= height1 && -newY < height2) {
           this.currentIndex = i;
+          this.diff = height2 + newY;
           return;
         }
         if (-newY >= height2) {
           this.currentIndex = listHeight.length - 2;
         }
       }
+    },
+    diff(newVal) {
+      let fixedTop =
+        newVal > 0 && newVal < TITLE_HEIGHT ? newVal - TITLE_HEIGHT : 0;
+      if (this.fixedTop === fixedTop) {
+        return;
+      }
+      this.fixedTop === fixedTop;
+      console.log(this.$refs.fixed);
+
+      this.$refs.fixed.style.transform = `translateY(${this.fixedTop})`;
     }
   },
   created() {
@@ -207,11 +236,12 @@ export default {
   .cart-list {
     position: absolute;
     right: 2px;
-    bottom: 20%;
+    top: 40%;
+    margin-top: -50%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     padding: 8px 0;
-    z-index: 999;
+    z-index: 1;
     .cart-wrapper {
       display: flex;
       flex-direction: column;
@@ -240,6 +270,19 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
       transition: all 300ms;
+    }
+  }
+  .list-fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .fixed-title {
+      display: inline-block;
+      padding: 5px 15px;
+      width: 100%;
+      font-size: 16px;
+      background: #e9ebec;
     }
   }
 }
