@@ -1,50 +1,33 @@
 <template>
-  <div class="artist">
-    <ul class="singer-list">
-      <!--
-        <li v-for="singer in singers" :key="singer.id" class="singer-item">
-          <img v-lazy="singer.picUrl" alt="" class="pic" />
-          <div class="left  border-bottom">
-            <h2 class="name">{{ singer.name }}</h2>
-          </div>
-        </li>
-      -->
-    </ul>
-  </div>
+  <div class="artist"><singer-list :singers="singers"></singer-list></div>
 </template>
 
 <script>
 import Artist from "../../api/artist.js";
 import Singer from "../../utils";
 import pinyin from "pinyin";
-const HOT_NAME = "热";
+import SingerList from "../../components/Artist/SingerList";
+const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
-  components: {},
+  components: { SingerList },
   props: {},
   data() {
     return {
-      singers: {}
+      singers: []
     };
   },
   watch: {},
   computed: {},
   methods: {
     setArtists(res) {
-      this.$NProgress.done();
       let singer = res.list.artists;
       this.setPinyin(singer);
       this.singers = this.normalizeSinger(singer);
-      console.log(this.singers);
+      this.$NProgress.done();
     },
     setPinyin(singer) {
-      console.log(
-        pinyin("蔡", {
-          style: pinyin.STYLE_FIRST_LETTER
-        })
-      );
-
       singer.forEach(item => {
         let lowerPy = pinyin(item.name[0], {
           style: pinyin.STYLE_FIRST_LETTER
@@ -87,7 +70,20 @@ export default {
           );
         }
       });
-      return map;
+      let ret = [];
+      let hot = [];
+      for (let key in map) {
+        let val = map[key];
+        if (val.title === key) {
+          ret.push(val);
+        } else if (val.title === HOT_NAME) {
+          hot.push(val);
+        }
+      }
+      ret.sort((a, b) => {
+        return a.title.charCodeAt(0) - b.title.charCodeAt(0);
+      });
+      return hot.concat(ret);
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -107,27 +103,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .artist {
-  .singer-list {
-    .singer-item {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 0 10px;
-      .pic {
-        width: 50px;
-        height: 50px;
-        border-radius: 4px;
-        margin-right: 20px;
-      }
-      .left {
-        flex: 1;
-        height: 70px;
-        line-height: 70px;
-        .name {
-          font-size: 16px;
-        }
-      }
-    }
-  }
+  position: fixed;
+  top: 98px;
+  width: 100%;
+  bottom: 0;
 }
 </style>
