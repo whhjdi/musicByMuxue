@@ -5,12 +5,15 @@
 <script>
 import { mapGetters } from "vuex";
 import Artist from "@/api/artist.js";
+import { createSong } from "@/utils/index.js";
 export default {
   name: "SingerDetail",
   components: {},
   props: {},
   data() {
-    return {};
+    return {
+      songs: []
+    };
   },
   watch: {},
   computed: {
@@ -19,12 +22,29 @@ export default {
   methods: {
     getDeatil(id) {
       Artist.singerDetail(id).then(res => {
-        console.log(res);
+        this.setSingerDetail(res);
       });
+    },
+    setSingerDetail(res) {
+      let songs = res.hotSongs;
+      this.songs = this.normalizeSongs(songs);
+    },
+    normalizeSongs(list) {
+      let ret = [];
+      list.forEach(item => {
+        ret.push(createSong(item));
+      });
+      console.log(ret);
+
+      return ret;
     }
   },
   created() {},
   mounted() {
+    if (!this.singer.id) {
+      this.$router.push("/artist");
+      return;
+    }
     this.getDeatil(this.singer.id);
   }
 };

@@ -184,8 +184,6 @@ export default {
         return;
       }
       this.fixedTop === fixedTop;
-      console.log(this.$refs.fixed);
-
       this.$refs.fixed.style.transform = `translateY(${this.fixedTop})`;
     }
   },

@@ -105,7 +105,7 @@ export default {
       vm.loadingShow = true;
     });
   },
-  created() {},
+
   destroyed() {
     this.$NProgress.remove();
   }

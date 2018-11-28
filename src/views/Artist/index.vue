@@ -7,7 +7,7 @@
 
 <script>
 import Artist from "../../api/artist.js";
-import Singer from "../../utils";
+import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapMutations } from "vuex";
