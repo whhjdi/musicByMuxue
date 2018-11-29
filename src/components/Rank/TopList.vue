@@ -9,6 +9,7 @@
 <script>
 import MusicList from "../base/MusicList";
 import { createSong } from "@/utils/index.js";
+import { mapGetters } from "vuex";
 export default {
   name: "TopList",
   components: { MusicList },
@@ -26,17 +27,18 @@ export default {
     };
   },
   watch: {
-    list(newVal) {
+    topDetailList(newVal) {
       let songs = newVal.tracks;
       this.songs = this.normalizeSongs(songs);
     }
   },
   computed: {
+    ...mapGetters(["topDetailList"]),
     title() {
-      return this.list.name;
+      return this.topDetailList.name;
     },
     picUrl() {
-      return this.list.coverImgUrl;
+      return this.topDetailList.coverImgUrl;
     }
   },
   methods: {

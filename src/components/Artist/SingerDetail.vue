@@ -39,6 +39,7 @@ export default {
     setSingerDetail(res) {
       let songs = res.hotSongs;
       this.songs = this.normalizeSongs(songs);
+      // this.$NProgress.done();
     },
     normalizeSongs(list) {
       let ret = [];

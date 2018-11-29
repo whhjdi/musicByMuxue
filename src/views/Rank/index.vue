@@ -1,53 +1,35 @@
 <template>
   <transition name="slide">
     <div class="rank">
-      <Scroll :data="topList">
-        <ul class="list-wrapper">
-          <li
-            v-for="(item, index) in topList"
-            :key="item.id"
-            class="list border-bottom"
-            @click="selectTopList(item, index);"
-          >
-            <img :src="item.coverImgUrl" alt="" class="pic" />
-            <div class="updateFrequency">{{ item.updateFrequency }}</div>
-            <ul v-show="item.tracks.length" class="song-list">
-              <li
-                v-for="(song, index) in item.tracks"
-                :key="song.first"
-                class="song"
-              >
-                {{ index }}.{{ song.first }}-{{ song.second }}
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </Scroll>
-      <router-view :list="topDetailList"></router-view>
+      <rank-list :topList="topList" @selectTopList="selectTopList"></rank-list>
+      <router-view></router-view>
     </div>
   </transition>
 </template>
 
 <script>
 import Rank from "@/api/rank.js";
-import Scroll from "@/components/base/Scroll.vue";
+import RankList from "@/components/Rank/RankList.vue";
+import { mapMutations } from "vuex";
 export default {
   name: "rank",
-  components: { Scroll },
+  components: { RankList },
   props: {},
   data() {
     return {
-      topList: [],
-      topDetailList: {}
+      topList: []
     };
   },
   watch: {},
   computed: {},
   methods: {
+    ...mapMutations({
+      setTopDetailList: "setTopDetailList"
+    }),
     getTopList() {
       Rank.topList().then(res => {
         this.setTopList(res);
-        this.$NProgress.done();
+        // this.$NProgress.done();
       });
     },
     setTopList(res) {
@@ -61,7 +43,9 @@ export default {
     },
     getTopListDetail(idx) {
       Rank.topListDetail(idx).then(res => {
-        this.topDetailList = res.playlist;
+        // this.topDetailList = res.playlist;
+        this.setTopDetailList(res.playlist);
+        // this.$NProgress.done();
       });
     }
   },

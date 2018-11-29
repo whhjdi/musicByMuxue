@@ -40,8 +40,8 @@ export default {
   watch: {},
   computed: {},
   methods: {
-    selectTopList(index) {
-      this.$emit("selectTopList", index);
+    selectTopList(item, index) {
+      this.$emit("selectTopList", item, index);
     }
   },
   created() {},

@@ -32,7 +32,7 @@ export default {
       let singer = res.list.artists;
       this.setPinyin(singer);
       this.singers = this.normalizeSinger(singer);
-      this.$NProgress.done();
+      // this.$NProgress.done();
     },
     setPinyin(singer) {
       singer.forEach(item => {
@@ -109,10 +109,7 @@ export default {
     });
   },
   created() {},
-  mounted() {},
-  destroyed() {
-    this.$NProgress.remove();
-  }
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>

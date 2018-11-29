@@ -102,7 +102,6 @@ export default {
     this.listenScroll = true;
   },
   mounted() {
-    this.$NProgress.done();
     this.$refs.list.$el.style.top;
     this.imageHeight = this.$refs.bg.clientHeight;
     this.minTranslateHeight = -this.imageHeight + 44;

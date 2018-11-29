@@ -95,7 +95,7 @@ export default {
       getAllRecommend().then(res => {
         vm.setAllRecommend(res);
         vm.loadingShow = false;
-        vm.$NProgress.done();
+        // vm.$NProgress.done();
       });
     });
   },
@@ -104,10 +104,6 @@ export default {
     next(vm => {
       vm.loadingShow = true;
     });
-  },
-
-  destroyed() {
-    this.$NProgress.remove();
   }
 };
 </script>
