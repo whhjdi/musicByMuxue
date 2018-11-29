@@ -1,14 +1,17 @@
 <template>
-  <transition name="slide"> <div class="singer-detail">1</div> </transition>
+  <div class="singer-detail">
+    <music-list :title="title" :songs="songs" :picUrl="picUrl"></music-list>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils/index.js";
+import MusicList from "../base/MusicList";
 export default {
   name: "SingerDetail",
-  components: {},
+  components: { MusicList },
   props: {},
   data() {
     return {
@@ -17,7 +20,13 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["singer"])
+    ...mapGetters(["singer"]),
+    title() {
+      return this.singer.name;
+    },
+    picUrl() {
+      return this.singer.avatar;
+    }
   },
   methods: {
     getDeatil(id) {
@@ -34,8 +43,6 @@ export default {
       list.forEach(item => {
         ret.push(createSong(item));
       });
-      console.log(ret);
-
       return ret;
     }
   },
@@ -50,14 +57,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.singer-detail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-}
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s;
