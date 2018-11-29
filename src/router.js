@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import SingerDetail from "./components/Artist/SingerDetail.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -12,21 +11,36 @@ export default new Router({
     {
       path: "/home",
       name: "home",
-      component: () => import("./views/Home")
+      component: () => import("./views/Home"),
+      meta: {
+        index: 1
+      }
     },
     {
       path: "/rank",
       name: "rank",
-      component: () => import("./views/Rank")
+      component: () => import("./views/Rank"),
+      meta: {
+        index: 2
+      },
+      children: [
+        {
+          path: ":idx",
+          component: () => import("./components/Rank/TopList.vue")
+        }
+      ]
     },
     {
       path: "/artist",
       name: "artist",
       component: () => import("./views/Artist"),
+      meta: {
+        index: 3
+      },
       children: [
         {
           path: ":id",
-          component: SingerDetail
+          component: () => import("./components/Artist/SingerDetail.vue")
         }
       ]
     }

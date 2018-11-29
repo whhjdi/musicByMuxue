@@ -1,23 +1,31 @@
 <template>
-  <div class="rank">
-    <Scroll :data="topList">
-      <ul class="list-wrapper">
-        <li v-for="item in topList" :key="item.id" class="list border-bottom">
-          <img :src="item.coverImgUrl" alt="" class="pic" />
-          <div class="updateFrequency">{{ item.updateFrequency }}</div>
-          <ul v-show="item.tracks.length" class="song-list">
-            <li
-              v-for="(song, index) in item.tracks"
-              :key="song.first"
-              class="song"
-            >
-              {{ index }}.{{ song.first }}-{{ song.second }}
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </Scroll>
-  </div>
+  <transition name="slide">
+    <div class="rank">
+      <Scroll :data="topList">
+        <ul class="list-wrapper">
+          <li
+            v-for="(item, index) in topList"
+            :key="item.id"
+            class="list border-bottom"
+            @click="selectTopList(index);"
+          >
+            <img :src="item.coverImgUrl" alt="" class="pic" />
+            <div class="updateFrequency">{{ item.updateFrequency }}</div>
+            <ul v-show="item.tracks.length" class="song-list">
+              <li
+                v-for="(song, index) in item.tracks"
+                :key="song.first"
+                class="song"
+              >
+                {{ index }}.{{ song.first }}-{{ song.second }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </Scroll>
+      <router-view :list="topDetailList"></router-view>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -29,7 +37,8 @@ export default {
   props: {},
   data() {
     return {
-      topList: []
+      topList: [],
+      topDetailList: []
     };
   },
   watch: {},
@@ -42,8 +51,18 @@ export default {
       });
     },
     setTopList(res) {
-      console.log(res);
       this.topList = res.list;
+    },
+    selectTopList(index) {
+      this.$router.push({
+        path: `/rank/${index}`
+      });
+      this.getTopListDetail(index);
+    },
+    getTopListDetail(idx) {
+      Rank.topListDetail(idx).then(res => {
+        this.topDetailList = res.playlist;
+      });
     }
   },
   created() {
@@ -97,5 +116,14 @@ export default {
       }
     }
   }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>

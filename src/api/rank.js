@@ -8,6 +8,14 @@ class Rank {
       }
     });
   }
+  static topListDetail(idx) {
+    return fetch("topListDetail", {
+      params: {
+        idx,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Rank;

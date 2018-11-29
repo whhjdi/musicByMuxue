@@ -1,7 +1,9 @@
 <template>
-  <div class="singer-detail">
-    <music-list :title="title" :songs="songs" :picUrl="picUrl"></music-list>
-  </div>
+  <transition name="slide">
+    <div class="singer-detail">
+      <music-list :title="title" :songs="songs" :picUrl="picUrl"></music-list>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -57,12 +59,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.singer-detail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s;
 }
 .slide-enter,
 .slide-leave-to {
-  transform: translateX(100%);
+  transform: translateY(100%);
 }
 </style>
