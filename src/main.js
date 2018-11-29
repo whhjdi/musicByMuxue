@@ -23,9 +23,6 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
   next();
 });
-router.afterEach(() => {
-  NProgress.done();
-});
 new VConsole();
 new Vue({
   router,
