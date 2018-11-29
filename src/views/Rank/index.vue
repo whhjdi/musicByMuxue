@@ -7,7 +7,7 @@
             v-for="(item, index) in topList"
             :key="item.id"
             class="list border-bottom"
-            @click="selectTopList(index);"
+            @click="selectTopList(item, index);"
           >
             <img :src="item.coverImgUrl" alt="" class="pic" />
             <div class="updateFrequency">{{ item.updateFrequency }}</div>
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       topList: [],
-      topDetailList: []
+      topDetailList: {}
     };
   },
   watch: {},
@@ -53,9 +53,9 @@ export default {
     setTopList(res) {
       this.topList = res.list;
     },
-    selectTopList(index) {
+    selectTopList(item, index) {
       this.$router.push({
-        path: `/rank/${index}`
+        path: `/rank/${item.id}`
       });
       this.getTopListDetail(index);
     },
