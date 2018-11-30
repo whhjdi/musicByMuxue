@@ -2,7 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import fastclick from "fastclick";
 import NProgress from "nprogress";
 import fetch from "./api/fetch.js";
 import VueLazyload from "vue-lazyload";
@@ -12,7 +11,7 @@ import "nprogress/nprogress.css";
 import "./assets/css/border-1px.css";
 import VConsole from "vconsole";
 Vue.config.productionTip = false;
-fastclick.attach(document.body);
+
 NProgress.configure({
   showSpinner: false
 });
@@ -22,6 +21,9 @@ Vue.use(VueLazyload);
 router.beforeEach((to, from, next) => {
   NProgress.start();
   next();
+});
+router.afterEach(() => {
+  NProgress.done();
 });
 new VConsole();
 new Vue({

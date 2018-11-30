@@ -1,13 +1,19 @@
 <template>
   <transition name="slide">
     <div class="singer-detail">
-      <music-list :title="title" :songs="songs" :picUrl="picUrl"></music-list>
+      <music-list
+        :title="title"
+        :songs="songs"
+        :picUrl="picUrl"
+        @select="selectItem"
+        @play="playAll"
+      ></music-list>
     </div>
   </transition>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils/index.js";
 import MusicList from "../base/MusicList";
@@ -31,6 +37,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["selectPlay", "randomPlay"]),
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
     getDeatil(id) {
       Artist.singerDetail(id).then(res => {
         this.setSingerDetail(res);

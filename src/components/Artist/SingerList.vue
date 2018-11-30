@@ -200,7 +200,6 @@ export default {
 .singer-list {
   position: relative;
   .list-wrapper {
-    z-index: 1;
     .singerGroup-item {
       .title {
         display: inline-block;

@@ -95,7 +95,6 @@ export default {
       getAllRecommend().then(res => {
         vm.setAllRecommend(res);
         vm.loadingShow = false;
-        vm.$NProgress.done();
       });
     });
   },

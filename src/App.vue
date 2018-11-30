@@ -2,15 +2,18 @@
   <div id="app">
     <div id="nav"><header-bar></header-bar></div>
     <transition :name="transitionName" @after-leave="afterLeave">
-      <router-view></router-view>
+      <keep-alive> <router-view></router-view> </keep-alive>
     </transition>
+    <Player></Player>
   </div>
 </template>
 <script>
 import HeaderBar from "./components/base/HeaderBar.vue";
+import Player from "./components/Player";
 export default {
   components: {
-    HeaderBar
+    HeaderBar,
+    Player
   },
   data() {
     return {

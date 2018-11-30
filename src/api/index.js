@@ -8,7 +8,8 @@ const urls = {
   artist: "/toplist/artist",
   singerDetail: "/artists",
   topList: "/toplist/detail",
-  topListDetail: "/top/list"
+  topListDetail: "/top/list",
+  song: "/song/url"
 };
 
 for (let key in urls) {

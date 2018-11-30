@@ -24,13 +24,16 @@
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-play-circle"></use>
             </svg>
-            <span class="desc">播放全部（共{{ this.songs.length }}首）</span>
+            <span class="desc" @click="playAll"
+              >播放全部（共{{ this.songs.length }}首）</span
+            >
           </div>
           <ul class="song-list">
             <li
               v-for="(song, index) in songs"
               :key="song.id"
               class="song border-bottom"
+              @click="selectItem(song, index);"
             >
               <div class="number">{{ index + 1 }}</div>
               <div class="right">
@@ -95,6 +98,12 @@ export default {
     },
     scroll(pos) {
       this.scrollY = pos.y;
+    },
+    selectItem(song, index) {
+      this.$emit("select", song, index);
+    },
+    playAll() {
+      this.$emit("play");
     }
   },
   created() {
@@ -102,7 +111,6 @@ export default {
     this.listenScroll = true;
   },
   mounted() {
-    this.$NProgress.done();
     this.$refs.list.$el.style.top;
     this.imageHeight = this.$refs.bg.clientHeight;
     this.minTranslateHeight = -this.imageHeight + 44;

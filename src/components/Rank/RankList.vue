@@ -15,7 +15,7 @@
             :key="song.first"
             class="song"
           >
-            {{ index }}.{{ song.first }}-{{ song.second }}
+            {{ index + 1 }}.{{ song.first }}-{{ song.second }}
           </li>
         </ul>
       </li>

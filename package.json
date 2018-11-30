@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-scroll": "^1.13.2",
+
     "cssnano": "^4.1.7",
     "cssnano-preset-advanced": "^4.0.5",
     "fastclick": "^1.0.6",

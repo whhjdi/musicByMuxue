@@ -1,28 +1,7 @@
 <template>
   <transition name="slide">
     <div class="rank">
-      <Scroll :data="topList">
-        <ul class="list-wrapper">
-          <li
-            v-for="(item, index) in topList"
-            :key="item.id"
-            class="list border-bottom"
-            @click="selectTopList(item, index);"
-          >
-            <img :src="item.coverImgUrl" alt="" class="pic" />
-            <div class="updateFrequency">{{ item.updateFrequency }}</div>
-            <ul v-show="item.tracks.length" class="song-list">
-              <li
-                v-for="(song, index) in item.tracks"
-                :key="song.first"
-                class="song"
-              >
-                {{ index }}.{{ song.first }}-{{ song.second }}
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </Scroll>
+      <rank-list :topList="topList"></rank-list>
       <router-view :list="topDetailList"></router-view>
     </div>
   </transition>
@@ -30,10 +9,10 @@
 
 <script>
 import Rank from "@/api/rank.js";
-import Scroll from "@/components/base/Scroll.vue";
+import RankList from "@/components/Rank/RankList.vue";
 export default {
   name: "rank",
-  components: { Scroll },
+  components: { RankList },
   props: {},
   data() {
     return {
@@ -47,7 +26,6 @@ export default {
     getTopList() {
       Rank.topList().then(res => {
         this.setTopList(res);
-        this.$NProgress.done();
       });
     },
     setTopList(res) {

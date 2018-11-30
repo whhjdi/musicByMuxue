@@ -11,6 +11,7 @@ import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapMutations } from "vuex";
+
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
@@ -26,13 +27,12 @@ export default {
   computed: {},
   methods: {
     ...mapMutations({
-      setSinger: "setSinger"
+      setSinger: "SET_SINGER"
     }),
     setArtists(res) {
       let singer = res.list.artists;
       this.setPinyin(singer);
       this.singers = this.normalizeSinger(singer);
-      this.$NProgress.done();
     },
     setPinyin(singer) {
       singer.forEach(item => {
@@ -97,6 +97,7 @@ export default {
       this.$router.push({
         path: `/artist/${singer.id}`
       });
+
       this.setSinger(singer);
     }
   },
@@ -104,7 +105,6 @@ export default {
     next(vm => {
       Artist.singer().then(res => {
         vm.setArtists(res);
-        vm.$NProgress.done();
       });
     });
   },
@@ -121,5 +121,6 @@ export default {
   top: 98px;
   width: 100%;
   bottom: 0;
+  background: #fff;
 }
 </style>
