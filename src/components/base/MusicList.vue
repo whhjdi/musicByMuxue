@@ -28,7 +28,7 @@
               >播放全部（共{{ this.songs.length }}首）</span
             >
           </div>
-          <ul class="song-list">
+          <ul class="song-list" ref="wrapper">
             <li
               v-for="(song, index) in songs"
               :key="song.id"
@@ -50,9 +50,11 @@
 
 <script>
 import Scroll from "../base/Scroll";
+import { playListMixin } from "@/mixin.js";
 export default {
   name: "MusicList",
   components: { Scroll },
+  mixins: [playListMixin],
   props: {
     songs: {
       type: Array,
@@ -104,6 +106,10 @@ export default {
     },
     playAll() {
       this.$emit("play");
+    },
+    handlePlayList(playList) {
+      const bottom = playList.length > 0 ? "60px" : "";
+      this.$refs.wrapper.style.bottom = bottom;
     }
   },
   created() {

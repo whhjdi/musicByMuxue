@@ -1,21 +1,22 @@
 import fetch from "./fetch.js";
 
 class Recommend {
-  static banner() {
+  static getBanner() {
     return fetch("banner", {
       params: {
         xhrFields: { withCredentials: true }
       }
     });
   }
-  static personalized() {
+  static getRecommendSongs() {
     return fetch("personalized", {
       params: {
+        limit: 6,
         xhrFields: { withCredentials: true }
       }
     });
   }
-  static newSong() {
+  static getNewSong() {
     return fetch("newSong", {
       params: {
         xhrFields: { withCredentials: true }

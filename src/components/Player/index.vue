@@ -22,14 +22,37 @@
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
         </div>
-        <div class="middle">
-          <div class="middle-l">
-            <div class="cd-wrapper" ref="cdWrapper">
+        <div class="middle" @click="changeMiddle">
+          <div class="middle-l" v-show="currentShow === 'cd'">
+            <div class="cd-wrapper" ref="cdWrapper" @click.stop="togglePlaying">
               <div class="cd" :class="playing ? 'play' : 'pause'">
                 <img :src="currentSong.picUrl" alt="" class="image" />
               </div>
             </div>
           </div>
+          <transition name="middleR">
+            <Scroll
+              class="middle-r"
+              ref="lyricList"
+              :data="currentLyric && currentLyric.lines"
+              v-show="currentShow === 'lyric'"
+            >
+              <div class="lyric-wrapper">
+                <div v-if="currentLyric">
+                  <p
+                    class="text"
+                    ref="lyricLine"
+                    v-for="(line, index) in currentLyric.lines"
+                    :key="index"
+                    :class="{ current: currentLineNum === index }"
+                  >
+                    {{ line.txt }}
+                  </p>
+                </div>
+                <p class="no-lyric" v-else>{{ updatecurrentLyric }}</p>
+              </div>
+            </Scroll>
+          </transition>
         </div>
         <div class="bottom">
           <div class="progress-wrapper">
@@ -110,16 +133,21 @@ import { mapGetters, mapMutations } from "vuex";
 import Song from "@/api/song.js";
 import ProgressBar from "../base/ProgressBar";
 import { playMode, shuffle } from "@/utils/index.js";
+import Lyric from "lyric-parser";
+import Scroll from "../base/Scroll";
 export default {
   name: "",
-  components: { ProgressBar },
+  components: { ProgressBar, Scroll },
   props: {},
   data() {
     return {
       url: "",
       songReady: false,
       currentTime: 0,
-      duration: 0
+      duration: 0,
+      currentLyric: null,
+      currentLineNum: 0,
+      currentShow: "cd"
     };
   },
   watch: {
@@ -133,18 +161,19 @@ export default {
       if (this.playing) {
         this.$refs.audio.pause();
       }
+      if (this.currentLyric) {
+        this.currentLyric.stop();
+      }
       this.getSong(newVal.id);
+      this.getLyric(newVal.id);
     },
     url(newVal) {
       this.$refs.audio.src = newVal;
-      let stop = setInterval(() => {
+      this.$refs.audio.play();
+      //获取duration
+      this.$refs.audio.oncanplay = () => {
         this.duration = this.$refs.audio.duration;
-        console.log(1, this.duration);
-
-        if (this.duration) {
-          clearInterval(stop);
-        }
-      }, 150);
+      };
       this.setPlayingState(true);
     }
   },
@@ -176,6 +205,14 @@ export default {
         : this.mode === playMode.loop
         ? "#icon-danquxunhuan"
         : "#icon-suijibofang";
+    },
+    updatecurrentLyric() {
+      if (this.noLyric) {
+        return "暂无歌词";
+      }
+      if (!this.noLyric) {
+        return "歌词加载中";
+      }
     }
   },
   methods: {
@@ -196,6 +233,9 @@ export default {
       if (!this.songReady) {
         return;
       }
+      if (this.currentLyric) {
+        this.currentLyric.togglePlay();
+      }
       this.setPlayingState(!this.playing);
       const audio = this.$refs.audio;
       this.$nextTick(() => {
@@ -206,22 +246,50 @@ export default {
     getSong(id) {
       Song.song(id).then(res => {
         this.url = res.data[0].url;
-        this.$nextTick(() => {
+        setTimeout(() => {
           this.$refs.audio.play();
-        });
+        }, 1000);
       });
+    },
+    getLyric(id) {
+      if (this.currentLyric) {
+        this.currentLyric.stop();
+        this.currentLyric = null;
+      }
+      this.noLyric = false;
+      Song.lyric(id).then(res => {
+        this.currentLyric = new Lyric(res.lrc.lyric, this.handleLyric);
+        if (this.playing) {
+          this.currentLyric.play();
+          this.currentLineNum = 0;
+          this.$refs.lyricList.scrollTo(0, 0, 1000);
+        }
+      });
+    },
+    handleLyric({ lineNum }) {
+      this.currentLineNum = lineNum;
+      if (lineNum > 5) {
+        let lineEl = this.$refs.lyricLine[lineNum - 5];
+        this.$refs.lyricList.scrollToElement(lineEl, 1000);
+      } else {
+        this.$refs.lyricList.scrollTo(0, 0, 1000);
+      }
     },
     prev() {
       if (!this.songReady) {
         return;
       }
-      let index = this.currentIndex - 1;
-      if (index === -1) {
-        index = this.playList.length - 1;
-      }
-      this.setCurrentIndex(index);
-      if (!this.playing) {
-        this.togglePlaying();
+      if (this.playList.length === 1) {
+        this.loop();
+      } else {
+        let index = this.currentIndex - 1;
+        if (index === -1) {
+          index = this.playList.length - 1;
+        }
+        this.setCurrentIndex(index);
+        if (!this.playing) {
+          this.togglePlaying();
+        }
       }
       this.songReadyfalse;
     },
@@ -229,15 +297,19 @@ export default {
       if (!this.songReady) {
         return;
       }
-      let index = this.currentIndex + 1;
-      if (index === this.playList.length) {
-        index = 0;
+      if (this.playList.length === 1) {
+        this.loop();
+      } else {
+        let index = this.currentIndex + 1;
+        if (index === this.playList.length) {
+          index = 0;
+        }
+        this.setCurrentIndex(index);
+        if (!this.playing) {
+          this.togglePlaying();
+        }
       }
-      this.setCurrentIndex(index);
-      if (!this.playing) {
-        this.togglePlaying();
-      }
-      this.songReadyfalse;
+      this.songReady = false;
     },
     ready() {
       this.songReady = true;
@@ -264,8 +336,13 @@ export default {
     },
     onProgressChange(percent) {
       this.$refs.audio.currentTime = this.duration * percent;
+      const currentTime = this.$refs.audio.currentTime;
+      this.currentTime = currentTime;
       if (!this.playing) {
         this.togglePlaying();
+      }
+      if (this.currentLyric) {
+        this.currentLyric.seek(currentTime * 1000);
       }
     },
     changeMode() {
@@ -286,7 +363,7 @@ export default {
       });
       this.setCurrentIndex(index);
     },
-    ended(e) {
+    ended() {
       if (this.mode === playMode.loop) {
         this.loop();
       } else {
@@ -294,8 +371,18 @@ export default {
       }
     },
     loop() {
+      if (this.currentLyric) {
+        this.currentLyric.seek(0);
+      }
       this.$refs.audio.currentTime = 0;
       this.$refs.audio.play();
+    },
+    changeMiddle() {
+      if (this.currentShow === "cd") {
+        this.currentShow = "lyric";
+      } else {
+        this.currentShow = "cd";
+      }
     }
   },
   created() {},
@@ -385,6 +472,7 @@ export default {
           top: 0;
           width: 80%;
           height: 100%;
+          border-radius: 50%;
           .cd {
             width: 100%;
             height: 100%;
@@ -405,6 +493,43 @@ export default {
               height: 100%;
               border-radius: 50%;
             }
+          }
+        }
+      }
+      .middle-r {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        vertical-align: top;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        &.middleR-enter-active,
+        &.middleR-leave-active {
+          transition: all 0.3s;
+        }
+        &.middleR-enter,
+        &.middleR-leave-to {
+          opacity: 0;
+        }
+        .lyric-wrapper {
+          width: 80%;
+          margin: 0 auto;
+          overflow: hidden;
+          text-align: center;
+          .text {
+            line-height: 40px;
+            color: #a7a8a8;
+            font-size: 16px;
+            &.current {
+              color: #e94a3e;
+            }
+          }
+          .no-lyric {
+            line-height: 40px;
+            margin-top: 60%;
+            color: #fff;
+            font-size: 16px;
           }
         }
       }

@@ -10,6 +10,14 @@ class Song {
       }
     });
   }
+  static lyric(id) {
+    return fetch("lyric", {
+      params: {
+        id,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Song;

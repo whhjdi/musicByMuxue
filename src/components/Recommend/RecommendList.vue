@@ -1,14 +1,11 @@
 <template>
-  <div class="new-song-list">
-    <h2 class="title">
-      <span>最新音乐</span>
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-right"></use>
-      </svg>
+  <div class="recommend">
+    <h2 class="title" @click="handleClick">
+      <span>{{ title }}</span>
     </h2>
     <ul class="list-wrapper">
       <li v-for="item in list" :key="item.id" class="list">
-        <img v-lazy="item.song.album.picUrl" alt="" class="pic" />
+        <img v-lazy="item.picUrl" alt="" class="pic" />
         <p class="name">{{ item.name }}</p>
       </li>
     </ul>
@@ -17,11 +14,16 @@
 
 <script>
 export default {
-  name: "NewSong",
+  name: "",
   components: {},
   props: {
     list: {
-      type: Array
+      type: Array,
+      default: () => []
+    },
+    title: {
+      type: String,
+      default: "推荐歌单"
     }
   },
   data() {
@@ -29,14 +31,18 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {},
+  methods: {
+    handleClick() {
+      console.log("全部歌单");
+    }
+  },
   created() {},
   mounted() {}
 };
 </script>
 <style lang="scss" scoped>
-.new-song-list {
-  padding: 20px 5px;
+.recommend {
+  padding: 20px 5px 0 5px;
   .title {
     display: inline-block;
     margin-bottom: 5px;
@@ -44,6 +50,7 @@ export default {
     color: #000;
     padding: 10px 5px;
     .icon {
+      vertical-align: top;
       display: inline-block;
       color: #666666;
       margin-left: 0.2em;
