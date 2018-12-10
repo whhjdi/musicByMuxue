@@ -57,44 +57,6 @@ export default {
   bottom: 52px;
   z-index: 99;
   overflow: hidden;
-  .list-wrapper {
-    .list {
-      display: flex;
-      padding: 10px;
-      position: relative;
-      justify-content: flex-start;
-      align-items: center;
-      overflow: hidden;
-      .pic {
-        width: 100px;
-        height: 100px;
-        flex: 0 0 100px;
-        border-radius: 5px;
-      }
-      .updateFrequency {
-        position: absolute;
-        left: 15px;
-        bottom: 20px;
-        color: #fff;
-        font-size: 12px;
-      }
-      .song-list {
-        flex: 1;
-        padding: 0 10px;
-        height: 100px;
-        overflow: hidden;
-        .song {
-          padding: 5px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          &:first-child {
-            margin-top: 10px;
-          }
-        }
-      }
-    }
-  }
 }
 
 .slide-enter-active,

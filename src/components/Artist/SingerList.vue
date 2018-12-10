@@ -199,7 +199,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .singer-list {
-  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
   .list-wrapper {
     .singerGroup-item {
       .title {
@@ -250,7 +252,7 @@ export default {
         font-weight: 400;
         font-size: 13px;
         &.current {
-          color: #FF3F72;
+          color: #ff3f72;
         }
       }
     }

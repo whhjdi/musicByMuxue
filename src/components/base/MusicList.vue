@@ -1,5 +1,5 @@
 <template>
-  <div class="music-list">
+  <div class="music-list" ref="musicList">
     <header ref="header">
       <svg class="icon" aria-hidden="true" @click="goBack">
         <use xlink:href="#icon-arrowleft"></use>
@@ -111,7 +111,10 @@ export default {
       const bottom = playList.length > 0 ? "54px" : "";
       console.log(bottom);
       this.$refs.list.$el.style.bottom = bottom;
-      this.$refs.list.refresh()
+      this.$refs.list.refresh();
+    },
+    refresh() {
+      this.$refs.list.refresh();
     }
   },
   created() {

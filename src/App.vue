@@ -58,6 +58,7 @@ export default {
     background: #fff !important;
   }
 }
+/* 动画 */
 .page-left-enter-active,
 .page-left-leave-active {
   transition: all 0.5s;

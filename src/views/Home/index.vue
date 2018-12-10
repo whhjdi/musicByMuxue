@@ -92,6 +92,9 @@ export default {
   right: 0;
   top: 0;
   .scroll-wrapper {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
     .recommend {
       .slides {
         margin-bottom: 20px;

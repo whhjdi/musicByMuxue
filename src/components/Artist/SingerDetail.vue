@@ -1,12 +1,13 @@
 <template>
   <transition name="slide">
-    <div class="singer-detail">
+    <div class="singer-detail" ref="singerDetail">
       <music-list
         :title="title"
         :songs="songs"
         :picUrl="picUrl"
         @select="selectItem"
         @play="playAll"
+        ref="musicList"
       ></music-list>
     </div>
   </transition>
@@ -17,9 +18,11 @@ import { mapGetters, mapActions } from "vuex";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils/index.js";
 import MusicList from "../base/MusicList";
+import { playListMixin } from "@/mixin.js";
 export default {
   name: "SingerDetail",
   components: { MusicList },
+  mixins: [playListMixin],
   props: {},
   data() {
     return {
@@ -59,6 +62,13 @@ export default {
         ret.push(createSong(item));
       });
       return ret;
+    },
+    handlePlayList(playList) {
+      console.log(1);
+      const bottom = playList.length > 0 ? "60px" : "";
+      console.log(this.$refs.singerDetail.style.bottom);
+      this.$refs.singerDetail.style.bottom = bottom;
+      this.$refs.musicList.refresh();
     }
   },
   created() {},
@@ -78,6 +88,7 @@ export default {
   bottom: 0;
   width: 100%;
   z-index: 99;
+  overflow: hidden;
 }
 .slide-enter-active,
 .slide-leave-active {
