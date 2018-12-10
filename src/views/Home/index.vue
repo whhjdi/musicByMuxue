@@ -70,7 +70,10 @@ export default {
       let newSongs = [];
       songs.forEach(item => {
         let { id, name, picUrl } = item.song.album;
-        newSongs.push({ id, name, picUrl });
+        if (newSongs.length < 6) {
+          newSongs.push({ id, name, picUrl });
+        }
+        return;
       });
       this.newSongs = newSongs;
     }

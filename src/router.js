@@ -26,7 +26,7 @@ export default new Router({
       children: [
         {
           path: ":idx",
-          component: () => import("./components/Rank/TopList.vue")
+          component: () => import("./components/Rank/TopListDetail.vue")
         }
       ]
     },

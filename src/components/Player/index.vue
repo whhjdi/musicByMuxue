@@ -102,26 +102,30 @@
       </div>
     </transition>
     <transition name="normal">
-    <div class="mini-player" v-show="!fullScreen && !showFooter" @click="open">
-      <div class="left">
-        <img :src="currentSong.picUrl" alt="" class="pic" />
-        <div class="name">{{ currentSong.name }}</div>
-        <div class="singer">{{ currentSong.singer }}</div>
-      </div>
-      <div class="right">
-        <svg
-          class="icon i-mini"
-          aria-hidden="true"
-          @click.stop.prevent="togglePlaying"
-        >
-          <use :xlink:href="miniIcon"></use>
-        </svg>
+      <div
+        class="mini-player"
+        v-show="!fullScreen && !showFooter"
+        @click="open"
+      >
+        <div class="left">
+          <img :src="currentSong.picUrl" alt="" class="pic" />
+          <div class="name">{{ currentSong.name }}</div>
+          <div class="singer">{{ currentSong.singer }}</div>
+        </div>
+        <div class="right">
+          <svg
+            class="icon i-mini"
+            aria-hidden="true"
+            @click.stop.prevent="togglePlaying"
+          >
+            <use :xlink:href="miniIcon"></use>
+          </svg>
 
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-menu"></use>
-        </svg>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-menu"></use>
+          </svg>
+        </div>
       </div>
-    </div>
     </transition>
     <audio
       ref="audio"
@@ -411,7 +415,7 @@ export default {
     background: #eee;
     z-index: 999;
     overflow: hidden;
-    color:#191516;
+    color: #191516;
     font-weight: 200;
     .background {
       position: absolute;
@@ -523,7 +527,7 @@ export default {
           .text {
             line-height: 40px;
             color: #a7a8a8;
-            font-size: 16px;
+            font-size: 14px;
             &.current {
               color: #191516;
             }
@@ -531,7 +535,7 @@ export default {
           .no-lyric {
             line-height: 40px;
             margin-top: 60%;
-            color: #fff;
+            color: #191516;
             font-size: 16px;
           }
         }
