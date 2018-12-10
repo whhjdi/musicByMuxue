@@ -11,3 +11,4 @@ export const currentSong = state => {
 export const showFooter = state => {
   return state.showFooter;
 };
+export const transitionName = state => state.transitionName;

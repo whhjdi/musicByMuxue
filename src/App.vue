@@ -3,13 +3,18 @@
     <transition :name="transitionName" @after-leave="afterLeave">
       <keep-alive> <router-view></router-view> </keep-alive>
     </transition>
+    <keep-alive>
     <Player></Player>
-    <the-footer></the-footer>
+    </keep-alive>
+    <keep-alive>
+      <the-footer></the-footer>
+    </keep-alive>
   </div>
 </template>
 <script>
 import Player from "./components/Player";
 import TheFooter from "./components/base/TheFooter";
+import {mapGetters,mapMutations} from 'vuex'
 export default {
   components: {
     Player,
@@ -17,8 +22,10 @@ export default {
   },
   data() {
     return {
-      transitionName: ""
     };
+  },
+  computed:{
+    ...mapGetters(["transitionName"])
   },
   watch: {
     $route(to, from) {
@@ -35,9 +42,9 @@ export default {
     }
   },
   methods: {
-    setTransitionName(name) {
-      this.transitionName = name;
-    },
+    ...mapMutations({
+      setTransitionName:'SET_TRANSITION_NAME'
+    }),
     afterLeave() {
       this.setTransitionName("page-left");
     }

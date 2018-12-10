@@ -420,7 +420,7 @@ export default {
       width: 100%;
       height: 100%;
       opacity: 0.2;
-      filter: blur(200px);
+      filter: blur(50px);
       .img {
         width: 300%;
         height: 300%;

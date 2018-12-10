@@ -24,6 +24,9 @@ const mutations = {
   },
   [types.SET_SHOW_FOOTER](state, flag) {
     state.showFooter = flag;
+  },
+  [types.SET_TRANSITION_NAME](state,name){
+    state.transitionName = name
   }
 };
 

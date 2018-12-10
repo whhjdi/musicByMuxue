@@ -7,7 +7,8 @@ const state = {
   sequenceList: [],
   mode: playMode.sequence,
   currentIndex: -1,
-  showFooter: true
+  showFooter: true,
+  transitionName: 'page-left'
 };
 
 export default state;
