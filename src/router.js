@@ -13,7 +13,7 @@ export default new Router({
       name: "home",
       component: () => import("./views/Home"),
       meta: {
-        index: 1
+        index: 2
       }
     },
     {
@@ -21,7 +21,7 @@ export default new Router({
       name: "rank",
       component: () => import("./views/Rank"),
       meta: {
-        index: 2
+        index: 3
       },
       children: [
         {
@@ -35,7 +35,7 @@ export default new Router({
       name: "artist",
       component: () => import("./views/Artist"),
       meta: {
-        index: 3
+        index: 4
       },
       children: [
         {
@@ -49,7 +49,7 @@ export default new Router({
       name: "user",
       component: () => import("./views/User"),
       meta: {
-        index: 4
+        index: 1
       }
     }
   ]

@@ -1,5 +1,6 @@
 <template>
-  <div class="footer" v-if="showFooter">
+<transition name="normal">
+  <div class="footer" v-show="showFooter">
     <div class="footer-wrapper">
       <router-link
         :to="nav.link"
@@ -20,6 +21,7 @@
       <img :src="picBg" alt="" class="circle-bg" />
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -117,7 +119,7 @@ export default {
       align-items: center;
       flex: 1 1 auto;
       &.on {
-        color: #e3453a;
+        color: #FF3F72;
       }
       .icon {
         width: 24px;
@@ -151,5 +153,13 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+.normal-enter-active,
+.normal-leave-active {
+  transition: all 0.3s;
+}
+.normal-enter,
+.normal-leave-to {
+  transform: translateY(100%);
 }
 </style>

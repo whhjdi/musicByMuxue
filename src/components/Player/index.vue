@@ -10,6 +10,7 @@
             height="100%"
             class="img"
           />
+
           <div class="filter"></div>
           <div class="filterR"></div>
         </div>
@@ -100,10 +101,10 @@
         </div>
       </div>
     </transition>
+    <transition name="normal">
     <div class="mini-player" v-show="!fullScreen && !showFooter" @click="open">
       <div class="left">
         <img :src="currentSong.picUrl" alt="" class="pic" />
-
         <div class="name">{{ currentSong.name }}</div>
         <div class="singer">{{ currentSong.singer }}</div>
       </div>
@@ -121,6 +122,7 @@
         </svg>
       </div>
     </div>
+    </transition>
     <audio
       ref="audio"
       @canplay="ready"
@@ -406,17 +408,19 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    background: #000;
+    background: #eee;
     z-index: 999;
     overflow: hidden;
+    color:#191516;
+    font-weight: 200;
     .background {
       position: absolute;
       left: -50%;
       top: -50%;
       width: 100%;
       height: 100%;
-      opacity: 0.6;
-      filter: blur(100px);
+      opacity: 0.2;
+      filter: blur(200px);
       .img {
         width: 300%;
         height: 300%;
@@ -428,25 +432,23 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
-      padding: 10px;
       .icon {
         position: absolute;
         left: 15px;
         top: 10px;
         width: 24px;
         height: 24px;
-        color: #fff;
         margin-right: 20px;
       }
       .name {
         text-align: center;
+        margin-top: 20px;
         .title {
-          color: #fff;
           font-size: 16px;
           margin-bottom: 10px;
         }
         .subtitle {
-          color: #ccc;
+          color: rgb(148, 147, 147);
           font-size: 12px;
         }
       }
@@ -523,7 +525,7 @@ export default {
             color: #a7a8a8;
             font-size: 16px;
             &.current {
-              color: #e94a3e;
+              color: #191516;
             }
           }
           .no-lyric {
@@ -543,7 +545,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        color: #fff;
         padding: 0 30px;
         .icon {
           width: 24px;
@@ -562,7 +563,6 @@ export default {
         margin: 0 auto;
         padding: 10px 0;
         .time {
-          color: #fff;
           flex: 0 0 30px;
           width: 30px;
           &.time-l {
@@ -588,6 +588,7 @@ export default {
     height: 52px;
     display: flex;
     background: #fff;
+    color: #191516;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -595,26 +596,30 @@ export default {
       width: 48px;
       height: 48px;
       padding: 5px;
-      .name {
-        display: inline-block;
-        vertical-align: top;
-      }
-      .singer {
-        display: inline-block;
-      }
       .pic {
         width: 100%;
         height: 100%;
         border-radius: 4px;
+      }
+      .name {
+        position: absolute;
+        left: 70px;
+        top: 10px;
+        font-size: 14px;
+      }
+      .singer {
+        position: absolute;
+        left: 70px;
+        top: 30px;
+        color: rgb(105, 105, 105);
       }
     }
     .right {
       display: flex;
       flex-direction: row;
       .icon {
-        width: 40px;
-        height: 40px;
-        color: #ccc;
+        width: 30px;
+        height: 30px;
         margin-right: 15px;
       }
     }
@@ -631,7 +636,7 @@ export default {
 
 .normal-enter-active,
 .normal-leave-active {
-  transition: all 0.4s;
+  transition: all 0.3s;
 }
 .normal-enter,
 .normal-leave-to {

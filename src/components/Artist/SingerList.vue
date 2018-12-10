@@ -1,3 +1,4 @@
+// 列表联动
 <template>
   <Scroll
     class="singer-list"
@@ -249,7 +250,7 @@ export default {
         font-weight: 400;
         font-size: 13px;
         &.current {
-          color: red;
+          color: #FF3F72;
         }
       }
     }
@@ -261,7 +262,7 @@ export default {
       text-align: center;
       color: #fff;
       position: fixed;
-      background: #e3453a;
+      background: #191516;
       border-radius: 50%;
       left: 50%;
       top: 50%;

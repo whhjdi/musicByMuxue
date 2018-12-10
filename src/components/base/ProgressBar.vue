@@ -89,17 +89,17 @@ export default {
     position: relative;
     top: 13px;
     height: 4px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgb(190, 190, 190);
     border-radius: 4px;
     .progress {
       border-radius: 4px;
       position: absolute;
       height: 100%;
-      background: #e94a3e;
+      background: #41423C;
     }
     .progress-btn-wrapper {
       position: absolute;
-      left: -8px;
+      left: -10px;
       top: -13px;
       width: 30px;
       height: 30px;
@@ -108,11 +108,11 @@ export default {
         top: 7px;
         left: 7px;
         box-sizing: border-box;
-        border: 6px solid #fff;
+        border: 6px solid #41423C;
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: #e94a3e;
+        background: #41423C;
       }
     }
   }

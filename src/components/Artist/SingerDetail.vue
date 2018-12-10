@@ -85,6 +85,6 @@ export default {
 }
 .slide-enter,
 .slide-leave-to {
-  transform: translateY(100%);
+  transform: translateX(100%);
 }
 </style>

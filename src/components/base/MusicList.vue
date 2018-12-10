@@ -83,9 +83,9 @@ export default {
         this.headerTitle = "歌单";
       }
       if (newY < 0) {
-        this.$refs.header.style.background = `rgba(212, 68, 57, ${percent})`;
+        this.$refs.header.style.background = `rgba(0,0,0, ${percent})`;
       } else {
-        this.$refs.header.style.background = `rgba(212, 68, 57, 0)`;
+        this.$refs.header.style.background = `rgba(0,0,0, 0)`;
       }
     }
   },
@@ -108,8 +108,10 @@ export default {
       this.$emit("play");
     },
     handlePlayList(playList) {
-      const bottom = playList.length > 0 ? "60px" : "";
-      this.$refs.wrapper.style.bottom = bottom;
+      const bottom = playList.length > 0 ? "54px" : "";
+      console.log(bottom);
+      this.$refs.list.$el.style.bottom = bottom;
+      this.$refs.list.refresh()
     }
   },
   created() {
@@ -160,6 +162,7 @@ export default {
     top: 0;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     overflow: hidden;
     .list-wrapper {
