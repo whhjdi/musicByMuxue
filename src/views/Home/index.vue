@@ -12,7 +12,6 @@
               <img :src="banner.imageUrl" alt="" class="slide-img" />
             </div>
           </slide>
-          <div class="slide-bg"></div>
         </div>
         <div class="recommendSongs">
           <recommend-list :list="recommendSongs"></recommend-list>
@@ -86,27 +85,17 @@ export default {
 <style lang="scss" scoped>
 .home {
   position: fixed;
-  top: 98px;
   width: 100%;
-  bottom: 0;
+  bottom: 52px;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  top: 0;
   .scroll-wrapper {
     .recommend {
       .slides {
         margin-bottom: 20px;
         position: relative;
-        .slide-bg {
-          width: 100%;
-          height: 300px;
-          background: linear-gradient(
-            to right,
-            #dd4137 0%,
-            #e4463a 50%,
-            #e8483c 100%
-          );
-          position: absolute;
-          bottom: 40px;
-          z-index: -1;
-        }
       }
     }
   }

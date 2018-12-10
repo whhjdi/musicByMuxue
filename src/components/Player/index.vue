@@ -15,7 +15,7 @@
         </div>
         <div class="top">
           <svg class="icon" aria-hidden="true" @click="goBack">
-            <use xlink:href="#icon-arrowleft"></use>
+            <use xlink:href="#icon-down"></use>
           </svg>
           <div class="name">
             <h1 class="title">{{ currentSong.name }}</h1>
@@ -100,9 +100,12 @@
         </div>
       </div>
     </transition>
-    <div class="mini-player border-top" v-show="!fullScreen" @click="open">
+    <div class="mini-player" v-show="!fullScreen && !showFooter" @click="open">
       <div class="left">
         <img :src="currentSong.picUrl" alt="" class="pic" />
+
+        <div class="name">{{ currentSong.name }}</div>
+        <div class="singer">{{ currentSong.singer }}</div>
       </div>
       <div class="right">
         <svg
@@ -185,7 +188,8 @@ export default {
       "playing",
       "currentIndex",
       "mode",
-      "sequenceList"
+      "sequenceList",
+      "showFooter"
     ]),
     playIcon() {
       return this.playing ? "#icon-timeout" : "#icon-play-circle";
@@ -221,10 +225,14 @@ export default {
       setPlayingState: "SET_PLAYING_STATE",
       setCurrentIndex: "SET_CURRENT_INDEX",
       setPlayMode: "SET_PLAYING_MODE",
-      setPlayList: "SET_PLAY_LIST"
+      setPlayList: "SET_PLAY_LIST",
+      setShowFooter: "SET_SHOW_FOOTER"
     }),
     goBack() {
       this.setFullScreen(false);
+      if (this.$route.name) {
+        this.setShowFooter(true);
+      }
     },
     open() {
       this.setFullScreen(true);
@@ -408,17 +416,10 @@ export default {
       width: 100%;
       height: 100%;
       opacity: 0.6;
-      filter: blur(30px);
+      filter: blur(100px);
       .img {
-        width: 200%;
-        height: 200%;
-      }
-      .filter {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: black;
-        opacity: 0.6;
+        width: 300%;
+        height: 300%;
       }
     }
     .top {
@@ -427,22 +428,22 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
       padding: 10px;
       .icon {
+        position: absolute;
+        left: 15px;
+        top: 10px;
         width: 24px;
         height: 24px;
         color: #fff;
         margin-right: 20px;
       }
       .name {
+        text-align: center;
         .title {
           color: #fff;
-          font-size: 14px;
-          top: 20px;
-          margin-bottom: 5px;
+          font-size: 16px;
+          margin-bottom: 10px;
         }
         .subtitle {
           color: #ccc;
@@ -583,15 +584,24 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 60px;
+    z-index: 999;
+    height: 52px;
     display: flex;
     background: #fff;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
     .left {
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       padding: 5px;
+      .name {
+        display: inline-block;
+        vertical-align: top;
+      }
+      .singer {
+        display: inline-block;
+      }
       .pic {
         width: 100%;
         height: 100%;

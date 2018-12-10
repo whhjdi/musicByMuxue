@@ -43,6 +43,14 @@ export default new Router({
           component: () => import("./components/Artist/SingerDetail.vue")
         }
       ]
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: () => import("./views/User"),
+      meta: {
+        index: 4
+      }
     }
   ]
 });

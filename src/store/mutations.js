@@ -21,6 +21,9 @@ const mutations = {
   },
   [types.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index;
+  },
+  [types.SET_SHOW_FOOTER](state, flag) {
+    state.showFooter = flag;
   }
 };
 

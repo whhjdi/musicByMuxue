@@ -52,9 +52,10 @@ export default {
 <style lang="scss" scoped>
 .rank {
   position: fixed;
-  top: 98px;
+  top: 0;
   width: 100%;
-  bottom: 0;
+  bottom: 52px;
+  z-index: 99;
   overflow: hidden;
   .list-wrapper {
     .list {

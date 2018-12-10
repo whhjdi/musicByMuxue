@@ -10,7 +10,7 @@ import Artist from "../../api/artist.js";
 import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
@@ -24,10 +24,13 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    ...mapGetters(["showFooter"])
+  },
   methods: {
     ...mapMutations({
-      setSinger: "SET_SINGER"
+      setSinger: "SET_SINGER",
+      setShowFooter: "SET_SHOW_FOOTER"
     }),
     setArtists(res) {
       let singer = res.list.artists;
@@ -118,9 +121,10 @@ export default {
 <style lang="scss" scoped>
 .artist {
   position: fixed;
-  top: 98px;
+  top: 0px;
   width: 100%;
-  bottom: 0;
+  bottom: 52px;
   background: #fff;
+  z-index: 99;
 }
 </style>

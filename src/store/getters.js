@@ -8,3 +8,6 @@ export const currentIndex = state => state.currentIndex;
 export const currentSong = state => {
   return state.playList[state.currentIndex] || {};
 };
+export const showFooter = state => {
+  return state.showFooter;
+};
