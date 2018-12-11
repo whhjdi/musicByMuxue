@@ -4,7 +4,12 @@
       <span>{{ title }}</span>
     </h2>
     <ul class="list-wrapper">
-      <li v-for="item in list" :key="item.id" class="list">
+      <li
+        v-for="item in list"
+        :key="item.id"
+        class="list"
+        @click="selectItem(item);"
+      >
         <img v-lazy="item.picUrl" alt="" class="pic" />
         <p class="name">{{ item.name }}</p>
       </li>
@@ -34,6 +39,12 @@ export default {
   methods: {
     handleClick() {
       console.log("全部歌单");
+    },
+    selectItem(item) {
+      this.$emit("setDiscList", item);
+      this.$router.push({
+        path: `/home/${item.id}`
+      });
     }
   },
   created() {},

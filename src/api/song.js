@@ -10,7 +10,7 @@ class Song {
       }
     });
   }
-  static lyric(id) {
+  static getLyric(id) {
     return fetch("lyric", {
       params: {
         id,

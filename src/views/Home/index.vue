@@ -14,13 +14,25 @@
           </slide>
         </div>
         <div class="recommendSongs">
-          <recommend-list :list="recommendSongs"></recommend-list>
+          <recommend-list
+            :list="recommendSongs"
+            @setDiscList="handleDisc"
+          ></recommend-list>
         </div>
         <div class="newSongs">
           <recommend-list :list="newSongs" title="新歌速递"></recommend-list>
         </div>
       </div>
     </Scroll>
+    <router-view
+      :title="title"
+      :picUrl="picUrl"
+      :songs="songs"
+      :id="discId"
+      @select="selectItem"
+      @play="playAll"
+      ref="musicList"
+    ></router-view>
   </div>
 </template>
 
@@ -29,6 +41,8 @@ import Slide from "@/components/Recommend/Slide.vue";
 import Recommend from "@/api/recommend.js";
 import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
+import { mapMutations, mapActions } from "vuex";
+import { createSong } from "@/utils";
 export default {
   name: "home",
   components: {
@@ -41,12 +55,54 @@ export default {
     return {
       banners: [],
       recommendSongs: [],
-      newSongs: []
+      newSongs: [],
+      songs: [],
+      list: []
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    title() {
+      return this.list.name;
+    },
+    picUrl() {
+      return this.list.coverImgUrl;
+    },
+    discId() {
+      return this.list.id;
+    }
+  },
   methods: {
+    ...mapMutations({
+      setDisc: "SET_DISC"
+    }),
+    ...mapActions(["selectPlay", "randomPlay"]),
+    handleDisc(item) {
+      Recommend.getDisc(item.id).then(res => {
+        this.setDiscList(res);
+      });
+    },
+    setDiscList(res) {
+      this.list = res.playlist;
+      this.songs = this.normalizeSongs(this.list);
+    },
+
+    setList() {},
+    normalizeSongs() {
+      let ret = [];
+      let list = this.list;
+      list.tracks.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
+
     getAllRecommend() {
       let p1 = Recommend.getBanner();
       let p2 = Recommend.getRecommendSongs();
@@ -70,8 +126,9 @@ export default {
       let newSongs = [];
       songs.forEach(item => {
         let { id, name, picUrl } = item.song.album;
+        let singer = item.song.album.artists[0].name;
         if (newSongs.length < 6) {
-          newSongs.push({ id, name, picUrl });
+          newSongs.push({ id, name, picUrl, singer });
         }
         return;
       });

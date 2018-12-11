@@ -271,7 +271,7 @@ export default {
         this.currentLyric = null;
       }
       this.noLyric = false;
-      Song.lyric(id).then(res => {
+      Song.getLyric(id).then(res => {
         this.currentLyric = new Lyric(res.lrc.lyric, this.handleLyric);
         if (this.playing) {
           this.currentLyric.play();

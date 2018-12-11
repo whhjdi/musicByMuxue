@@ -1,7 +1,15 @@
 <template>
   <div class="artist">
     <singer-list :singers="singers" @selectSinger="chooseSinger"></singer-list>
-    <router-view></router-view>
+    <router-view
+      :title="title"
+      :songs="songs"
+      :picUrl="picUrl"
+      :id="id"
+      @select="selectItem"
+      @play="playAll"
+      ref="musicList"
+    ></router-view>
   </div>
 </template>
 
@@ -10,7 +18,8 @@ import Artist from "../../api/artist.js";
 import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import { createSong } from "@/utils/index.js";
 
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
@@ -20,18 +29,51 @@ export default {
   props: {},
   data() {
     return {
-      singers: []
+      singers: [],
+      songs: []
     };
   },
   watch: {},
   computed: {
-    ...mapGetters(["showFooter"])
+    ...mapGetters(["showFooter", "singer"]),
+    title() {
+      return this.singer.name;
+    },
+    picUrl() {
+      return this.singer.avatar;
+    },
+    id() {
+      return this.singer.id;
+    }
   },
   methods: {
     ...mapMutations({
       setSinger: "SET_SINGER",
       setShowFooter: "SET_SHOW_FOOTER"
     }),
+    ...mapActions(["selectPlay", "randomPlay"]),
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
+    getDeatil(id) {
+      Artist.singerDetail(id).then(res => {
+        this.setSingerDetail(res);
+      });
+    },
+    setSingerDetail(res) {
+      let songs = res.hotSongs;
+      this.songs = this.normalizeSongs(songs);
+    },
+    normalizeSongs(list) {
+      let ret = [];
+      list.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
     setArtists(res) {
       let singer = res.list.artists;
       this.setPinyin(singer);
@@ -97,6 +139,7 @@ export default {
     },
     chooseSinger(singer) {
       this.$NProgress.start();
+      this.getDeatil(this.singer.id);
       this.$router.push({
         path: `/artist/${singer.id}`
       });

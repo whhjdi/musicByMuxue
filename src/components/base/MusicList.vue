@@ -66,6 +66,9 @@ export default {
     },
     picUrl: {
       type: String
+    },
+    id: {
+      type: Number
     }
   },
   data() {
@@ -109,7 +112,6 @@ export default {
     },
     handlePlayList(playList) {
       const bottom = playList.length > 0 ? "54px" : "";
-      console.log(bottom);
       this.$refs.list.$el.style.bottom = bottom;
       this.$refs.list.refresh();
     },
@@ -122,6 +124,10 @@ export default {
     this.listenScroll = true;
   },
   mounted() {
+    if (!this.id) {
+      this.$router.push("/home");
+      return;
+    }
     this.$refs.list.$el.style.top;
     this.imageHeight = this.$refs.bg.clientHeight;
     this.minTranslateHeight = -this.imageHeight + 44;

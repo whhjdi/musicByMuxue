@@ -8,7 +8,8 @@ const state = {
   mode: playMode.sequence,
   currentIndex: -1,
   showFooter: true,
-  transitionName: 'page-left'
+  transitionName: "page-left",
+  disc: {}
 };
 
 export default state;

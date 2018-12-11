@@ -14,7 +14,13 @@ export default new Router({
       component: () => import("./views/Home"),
       meta: {
         index: 2
-      }
+      },
+      children: [
+        {
+          path: ":id",
+          component: () => import("./components/base/MusicList.vue")
+        }
+      ]
     },
     {
       path: "/rank",
@@ -40,7 +46,7 @@ export default new Router({
       children: [
         {
           path: ":id",
-          component: () => import("./components/Artist/SingerDetail.vue")
+          component: () => import("./components/base/MusicList.vue")
         }
       ]
     },

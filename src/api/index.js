@@ -5,6 +5,7 @@ const urls = {
   personalized: "/personalized",
   newSong: "/personalized/newsong",
   dj: "/personalized/djprogram",
+  disc: "/playlist/detail",
   artist: "/toplist/artist",
   singerDetail: "/artists",
   topList: "/toplist/detail",

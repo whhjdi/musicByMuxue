@@ -30,6 +30,14 @@ class Recommend {
       }
     });
   }
+  static getDisc(id) {
+    return fetch("disc", {
+      params: {
+        id,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Recommend;
