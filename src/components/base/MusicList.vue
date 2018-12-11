@@ -127,7 +127,7 @@ export default {
   },
   mounted() {
     if (!this.id) {
-      this.$router.push("/home");
+      this.$router.go(-1);
       return;
     }
     this.$refs.list.$el.style.top;
@@ -227,10 +227,11 @@ export default {
               flex: 1;
               .name {
                 margin-bottom: 6px;
-                font-size: 10px;
+                font-size: 12px;
               }
               .singer {
                 color: darkgray;
+                font-size: 10px;
               }
             }
           }

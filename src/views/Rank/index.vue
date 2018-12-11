@@ -1,17 +1,25 @@
 <template>
   <transition name="slide">
     <div class="rank">
-      <rank-list :topList="topList"></rank-list>
-      <router-view :list="topDetailList"></router-view>
+      <rank-list :topList="topList" @selectTopList="chooseItem"></rank-list>
+      <router-view
+        :title="title"
+        :songs="songs"
+        :picUrl="picUrl"
+        :id="id"
+        @select="selectItem"
+        @play="playAll"
+        ref="musicList"
+      ></router-view>
     </div>
   </transition>
 </template>
 
 <script>
-const RANK_LIST = [0, 1, 2, 3, 4, 22, 23];
-
+import { createSong } from "@/utils";
 import Rank from "@/api/rank.js";
 import RankList from "@/components/Rank/RankList.vue";
+import { mapActions } from "vuex";
 export default {
   name: "rank",
   components: { RankList },
@@ -19,34 +27,62 @@ export default {
   data() {
     return {
       topList: [],
-      topDetailList: {}
+      songs: [],
+      topDetailList: []
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    title() {
+      return this.topDetailList.name;
+    },
+    picUrl() {
+      return this.topDetailList.coverImgUrl;
+    },
+    id() {
+      return this.topDetailList.id;
+    }
+  },
   methods: {
+    ...mapActions(["selectPlay", "randomPlay"]),
     getTopList() {
-      Rank.topList().then(res => {
+      Rank.getTopList().then(res => {
         this.setTopList(res);
       });
     },
     setTopList(res) {
       this.topList = res.list;
     },
-    selectTopList(item, index) {
+    chooseItem(item, index) {
       this.$router.push({
         path: `/rank/${item.id}`
       });
       this.getTopListDetail(index);
     },
     getTopListDetail(idx) {
-      Rank.topListDetail(idx).then(res => {
+      Rank.getTopListDetail(idx).then(res => {
         this.topDetailList = res.playlist;
+        let songs = this.topDetailList.tracks;
+        this.songs = this.normalizeSongs(songs);
       });
+    },
+    normalizeSongs(list) {
+      let ret = [];
+      list.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
     }
   },
   created() {
     this.getTopList();
+    this.topDetailList = [];
   },
   mounted() {}
 };

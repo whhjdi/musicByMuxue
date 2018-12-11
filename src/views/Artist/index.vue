@@ -147,14 +147,11 @@ export default {
       this.setSinger(singer);
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      Artist.singer().then(res => {
-        vm.setArtists(res);
-      });
+  created() {
+    Artist.singer().then(res => {
+      this.setArtists(res);
     });
   },
-  created() {},
   mounted() {},
   destroyed() {
     this.$NProgress.remove();

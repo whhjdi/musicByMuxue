@@ -32,7 +32,7 @@ export default new Router({
       children: [
         {
           path: ":idx",
-          component: () => import("./components/Rank/TopListDetail.vue")
+          component: () => import("./components/base/MusicList.vue")
         }
       ]
     },

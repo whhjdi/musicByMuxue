@@ -1,14 +1,14 @@
 import fetch from "./fetch.js";
 
 class Rank {
-  static topList() {
+  static getTopList() {
     return fetch("topList", {
       params: {
         xhrFields: { withCredentials: true }
       }
     });
   }
-  static topListDetail(idx) {
+  static getTopListDetail(idx) {
     return fetch("topListDetail", {
       params: {
         idx,
