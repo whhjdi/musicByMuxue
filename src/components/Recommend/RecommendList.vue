@@ -2,6 +2,9 @@
   <div class="recommend">
     <h2 class="title" @click="handleClick">
       <span>{{ title }}</span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-right"></use>
+      </svg>
     </h2>
     <ul class="list-wrapper">
       <li
