@@ -77,9 +77,18 @@ export default {
       });
     },
     setTopList(res) {
-      this.topList = res.list;
+      let topList = res.list;
+      let newList = [];
+      topList.forEach(item1 => {
+        RANK_LIST.forEach(item2 => {
+          if (item1.name === item2) {
+            newList.push(item1);
+          }
+        });
+      });
+      this.topList = newList;
     },
-    chooseItem(item, index) {
+    chooseItem(item) {
       this.$router.push({
         path: `/rank/${item.id}`
       });

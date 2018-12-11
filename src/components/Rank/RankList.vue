@@ -2,10 +2,10 @@
   <Scroll :data="topList" class="rankList">
     <ul class="list-wrapper">
       <li
-        v-for="(item, index) in topList"
+        v-for="item in topList"
         :key="item.id"
         class="list border-bottom"
-        @click="selectTopList(item, index);"
+        @click="selectTopList(item);"
       >
         <img :src="item.coverImgUrl" alt="" class="pic" />
         <div class="updateFrequency">{{ item.updateFrequency }}</div>
@@ -40,8 +40,8 @@ export default {
   watch: {},
   computed: {},
   methods: {
-    selectTopList(item, index) {
-      this.$emit("selectTopList", item, index);
+    selectTopList(item) {
+      this.$emit("selectTopList", item);
     }
   },
   created() {},
