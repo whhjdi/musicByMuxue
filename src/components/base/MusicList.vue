@@ -1,51 +1,53 @@
 <template>
-  <div class="music-list" ref="musicList">
-    <header ref="header">
-      <svg class="icon" aria-hidden="true" @click="goBack">
-        <use xlink:href="#icon-arrowleft"></use>
-      </svg>
-      <h1 class="title">{{ headerTitle }}</h1>
-    </header>
-    <Scroll
-      :data="songs"
-      @scroll="scroll"
-      :probe-type="probeType"
-      :listenscroll="listenScroll"
-      class="wrapper"
-      ref="list"
-    >
-      <div class="list-wrapper">
-        <div class="bg" :style="bgStyle" ref="bg">
-          <div class="filter"></div>
-          <h1 class="title">{{ title }}</h1>
-        </div>
-        <div class="song-list-wrapper">
-          <div class="control-wrapper border-bottom">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-play-circle"></use>
-            </svg>
-            <span class="desc" @click="playAll"
-              >播放全部（共{{ this.songs.length }}首）</span
-            >
+  <transition name="fade">
+    <div class="music-list" ref="musicList">
+      <header ref="header">
+        <svg class="icon" aria-hidden="true" @click="goBack">
+          <use xlink:href="#icon-arrowleft"></use>
+        </svg>
+        <h1 class="title">{{ headerTitle }}</h1>
+      </header>
+      <Scroll
+        :data="songs"
+        @scroll="scroll"
+        :probe-type="probeType"
+        :listenscroll="listenScroll"
+        class="wrapper"
+        ref="list"
+      >
+        <div class="list-wrapper">
+          <div class="bg" :style="bgStyle" ref="bg">
+            <div class="filter"></div>
+            <h1 class="title">{{ title }}</h1>
           </div>
-          <ul class="song-list" ref="wrapper">
-            <li
-              v-for="(song, index) in songs"
-              :key="song.id"
-              class="song border-bottom"
-              @click="selectItem(song, index);"
-            >
-              <div class="number">{{ index + 1 }}</div>
-              <div class="right">
-                <div class="name">{{ song.name }}</div>
-                <div class="singer">{{ song.singer }}</div>
-              </div>
-            </li>
-          </ul>
+          <div class="song-list-wrapper">
+            <div class="control-wrapper border-bottom">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-play-circle"></use>
+              </svg>
+              <span class="desc" @click="playAll"
+                >播放全部（共{{ this.songs.length }}首）</span
+              >
+            </div>
+            <ul class="song-list" ref="wrapper">
+              <li
+                v-for="(song, index) in songs"
+                :key="song.id"
+                class="song border-bottom"
+                @click="selectItem(song, index);"
+              >
+                <div class="number">{{ index + 1 }}</div>
+                <div class="right">
+                  <div class="name">{{ song.name }}</div>
+                  <div class="singer">{{ song.singer }}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </Scroll>
-  </div>
+      </Scroll>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -236,5 +238,13 @@ export default {
       }
     }
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  transform: translateX(100%);
 }
 </style>

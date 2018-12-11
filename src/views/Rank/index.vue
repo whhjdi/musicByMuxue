@@ -8,6 +8,8 @@
 </template>
 
 <script>
+const RANK_LIST = [0, 1, 2, 3, 4, 22, 23];
+
 import Rank from "@/api/rank.js";
 import RankList from "@/components/Rank/RankList.vue";
 export default {
