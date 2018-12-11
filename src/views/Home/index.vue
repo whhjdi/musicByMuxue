@@ -20,7 +20,11 @@
           ></recommend-list>
         </div>
         <div class="newSongs">
-          <recommend-list :list="newSongs" title="新歌速递"></recommend-list>
+          <recommend-list
+            :list="newDiscs"
+            title="最新歌单"
+            @setDiscList="handleDisc"
+          ></recommend-list>
         </div>
       </div>
     </Scroll>
@@ -55,7 +59,7 @@ export default {
     return {
       banners: [],
       recommendSongs: [],
-      newSongs: [],
+      newDiscs: [],
       songs: [],
       list: []
     };
@@ -79,15 +83,13 @@ export default {
     ...mapActions(["selectPlay", "randomPlay"]),
     handleDisc(item) {
       Recommend.getDisc(item.id).then(res => {
-        this.setDiscList(res);
+        this.setList(res);
       });
     },
-    setDiscList(res) {
+    setList(res) {
       this.list = res.playlist;
       this.songs = this.normalizeSongs(this.list);
     },
-
-    setList() {},
     normalizeSongs() {
       let ret = [];
       let list = this.list;
@@ -106,14 +108,14 @@ export default {
     getAllRecommend() {
       let p1 = Recommend.getBanner();
       let p2 = Recommend.getRecommendSongs();
-      let p3 = Recommend.getNewSong();
+      let p3 = Recommend.getNewDisc();
       return Promise.all([p1, p2, p3]);
     },
     setAllRecommend(res) {
-      let [banners, recommendSongs, newSongs] = res;
+      let [banners, recommendSongs, newDisc] = res;
       this.setBanner(banners);
       this.setRecommendSongs(recommendSongs);
-      this.setNewSongs(newSongs);
+      this.setNewDisc(newDisc);
     },
     setBanner(res) {
       this.banners = res.banners;
@@ -121,18 +123,8 @@ export default {
     setRecommendSongs(res) {
       this.recommendSongs = res.result;
     },
-    setNewSongs(res) {
-      let songs = res.result;
-      let newSongs = [];
-      songs.forEach(item => {
-        let { id, name, picUrl } = item.song.album;
-        let singer = item.song.album.artists[0].name;
-        if (newSongs.length < 6) {
-          newSongs.push({ id, name, picUrl, singer });
-        }
-        return;
-      });
-      this.newSongs = newSongs;
+    setNewDisc(res) {
+      this.newDiscs = res.playlists;
     }
   },
   created() {

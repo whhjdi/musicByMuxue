@@ -23,17 +23,19 @@ class Recommend {
       }
     });
   }
-  static dj() {
-    return fetch("dj", {
-      params: {
-        xhrFields: { withCredentials: true }
-      }
-    });
-  }
   static getDisc(id) {
     return fetch("disc", {
       params: {
         id,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
+  static getNewDisc() {
+    return fetch("newDisc", {
+      params: {
+        order: "new",
+        limit: 6,
         xhrFields: { withCredentials: true }
       }
     });

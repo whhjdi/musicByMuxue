@@ -10,7 +10,11 @@
         class="list"
         @click="selectItem(item);"
       >
-        <img v-lazy="item.picUrl" alt="" class="pic" />
+        <img
+          v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl"
+          alt=""
+          class="pic"
+        />
         <p class="name">{{ item.name }}</p>
       </li>
     </ul>

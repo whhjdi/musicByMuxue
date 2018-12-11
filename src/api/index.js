@@ -3,8 +3,7 @@ const host = "http://192.168.123.63:3000";
 const urls = {
   banner: "/banner",
   personalized: "/personalized",
-  newSong: "/personalized/newsong",
-  dj: "/personalized/djprogram",
+  newDisc: "/top/playlist",
   disc: "/playlist/detail",
   artist: "/toplist/artist",
   singerDetail: "/artists",
