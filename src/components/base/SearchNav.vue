@@ -1,32 +1,19 @@
 <template>
   <div class="search-bar">
-    <svg
-      class="icon back"
-      aria-hidden="true"
-      @click.stop="hideSearch"
-      v-show="!showFooter"
-    >
-      <use xlink:href="#icon-left"></use>
-    </svg>
     <input
       type="text"
       class="input"
-      @focus="changeInput"
-      v-model="query"
-      ref="input"
+      @click="clickInput"
       :placeholder="placeholder"
     />
-    <svg class="icon souso" aria-hidden="true" v-if="!query">
+    <svg class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-sousuo"></use>
-    </svg>
-    <svg class="icon souso" aria-hidden="true" v-else @click="deleteQuery">
-      <use xlink:href="#icon-close"></use>
     </svg>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "",
   components: {},
@@ -44,34 +31,10 @@ export default {
     ...mapGetters(["showFooter", "query"])
   },
   methods: {
-    ...mapMutations({
-      setShowSearch: "SET_SHOW_SEARCH",
-      setQuery: "SET_QUERY",
-      setShowFooter: "SET_SHOW_FOOTER"
-    }),
-    hideSearch() {
-      this.$router.go(-1);
-      this.setShowFooter(true);
-    },
-    changeInput() {
-      this.setShowFooter(false);
+    clickInput() {
       this.$router.push({
         path: "/search"
       });
-    },
-    deleteQuery() {
-      this.setQuery("");
-    }
-  },
-
-  created() {
-    this.$watch("query", newQuery => {
-      this.$emit("query", newQuery);
-    });
-  },
-  mounted() {
-    if (this.showSearch) {
-      this.$refs.input.focus();
     }
   }
 };

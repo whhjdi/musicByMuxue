@@ -21,7 +21,7 @@ import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
-import SearchBar from "@/components/base/SearchBar.vue";
+import SearchBar from "@/components/base/SearchNav.vue";
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
@@ -49,8 +49,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSinger: "SET_SINGER",
-      setShowFooter: "SET_SHOW_FOOTER"
+      setSinger: "SET_SINGER"
     }),
     ...mapActions(["selectPlay", "randomPlay"]),
     selectItem(song, index) {

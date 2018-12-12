@@ -47,7 +47,7 @@ import { createSong } from "@/utils";
 import Rank from "@/api/rank.js";
 import RankList from "@/components/Rank/RankList.vue";
 import { mapActions } from "vuex";
-import SearchBar from "@/components/base/SearchBar.vue";
+import SearchBar from "@/components/base/SearchNav.vue";
 export default {
   name: "rank",
   components: { RankList, SearchBar },

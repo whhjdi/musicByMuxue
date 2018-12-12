@@ -12,5 +12,4 @@ export const showFooter = state => state.showFooter;
 
 export const transitionName = state => state.transitionName;
 export const disc = state => state.disc;
-export const showSearch = state => state.showSearch;
 export const query = state => state.query;

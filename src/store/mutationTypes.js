@@ -8,5 +8,4 @@ export const SET_CURRENT_INDEX = "SET_CURRENT_INDEX";
 export const SET_SHOW_FOOTER = "SET_SHOW_FOOTER";
 export const SET_TRANSITION_NAME = "SET_TRANSITION_NAME";
 export const SET_DISC = "SET_DISC";
-export const SET_SHOW_SEARCH = "SET_SHOW_SEARCH";
 export const SET_QUERY = "SET_QUERY";

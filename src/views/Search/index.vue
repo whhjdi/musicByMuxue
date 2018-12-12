@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar.vue";
 import Search from "@/api/search.js";
 import Suggest from "./Suggest";
 import { mapGetters, mapMutations } from "vuex";

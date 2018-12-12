@@ -10,7 +10,6 @@ const state = {
   showFooter: true,
   transitionName: "page-left",
   disc: {},
-  showSearch: false,
   query: ""
 };
 

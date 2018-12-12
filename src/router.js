@@ -61,12 +61,7 @@ export default new Router({
     {
       path: "/search",
       name: "search",
-      component: () => import("./components/base/Search.vue")
-    },
-    {
-      path: "/musiclist",
-      name: "musiclist",
-      component: () => import("./components/base/MusicList.vue")
+      component: () => import("./views/Search")
     }
   ]
 });

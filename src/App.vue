@@ -25,7 +25,7 @@ export default {
   watch: {
     $route(to, from) {
       // 页面刷新时不需要过渡
-      if (!from.name || !to.meta || from.meta) {
+      if (!from.name || !to.meta.index || !from.meta.index) {
         this.setTransitionName("");
         return;
       }

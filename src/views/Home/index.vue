@@ -51,7 +51,7 @@ import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
 import { mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils";
-import SearchBar from "@/components/base/SearchBar.vue";
+import SearchBar from "@/components/base/SearchNav.vue";
 export default {
   name: "home",
   components: {
