@@ -9,7 +9,8 @@ const state = {
   currentIndex: -1,
   showFooter: true,
   transitionName: "page-left",
-  disc: {}
+  disc: {},
+  showSearch: false
 };
 
 export default state;

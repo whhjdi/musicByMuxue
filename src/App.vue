@@ -3,29 +3,27 @@
     <transition :name="transitionName" @after-leave="afterLeave">
       <keep-alive> <router-view></router-view> </keep-alive>
     </transition>
-    <keep-alive>
-    <Player></Player>
-    </keep-alive>
-    <keep-alive>
-      <the-footer></the-footer>
-    </keep-alive>
+    <keep-alive> <Player></Player> </keep-alive>
+    <keep-alive> <the-footer></the-footer> </keep-alive>
+    <Search v-if="showSearch"></Search>
   </div>
 </template>
 <script>
+import Search from "./components/base/Search.vue";
 import Player from "./components/Player";
 import TheFooter from "./components/base/TheFooter";
-import {mapGetters,mapMutations} from 'vuex'
+import { mapGetters, mapMutations } from "vuex";
 export default {
   components: {
     Player,
-    TheFooter
+    TheFooter,
+    Search
   },
   data() {
-    return {
-    };
+    return {};
   },
-  computed:{
-    ...mapGetters(["transitionName"])
+  computed: {
+    ...mapGetters(["transitionName", "showSearch"])
   },
   watch: {
     $route(to, from) {
@@ -43,7 +41,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setTransitionName:'SET_TRANSITION_NAME'
+      setTransitionName: "SET_TRANSITION_NAME"
     }),
     afterLeave() {
       this.setTransitionName("page-left");

@@ -90,7 +90,7 @@ export default {
       if (newY < 0) {
         this.$refs.header.style.background = `rgba(0,0,0, ${percent})`;
       } else {
-        this.$refs.header.style.background = `rgba(0,0,0, 0)`;
+        this.$refs.header.style.background = `rgba(0,0,0,0)`;
       }
     }
   },

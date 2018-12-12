@@ -1,5 +1,6 @@
 <template>
   <div class="artist">
+    <search-bar></search-bar>
     <singer-list :singers="singers" @selectSinger="chooseSinger"></singer-list>
     <router-view
       :title="title"
@@ -20,12 +21,12 @@ import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
-
+import SearchBar from "@/components/base/SearchBar.vue";
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
-  components: { SingerList },
+  components: { SingerList, SearchBar },
   props: {},
   data() {
     return {

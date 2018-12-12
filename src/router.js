@@ -57,6 +57,11 @@ export default new Router({
       meta: {
         index: 1
       }
+    },
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("./components/base/Search.vue")
     }
   ]
 });

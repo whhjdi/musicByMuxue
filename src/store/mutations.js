@@ -30,6 +30,9 @@ const mutations = {
   },
   [types.SET_DISC](state, list) {
     state.disc = list;
+  },
+  [types.SET_SHOW_SEARCH](state, flag) {
+    state.showSearch = flag;
   }
 };
 

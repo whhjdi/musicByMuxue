@@ -1,5 +1,9 @@
 <template>
   <div class="home" ref="home">
+    <nav>
+      <h1>沐雪music</h1>
+      <input type="text" class="input" @focus="changeInput" />
+    </nav>
     <Scroll :data="recommendSongs" ref="scrolls" class="scroll-wrapper">
       <div class="recommend">
         <div class="slides" v-if="this.banners && this.banners.length">
@@ -78,7 +82,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setDisc: "SET_DISC"
+      setDisc: "SET_DISC",
+      setShowSearch: "SET_SHOW_SEARCH"
     }),
     ...mapActions(["selectPlay", "randomPlay"]),
     handleDisc(item) {
@@ -125,6 +130,9 @@ export default {
     },
     setNewDisc(res) {
       this.newDiscs = res.playlists;
+    },
+    changeInput() {
+      this.setShowSearch(true);
     }
   },
   created() {
@@ -143,6 +151,18 @@ export default {
   left: 0;
   right: 0;
   top: 0;
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    .input {
+      height: 30px;
+      background: rgb(224, 224, 224);
+      border: none;
+      border-radius: 6px;
+    }
+  }
   .scroll-wrapper {
     overflow: hidden;
     height: 100%;

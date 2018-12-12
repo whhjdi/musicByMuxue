@@ -202,6 +202,7 @@ export default {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  top: 40px;
   .list-wrapper {
     .singerGroup-item {
       .title {
@@ -274,7 +275,7 @@ export default {
   }
   .list-fixed {
     position: absolute;
-    top: 0;
+    top: 40px;
     left: 0;
     width: 100%;
     .fixed-title {

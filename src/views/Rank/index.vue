@@ -123,7 +123,6 @@ export default {
   },
   created() {
     this.getTopList();
-    this.topDetailList = [];
   },
   mounted() {}
 };
