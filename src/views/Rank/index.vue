@@ -137,6 +137,7 @@ export default {
   bottom: 52px;
   z-index: 99;
   overflow: hidden;
+  background: #fff;
 }
 
 .slide-enter-active,

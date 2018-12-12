@@ -84,8 +84,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setDisc: "SET_DISC",
-      setShowSearch: "SET_SHOW_SEARCH"
+      setDisc: "SET_DISC"
     }),
     ...mapActions(["selectPlay", "randomPlay"]),
     handleDisc(item) {
@@ -132,9 +131,6 @@ export default {
     },
     setNewDisc(res) {
       this.newDiscs = res.playlists;
-    },
-    changeInput() {
-      this.setShowSearch(true);
     }
   },
   created() {
@@ -153,6 +149,7 @@ export default {
   left: 0;
   right: 0;
   top: 0;
+  background: #fff;
   nav {
     display: flex;
     justify-content: space-between;

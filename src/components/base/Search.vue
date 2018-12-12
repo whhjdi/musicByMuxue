@@ -1,8 +1,8 @@
 <template>
   <div class="search">
-    <search-bar ref="searchbar" :query="query"></search-bar>
+    <search-bar ref="searchbar"></search-bar>
     <h2 class="title">热门搜索</h2>
-    <div class="hots">
+    <div class="hots" v-show="!query">
       <div
         class="hot"
         v-for="hot in hots"
@@ -12,7 +12,8 @@
         {{ hot.first }}
       </div>
     </div>
-    <Suggest :query="query"></Suggest>
+    <Suggest v-show="query"></Suggest>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -20,21 +21,26 @@
 import SearchBar from "./SearchBar";
 import Search from "@/api/search.js";
 import Suggest from "./Suggest";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "Search",
   components: { SearchBar, Suggest },
   props: {},
   data() {
     return {
-      hots: [],
-      query: ""
+      hots: []
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    ...mapGetters(["query"])
+  },
   methods: {
+    ...mapMutations({
+      setQuery: "SET_QUERY"
+    }),
     addQuery(key) {
-      this.query = key;
+      this.setQuery(key);
     }
   },
   created() {

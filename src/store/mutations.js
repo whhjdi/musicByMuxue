@@ -33,6 +33,9 @@ const mutations = {
   },
   [types.SET_SHOW_SEARCH](state, flag) {
     state.showSearch = flag;
+  },
+  [types.SET_QUERY](state, query) {
+    state.query = query;
   }
 };
 

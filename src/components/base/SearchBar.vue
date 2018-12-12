@@ -4,7 +4,7 @@
       class="icon back"
       aria-hidden="true"
       @click.stop="hideSearch"
-      v-show="showSearch"
+      v-show="!showFooter"
     >
       <use xlink:href="#icon-left"></use>
     </svg>
@@ -34,10 +34,6 @@ export default {
     placeholder: {
       type: String,
       default: "搜歌手，搜歌曲"
-    },
-    query: {
-      type: String,
-      default: ""
     }
   },
   data() {
@@ -45,20 +41,26 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["showSearch"])
+    ...mapGetters(["showFooter", "query"])
   },
   methods: {
     ...mapMutations({
-      setShowSearch: "SET_SHOW_SEARCH"
+      setShowSearch: "SET_SHOW_SEARCH",
+      setQuery: "SET_QUERY",
+      setShowFooter: "SET_SHOW_FOOTER"
     }),
     hideSearch() {
-      this.setShowSearch(false);
+      this.$router.go(-1);
+      this.setShowFooter(true);
     },
     changeInput() {
-      this.setShowSearch(true);
+      this.setShowFooter(false);
+      this.$router.push({
+        path: "/search"
+      });
     },
     deleteQuery() {
-      this.query = "";
+      this.setQuery("");
     }
   },
 

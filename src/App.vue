@@ -5,19 +5,16 @@
     </transition>
     <keep-alive> <Player></Player> </keep-alive>
     <keep-alive> <the-footer></the-footer> </keep-alive>
-    <Search v-show="showSearch"></Search>
   </div>
 </template>
 <script>
-import Search from "./components/base/Search.vue";
 import Player from "./components/Player";
 import TheFooter from "./components/base/TheFooter";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   components: {
     Player,
-    TheFooter,
-    Search
+    TheFooter
   },
   data() {
     return {};
@@ -28,7 +25,7 @@ export default {
   watch: {
     $route(to, from) {
       // 页面刷新时不需要过渡
-      if (!from.name) {
+      if (!from.name || !to.meta || from.meta) {
         this.setTransitionName("");
         return;
       }

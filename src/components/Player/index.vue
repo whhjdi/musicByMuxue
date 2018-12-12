@@ -236,7 +236,7 @@ export default {
     }),
     goBack() {
       this.setFullScreen(false);
-      if (this.$route.name) {
+      if (this.$route.name && this.$router.name !== "search") {
         this.setShowFooter(true);
       }
     },
