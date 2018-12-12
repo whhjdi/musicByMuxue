@@ -31,7 +31,9 @@ export default {
     ...mapGetters(["showFooter", "query"])
   },
   methods: {
-    clickInput() {
+    clickInput(e) {
+      console.log(e);
+
       this.$router.push({
         path: "/search"
       });

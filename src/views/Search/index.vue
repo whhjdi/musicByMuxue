@@ -12,8 +12,20 @@
         {{ hot.first }}
       </div>
     </div>
-    <Suggest v-show="query"></Suggest>
-    <router-view></router-view>
+    <Suggest
+      v-show="query"
+      @handleSinger="getSinger"
+      @handleSong="setSong"
+    ></Suggest>
+    <router-view
+      :title="title"
+      :songs="songsList"
+      :picUrl="picUrl"
+      :id="id"
+      @select="selectItem"
+      @play="playAll"
+      ref="musicList"
+    ></router-view>
   </div>
 </template>
 
@@ -21,24 +33,73 @@
 import SearchBar from "./SearchBar.vue";
 import Search from "@/api/search.js";
 import Suggest from "./Suggest";
-import { mapGetters, mapMutations } from "vuex";
+import Artist from "@/api/artist.js";
+import { createSong } from "@/utils";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "Search",
   components: { SearchBar, Suggest },
   props: {},
   data() {
     return {
-      hots: []
+      hots: [],
+      songsList: [],
+      singer: {}
     };
   },
   watch: {},
   computed: {
-    ...mapGetters(["query"])
+    ...mapGetters(["query"]),
+    title() {
+      return this.singer.singer;
+    },
+    picUrl() {
+      return this.singer.picUrl;
+    },
+    id() {
+      return this.singer.id;
+    }
   },
   methods: {
     ...mapMutations({
-      setQuery: "SET_QUERY"
+      setQuery: "SET_QUERY",
+      setSinger: "SET_SINGER"
     }),
+    ...mapActions(["selectPlay", "randomPlay"]),
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songsList, index });
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
+    getDeatil(id) {
+      Artist.getSingerDetail(id).then(res => {
+        this.setSingerDetail(res);
+      });
+    },
+    setSingerDetail(res) {
+      let songs = res.hotSongs;
+      this.songsList = this.normalizeSongs(songs);
+    },
+    normalizeSongs(list) {
+      let ret = [];
+      list.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
+    getSinger(singer) {
+      this.singer = singer;
+      let id = singer.id;
+      this.getDeatil(id);
+      this.$router.push({
+        path: `/search/${id}`
+      });
+    },
+    setSong(song) {
+      let songs = [song];
+      this.selectPlay({ list: songs, index: 0 });
+    },
     addQuery(key) {
       this.setQuery(key);
     }

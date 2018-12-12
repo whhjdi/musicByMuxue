@@ -9,6 +9,7 @@
       v-model="query"
       ref="input"
       :placeholder="placeholder"
+      autofocus
     />
     <svg class="icon souso" aria-hidden="true" v-if="!query">
       <use xlink:href="#icon-sousuo"></use>
@@ -44,6 +45,7 @@ export default {
       setShowFooter: "SET_SHOW_FOOTER"
     }),
     hideSearch() {
+      this.setQuery("");
       this.$router.go(-1);
     },
     deleteQuery() {

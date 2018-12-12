@@ -59,7 +59,7 @@ export default {
       this.randomPlay({ list: this.songs });
     },
     getDeatil(id) {
-      Artist.singerDetail(id).then(res => {
+      Artist.getSingerDetail(id).then(res => {
         this.setSingerDetail(res);
       });
     },

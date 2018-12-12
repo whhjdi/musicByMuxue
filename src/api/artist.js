@@ -8,7 +8,7 @@ class Artist {
       }
     });
   }
-  static singerDetail(id) {
+  static getSingerDetail(id) {
     return fetch("singerDetail", {
       params: {
         id,

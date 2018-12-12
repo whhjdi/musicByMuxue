@@ -51,10 +51,8 @@
 
 <script>
 import Search from "@/api/search.js";
-import Artist from "@/api/artist.js";
 import { mapGetters } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
-import { createSong } from "@/utils";
 export default {
   name: "",
   components: { Scroll },
@@ -64,8 +62,7 @@ export default {
       page: 1,
       album: [],
       artists: [],
-      songs: [],
-      songList: []
+      songs: []
     };
   },
   watch: {
@@ -80,37 +77,15 @@ export default {
   },
   methods: {
     selectSinger(item) {
-      this.getDeatil(item.id);
-      console.log(1);
-
-      this.$router.push({
-        path: `/search/musiclist/${item.id}`
-      });
-    },
-    getDeatil(id) {
-      Artist.singerDetail(id).then(res => {
-        this.setSingerDetail(res);
-      });
-    },
-    setSingerDetail(res) {
-      let songs = res.hotSongs;
-      this.songList = this.normalizeSongs(songs);
-    },
-    normalizeSongs(list) {
-      let ret = [];
-      list.forEach(item => {
-        ret.push(createSong(item));
-      });
-      return ret;
+      this.$emit("handleSinger", item);
     },
     selectSong(item) {
-      this.$router.push({
-        path: `/search/${item.id}`
-      });
+      this.$emit("handleSong", item);
     },
     search(query) {
       Search.getSuggest(query).then(res => {
         let suggest = res.result;
+        let picUrl = suggest.albums[0].artist.picUrl;
         if (suggest.albums && suggest.albums.length > 0) {
           this.setAlbum(suggest.albums);
         }
@@ -118,7 +93,7 @@ export default {
           this.setArtist(suggest.artists);
         }
         if (suggest.songs && suggest.songs.length > 0) {
-          this.setSongs(suggest.songs);
+          this.setSongs(suggest.songs, picUrl);
         }
       });
     },
@@ -142,13 +117,13 @@ export default {
         this.artists.push({ id, singer, picUrl });
       });
     },
-    setSongs(songs) {
+    setSongs(songs, picUrl) {
       this.songs = [];
       songs.forEach(item => {
         let id = item.id;
         let name = item.name;
         let singer = item.artists[0].name;
-        this.songs.push({ id, name, singer });
+        this.songs.push({ id, name, singer, picUrl });
       });
     }
   },

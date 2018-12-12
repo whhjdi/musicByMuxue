@@ -61,7 +61,13 @@ export default new Router({
     {
       path: "/search",
       name: "search",
-      component: () => import("./views/Search")
+      component: () => import("./views/Search"),
+      children: [
+        {
+          path: ":id",
+          component: () => import("./components/base/MusicList.vue")
+        }
+      ]
     }
   ]
 });
