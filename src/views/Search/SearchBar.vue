@@ -55,9 +55,6 @@ export default {
     this.$watch("query", newQuery => {
       this.$emit("query", newQuery);
     });
-  },
-  beforeRouteEnter(to, from, next) {
-    next(this.setShowFooter(false));
   }
 };
 </script>
