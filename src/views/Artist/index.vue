@@ -162,9 +162,10 @@ export default {
 <style lang="scss" scoped>
 .artist {
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100%;
-  bottom: 52px;
+  bottom: 0;
+  width: 100%;
   background: #fff;
   z-index: 99;
 }

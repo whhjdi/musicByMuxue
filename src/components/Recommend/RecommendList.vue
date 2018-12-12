@@ -60,7 +60,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .recommend {
-  padding: 20px 5px 0 5px;
+  padding: 10px 5px 0 5px;
   .title {
     display: inline-block;
     margin-bottom: 5px;

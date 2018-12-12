@@ -5,7 +5,7 @@
     </transition>
     <keep-alive> <Player></Player> </keep-alive>
     <keep-alive> <the-footer></the-footer> </keep-alive>
-    <Search v-if="showSearch"></Search>
+    <Search v-show="showSearch"></Search>
   </div>
 </template>
 <script>

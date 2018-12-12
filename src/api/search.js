@@ -8,6 +8,14 @@ class Search {
       }
     });
   }
+  static getSuggest(keywords) {
+    return fetch("suggest", {
+      params: {
+        keywords,
+        xhrFields: { withCredentials: true }
+      }
+    });
+  }
 }
 
 export default Search;

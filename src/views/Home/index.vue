@@ -157,6 +157,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
     .title {
       margin-left: 10px;
     }
@@ -167,7 +168,7 @@ export default {
     width: 100%;
     .recommend {
       .slides {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         position: relative;
       }
     }

@@ -1,20 +1,47 @@
 <template>
-  <div class="search"><search-bar></search-bar></div>
+  <div class="search">
+    <search-bar ref="searchbar" :query="query"></search-bar>
+    <h2 class="title">热门搜索</h2>
+    <div class="hots">
+      <div
+        class="hot"
+        v-for="hot in hots"
+        :key="hot.first"
+        @click="addQuery(hot.first);"
+      >
+        {{ hot.first }}
+      </div>
+    </div>
+    <Suggest :query="query"></Suggest>
+  </div>
 </template>
 
 <script>
 import SearchBar from "./SearchBar";
+import Search from "@/api/search.js";
+import Suggest from "./Suggest";
 export default {
-  name: "",
-  components: { SearchBar },
+  name: "Search",
+  components: { SearchBar, Suggest },
   props: {},
   data() {
-    return {};
+    return {
+      hots: [],
+      query: ""
+    };
   },
   watch: {},
   computed: {},
-  methods: {},
-  created() {},
+  methods: {
+    addQuery(key) {
+      this.query = key;
+    }
+  },
+  created() {
+    Search.getHotSearch().then(res => {
+      this.hots = res.result.hots;
+    });
+  },
   mounted() {}
 };
 </script>
@@ -26,5 +53,21 @@ export default {
   left: 0;
   right: 0;
   z-index: 9999;
+  background: #fff;
+  .title {
+    font-size: 16px;
+    margin: 5px 0 5px 10px;
+  }
+  .hots {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5px;
+    .hot {
+      padding: 5px;
+      margin: 5px;
+      border-radius: 4px;
+      background: #e4e4e4;
+    }
+  }
 }
 </style>

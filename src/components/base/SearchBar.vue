@@ -1,9 +1,9 @@
 <template>
-  <div class="search">
+  <div class="search-bar">
     <svg
       class="icon back"
       aria-hidden="true"
-      @click="hideSearch"
+      @click.stop="hideSearch"
       v-show="showSearch"
     >
       <use xlink:href="#icon-left"></use>
@@ -34,12 +34,14 @@ export default {
     placeholder: {
       type: String,
       default: "搜歌手，搜歌曲"
+    },
+    query: {
+      type: String,
+      default: ""
     }
   },
   data() {
-    return {
-      query: ""
-    };
+    return {};
   },
   watch: {},
   computed: {
@@ -73,8 +75,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.search {
-  background: #fff;
+.search-bar {
   display: flex;
   padding: 5px;
   color: #191516;
@@ -93,6 +94,7 @@ export default {
     border-radius: 6px;
     padding-left: 30px;
     padding-right: 30px;
+    outline: none;
   }
   .souso {
     height: 30px;

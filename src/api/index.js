@@ -11,7 +11,8 @@ const urls = {
   topListDetail: "/top/list",
   song: "/song/url",
   lyric: "/lyric",
-  hotSearch: "/search/hot"
+  hotSearch: "/search/hot",
+  suggest: "/search/suggest"
 };
 
 for (let key in urls) {
