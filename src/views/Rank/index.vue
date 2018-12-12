@@ -1,6 +1,7 @@
 <template>
   <transition name="slide">
     <div class="rank">
+      <search-bar></search-bar>
       <rank-list :topList="topList" @selectTopList="chooseItem"></rank-list>
       <router-view
         :title="title"
@@ -46,9 +47,10 @@ import { createSong } from "@/utils";
 import Rank from "@/api/rank.js";
 import RankList from "@/components/Rank/RankList.vue";
 import { mapActions } from "vuex";
+import SearchBar from "@/components/base/SearchBar.vue";
 export default {
   name: "rank",
-  components: { RankList },
+  components: { RankList, SearchBar },
   props: {},
   data() {
     return {

@@ -1,25 +1,50 @@
 <template>
   <div class="search">
-    <svg class="icon back" aria-hidden="true" @click="hideSearch">
-      <use xlink:href="#icon-left"></use></svg
-    ><input type="text" class="input" @focus="changeInput" />
-    <svg class="icon souso" aria-hidden="true">
+    <svg
+      class="icon back"
+      aria-hidden="true"
+      @click="hideSearch"
+      v-show="showSearch"
+    >
+      <use xlink:href="#icon-left"></use>
+    </svg>
+    <input
+      type="text"
+      class="input"
+      @focus="changeInput"
+      v-model="query"
+      ref="input"
+      :placeholder="placeholder"
+    />
+    <svg class="icon souso" aria-hidden="true" v-if="!query">
       <use xlink:href="#icon-sousuo"></use>
+    </svg>
+    <svg class="icon souso" aria-hidden="true" v-else @click="deleteQuery">
+      <use xlink:href="#icon-close"></use>
     </svg>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "",
   components: {},
-  props: {},
+  props: {
+    placeholder: {
+      type: String,
+      default: "搜歌手，搜歌曲"
+    }
+  },
   data() {
-    return {};
+    return {
+      query: ""
+    };
   },
   watch: {},
-  computed: {},
+  computed: {
+    ...mapGetters(["showSearch"])
+  },
   methods: {
     ...mapMutations({
       setShowSearch: "SET_SHOW_SEARCH"
@@ -29,11 +54,22 @@ export default {
     },
     changeInput() {
       this.setShowSearch(true);
+    },
+    deleteQuery() {
+      this.query = "";
     }
   },
 
-  created() {},
-  mounted() {}
+  created() {
+    this.$watch("query", newQuery => {
+      this.$emit("query", newQuery);
+    });
+  },
+  mounted() {
+    if (this.showSearch) {
+      this.$refs.input.focus();
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

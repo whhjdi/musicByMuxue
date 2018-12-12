@@ -1,8 +1,8 @@
 <template>
   <div class="home" ref="home">
     <nav>
-      <h1>沐雪music</h1>
-      <input type="text" class="input" @focus="changeInput" />
+      <h1 class="title">沐雪music</h1>
+      <search-bar></search-bar>
     </nav>
     <Scroll :data="recommendSongs" ref="scrolls" class="scroll-wrapper">
       <div class="recommend">
@@ -51,12 +51,14 @@ import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
 import { mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils";
+import SearchBar from "@/components/base/SearchBar.vue";
 export default {
   name: "home",
   components: {
     Slide,
     Scroll,
-    RecommendList
+    RecommendList,
+    SearchBar
   },
   props: {},
   data() {
@@ -155,12 +157,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
-    .input {
-      height: 30px;
-      background: rgb(224, 224, 224);
-      border: none;
-      border-radius: 6px;
+    .title {
+      margin-left: 10px;
     }
   }
   .scroll-wrapper {

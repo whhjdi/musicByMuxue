@@ -10,7 +10,8 @@ const urls = {
   topList: "/toplist/detail",
   topListDetail: "/top/list",
   song: "/song/url",
-  lyric: "/lyric"
+  lyric: "/lyric",
+  hotSearch: "/search/hot"
 };
 
 for (let key in urls) {
