@@ -65,7 +65,7 @@ export default {
       setQuery: "SET_QUERY",
       setSinger: "SET_SINGER"
     }),
-    ...mapActions(["selectPlay", "randomPlay"]),
+    ...mapActions(["selectPlay", "randomPlay", "insertSong"]),
     selectItem(song, index) {
       this.selectPlay({ list: this.songsList, index });
     },
@@ -97,8 +97,9 @@ export default {
       });
     },
     setSong(song) {
-      let songs = [song];
-      this.selectPlay({ list: songs, index: 0 });
+      // let songs = [song];
+      // this.selectPlay({ list: songs, index: 0 });
+      this.insertSong(song);
     },
     addQuery(key) {
       this.setQuery(key);

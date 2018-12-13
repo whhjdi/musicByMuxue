@@ -454,12 +454,12 @@ export default {
         top: 10px; */
         width: 24px;
         height: 24px;
-        padding:5px;
-        &.i-left{
-          margin-left:5px;
+        padding: 5px;
+        &.i-left {
+          margin-left: 5px;
         }
-        &.i-right{
-        margin-right: 5px;
+        &.i-right {
+          margin-right: 5px;
         }
       }
       .name {
@@ -573,8 +573,8 @@ export default {
           height: 24px;
           padding: 6px;
           &.i-center {
-            width: 50px;
-            height: 50px;
+            width: 36px;
+            height: 36px;
           }
         }
       }
