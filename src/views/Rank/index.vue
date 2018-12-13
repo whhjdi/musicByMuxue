@@ -2,7 +2,9 @@
   <transition name="slide">
     <div class="rank">
       <search-bar></search-bar>
-      <rank-list :topList="topList" @selectTopList="chooseItem"></rank-list>
+      <div class="rank-list-wrapper">
+        <rank-list :topList="topList" @selectTopList="chooseItem"></rank-list>
+      </div>
       <router-view
         :title="title"
         :songs="songs"
@@ -134,10 +136,15 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  bottom: 52px;
+  bottom: 0;
   z-index: 99;
   overflow: hidden;
   background: #fff;
+  .rank-list-wrapper {
+    position: absolute;
+    top: 40px;
+    bottom: 52px;
+  }
 }
 
 .slide-enter-active,

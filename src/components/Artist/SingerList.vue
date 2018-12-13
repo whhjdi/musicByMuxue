@@ -200,9 +200,8 @@ export default {
 <style lang="scss" scoped>
 .singer-list {
   overflow: hidden;
-  height: calc(100% - 52px);
+  height: 100%;
   width: 100%;
-  top: 40px;
   .list-wrapper {
     .singerGroup-item {
       .title {
@@ -275,7 +274,7 @@ export default {
   }
   .list-fixed {
     position: absolute;
-    top: 40px;
+    top: 0;
     left: 0;
     width: 100%;
     .fixed-title {

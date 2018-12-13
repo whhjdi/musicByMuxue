@@ -1,6 +1,6 @@
 <template>
   <div class="suggest">
-    <Scroll :data="songs" class="scroll-wrapper" ref="list">
+    <Scroll :data="allData" class="scroll-wrapper" ref="list">
       <div class="list-detail">
         <div class="album" v-show="album && album.length > 0">
           <ul class="list">
@@ -77,7 +77,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["query"])
+    ...mapGetters(["query"]),
+    allData() {
+      return this.album.concat(this.artists, this.songs);
+    }
   },
   methods: {
     selectSinger(item) {

@@ -1,7 +1,12 @@
 <template>
   <div class="artist">
     <search-bar></search-bar>
-    <singer-list :singers="singers" @selectSinger="chooseSinger"></singer-list>
+    <div class="singer-list-wrapper">
+      <singer-list
+        :singers="singers"
+        @selectSinger="chooseSinger"
+      ></singer-list>
+    </div>
     <router-view
       :title="title"
       :songs="songs"
@@ -163,9 +168,15 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  bottom: 52px;
+  bottom: 0;
   width: 100%;
   background: #fff;
   z-index: 99;
+  .singer-list-wrapper {
+    position: absolute;
+    top: 40px;
+    bottom: 52px;
+    width: 100%;
+  }
 }
 </style>
