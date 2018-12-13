@@ -6,7 +6,7 @@
     <input
       type="text"
       class="input"
-      v-model="query"
+      v-model="queryArg"
       ref="input"
       :placeholder="placeholder"
       autofocus
@@ -32,7 +32,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      queryArg: ""
+    };
   },
   watch: {},
   computed: {
@@ -54,8 +56,8 @@ export default {
   },
 
   created() {
-    this.$watch("query", newQuery => {
-      this.$emit("query", newQuery);
+    this.$watch("queryArg", newQuery => {
+      this.setQuery(newQuery);
     });
   }
 };
