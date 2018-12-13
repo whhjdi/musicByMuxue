@@ -1,28 +1,32 @@
 <template>
   <div class="search">
     <search-bar ref="searchbar"></search-bar>
-    <h3 class="title">热门搜索</h3>
-    <div class="hots border-bottom" v-show="!query">
-      <div
-        class="hot"
-        v-for="hot in hots"
-        :key="hot.first"
-        @click="setQuery(hot.first);"
-      >
-        {{ hot.first }}
+    <Scroll :data="shortCut" class="shortcut" ref="list">
+      <div>
+        <h3 class="title">热门搜索</h3>
+        <div class="hots border-bottom" v-show="!query">
+          <div
+            class="hot"
+            v-for="hot in hots"
+            :key="hot.first"
+            @click="setQuery(hot.first);"
+          >
+            {{ hot.first }}
+          </div>
+        </div>
+        <History
+          @selectItem="setQuery"
+          @deleteOne="deleteSearchHistory"
+          @deleteAll="showConfirm"
+          v-show="!query && searchHistory && searchHistory.length > 0"
+        ></History>
       </div>
-    </div>
+    </Scroll>
     <Suggest
       v-show="query"
       @handleSinger="getSinger"
       @handleSong="setSong"
     ></Suggest>
-    <History
-      @selectItem="setQuery"
-      @deleteOne="deleteSearchHistory"
-      @deleteAll="deleteAllSearchHistory"
-      v-show="!query && searchHistory && searchHistory.length > 0"
-    ></History>
     <router-view
       :title="title"
       :songs="songsList"
@@ -32,6 +36,11 @@
       @play="playAll"
       ref="musicList"
     ></router-view>
+    <Confirm
+      ref="confirm"
+      @deleteAll="deleteAllSearchHistory"
+      :text="'确定要清空所有搜索历史吗'"
+    ></Confirm>
   </div>
 </template>
 
@@ -43,9 +52,13 @@ import History from "@/components/Search/History.vue";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import Confirm from "@/components/Search/Confirm.vue";
+import Scroll from "@/components/base/Scroll.vue";
+import { playListMixin } from "@/mixin.js";
 export default {
   name: "Search",
-  components: { SearchBar, Suggest, History },
+  components: { SearchBar, Suggest, History, Confirm, Scroll },
+  mixins: [playListMixin],
   props: {},
   data() {
     return {
@@ -54,7 +67,15 @@ export default {
       singer: {}
     };
   },
-  watch: {},
+  watch: {
+    query(newVal) {
+      if (!newVal) {
+        setTimeout(() => {
+          this.$refs.list.refresh();
+        }, 20);
+      }
+    }
+  },
   computed: {
     ...mapGetters(["query", "searchHistory"]),
     title() {
@@ -65,6 +86,9 @@ export default {
     },
     id() {
       return this.singer.id;
+    },
+    shortCut() {
+      return this.hots.concat(this.searchHistory);
     }
   },
   methods: {
@@ -80,6 +104,9 @@ export default {
       "deleteSearchHistory",
       "deleteAllSearchHistory"
     ]),
+    showConfirm() {
+      this.$refs.confirm.show();
+    },
     selectItem(song, index) {
       this.selectPlay({ list: this.songsList, index });
     },
@@ -114,6 +141,11 @@ export default {
     setSong(song) {
       this.saveSearchHistory(this.query);
       this.insertSong(song);
+    },
+    handlePlayList(playList) {
+      const bottom = playList.length > 0 ? "54px" : "";
+      this.$refs.list.$el.style.bottom = bottom;
+      this.$refs.list.refresh();
     }
   },
   created() {
@@ -133,20 +165,29 @@ export default {
   right: 0;
   z-index: 9999;
   background: #fff;
-  .title {
-    font-size: 16px;
-    margin: 15px 0 5px 10px;
-  }
-  .hots {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 5px;
-    padding-bottom: 10px;
-    .hot {
-      padding: 5px;
-      margin: 5px;
-      border-radius: 4px;
-      background: #e4e4e4;
+  .shortcut {
+    position: absolute;
+    top: 44px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    overflow: hidden;
+    .title {
+      font-size: 16px;
+      margin: 15px 0 5px 10px;
+    }
+    .hots {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 5px;
+      padding-bottom: 10px;
+      .hot {
+        padding: 5px;
+        margin: 5px;
+        border-radius: 4px;
+        background: #e4e4e4;
+      }
     }
   }
 }
