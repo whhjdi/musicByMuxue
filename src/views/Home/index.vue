@@ -4,34 +4,36 @@
       <h1 class="title">沐雪music</h1>
       <search-bar></search-bar>
     </nav>
-    <Scroll :data="recommendSongs" ref="scrolls" class="scroll-wrapper">
-      <div class="recommend">
-        <div class="slides" v-if="this.banners && this.banners.length">
-          <slide :autoPlay="true" :interval="3000" :loop="true">
-            <div
-              v-for="banner in banners"
-              :key="banner.imageUrl"
-              class="slide-item"
-            >
-              <img :src="banner.imageUrl" alt="" class="slide-img" />
-            </div>
-          </slide>
+    <div class="scroll-wrapper">
+      <Scroll :data="recommendSongs" ref="scrolls" class="scroll">
+        <div class="recommend">
+          <div class="slides" v-if="this.banners && this.banners.length">
+            <slide :autoPlay="true" :interval="3000" :loop="true">
+              <div
+                v-for="banner in banners"
+                :key="banner.imageUrl"
+                class="slide-item"
+              >
+                <img :src="banner.imageUrl" alt="" class="slide-img" />
+              </div>
+            </slide>
+          </div>
+          <div class="recommendSongs">
+            <recommend-list
+              :list="recommendSongs"
+              @setDiscList="handleDisc"
+            ></recommend-list>
+          </div>
+          <div class="newSongs">
+            <recommend-list
+              :list="newDiscs"
+              title="最新歌单"
+              @setDiscList="handleDisc"
+            ></recommend-list>
+          </div>
         </div>
-        <div class="recommendSongs">
-          <recommend-list
-            :list="recommendSongs"
-            @setDiscList="handleDisc"
-          ></recommend-list>
-        </div>
-        <div class="newSongs">
-          <recommend-list
-            :list="newDiscs"
-            title="最新歌单"
-            @setDiscList="handleDisc"
-          ></recommend-list>
-        </div>
-      </div>
-    </Scroll>
+      </Scroll>
+    </div>
     <router-view
       :title="title"
       :picUrl="picUrl"
@@ -144,11 +146,11 @@ export default {
 .home {
   position: fixed;
   width: 100%;
-  bottom: 52px;
-  z-index: 99;
+  bottom: 0;
   left: 0;
   right: 0;
   top: 0;
+  z-index: 99;
   background: #fff;
   nav {
     display: flex;
@@ -160,13 +162,19 @@ export default {
     }
   }
   .scroll-wrapper {
-    overflow: hidden;
-    height: calc(100% - 52px);
+    position: absolute;
+    top: 40px;
+    bottom: 52px;
     width: 100%;
-    .recommend {
-      .slides {
-        margin-bottom: 10px;
-        position: relative;
+    .scroll {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .recommend {
+        .slides {
+          margin-bottom: 10px;
+          position: relative;
+        }
       }
     }
   }
