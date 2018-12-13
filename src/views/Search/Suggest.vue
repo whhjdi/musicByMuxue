@@ -1,49 +1,51 @@
 <template>
   <div class="suggest">
-    <Scroll :data="album" class="scroll-wrapper">
-      <div class="album">
-        <ul class="list">
-          <h3 class="title">专辑</h3>
-          <li
-            v-for="item in album"
-            :key="item.albumId"
-            class="item border-bottom"
-          >
-            <img :src="item.picUrl" alt="" class="img" />
-            <div class="right">
-              <div class="name">专辑：{{ item.name }}</div>
+    <Scroll :data="songs" class="scroll-wrapper">
+      <div class="suggest-detail">
+        <div class="album" v-show="album && album.length > 0">
+          <ul class="list">
+            <h3 class="title">专辑</h3>
+            <li
+              v-for="item in album"
+              :key="item.albumId"
+              class="item border-bottom"
+            >
+              <img :src="item.picUrl" alt="" class="img" />
+              <div class="right">
+                <div class="name">专辑：{{ item.name }}</div>
+                <div class="singer">{{ item.singer }}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="artists" v-show="artists && artists.length > 0">
+          <ul class="list">
+            <h3 class="title">歌手</h3>
+            <li
+              v-for="item in artists"
+              :key="item.id"
+              class="item border-bottom"
+              @click="selectSinger(item);"
+            >
+              <img :src="item.picUrl" alt="" class="img" />
+              <div class="singer">歌手：{{ item.singer }}</div>
+            </li>
+          </ul>
+        </div>
+        <div class="songs" v-show="songs && songs.length > 0">
+          <ul class="list">
+            <h3 class="title">歌曲</h3>
+            <li
+              v-for="item in songs"
+              :key="item.id"
+              class="item border-bottom"
+              @click="selectSong(item);"
+            >
+              <div class="name">{{ item.name }}</div>
               <div class="singer">{{ item.singer }}</div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="artists">
-        <ul class="list">
-          <h3 class="title">歌手</h3>
-          <li
-            v-for="item in artists"
-            :key="item.id"
-            class="item border-bottom"
-            @click="selectSinger(item);"
-          >
-            <img :src="item.picUrl" alt="" class="img" />
-            <div class="singer">歌手：{{ item.singer }}</div>
-          </li>
-        </ul>
-      </div>
-      <div class="songs">
-        <ul class="list">
-          <h3 class="title">歌曲</h3>
-          <li
-            v-for="item in songs"
-            :key="item.id"
-            class="item border-bottom"
-            @click="selectSong(item);"
-          >
-            <div class="name">{{ item.name }}</div>
-            <div class="singer">{{ item.singer }}</div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </Scroll>
   </div>
@@ -85,7 +87,13 @@ export default {
     search(query) {
       Search.getSuggest(query).then(res => {
         let suggest = res.result;
-        let picUrl = suggest.albums[0].artist.picUrl;
+        let picUrl;
+        if (suggest.albums && suggest.albums[0].artist.picUrl) {
+          picUrl = suggest.albums[0].artist.picUrl;
+        } else {
+          picUrl =
+            "https://ws2.sinaimg.cn/large/006tNbRwly1fy54tapw58j30yl0u0h16.jpg";
+        }
         if (suggest.albums && suggest.albums.length > 0) {
           this.setAlbum(suggest.albums);
         }
@@ -140,7 +148,7 @@ export default {
   background: #fff;
   .scroll-wrapper {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 52px);
     overflow: hidden;
     .album {
       .list {

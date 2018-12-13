@@ -59,6 +59,9 @@ export default {
     this.$watch("queryArg", newQuery => {
       this.setQuery(newQuery);
     });
+    this.$watch("query", newQuery => {
+      this.queryArg = newQuery;
+    });
   }
 };
 </script>
