@@ -1,4 +1,5 @@
 //构造歌手类，包含基本的三个属性
+import Storage from "good-storage";
 export class Singer {
   constructor({ id, name, avatar }) {
     (this.id = id), (this.name = name), (this.avatar = avatar);
@@ -61,4 +62,60 @@ export function shuffle(arr) {
 }
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+//缓存
+const SEARCH_KEY = "__search__";
+const SEARCH_MAX_LENGTH = 15;
+export function cacheSearchHistory(query) {
+  let searches = Storage.get(SEARCH_KEY, []);
+  insertArray(
+    searches,
+    query,
+    item => {
+      return item === query;
+    },
+    SEARCH_MAX_LENGTH
+  );
+  Storage.set(SEARCH_KEY, searches);
+  return searches;
+}
+function insertArray(arr, val, compare, maxLen) {
+  const index = arr.findIndex(compare);
+  if (index === 0) {
+    return;
+  }
+  if (index > 0) {
+    arr.splice(index, 1);
+  }
+  arr.unshift(val);
+  if (maxLen && arr.length > maxLen) {
+    arr.pop();
+  }
+}
+
+export function loadSearch() {
+  return Storage.get(SEARCH_KEY, []);
+}
+//删除某条缓存
+
+export function deleteCacheSearchHistory(query) {
+  let searches = Storage.get(SEARCH_KEY, []);
+  deleteFromArray(searches, item => {
+    return item === query;
+  });
+  Storage.set(SEARCH_KEY, searches);
+  return searches;
+}
+
+function deleteFromArray(arr, compare) {
+  const index = arr.findIndex(compare);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+}
+//删除所有缓存
+export function deleteAllCacheSearchHistory() {
+  Storage.remove(SEARCH_KEY, []);
+  return [];
 }

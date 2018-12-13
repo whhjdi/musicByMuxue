@@ -290,8 +290,8 @@ export default {
     },
     handleLyric({ lineNum }) {
       this.currentLineNum = lineNum;
-      if (lineNum > 5) {
-        let lineEl = this.$refs.lyricLine[lineNum - 5];
+      if (lineNum > 4) {
+        let lineEl = this.$refs.lyricLine[lineNum - 4];
         this.$refs.lyricList.scrollToElement(lineEl, 1000);
       } else {
         this.$refs.lyricList.scrollTo(0, 0, 1000);

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <transition :name="transitionName" @after-leave="afterLeave">
-      <keep-alive> <router-view></router-view> </keep-alive>
+      <router-view></router-view>
     </transition>
-    <keep-alive> <Player></Player> </keep-alive>
-    <keep-alive> <the-footer></the-footer> </keep-alive>
+    <Player></Player>
+    <the-footer></the-footer>
   </div>
 </template>
 <script>

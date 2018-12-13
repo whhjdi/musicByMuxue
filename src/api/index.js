@@ -12,8 +12,7 @@ const urls = {
   song: "/song/url",
   lyric: "/lyric",
   hotSearch: "/search/hot",
-  suggest: "/search/suggest",
-  search: "/search/multimatch"
+  suggest: "/search/suggest"
 };
 
 for (let key in urls) {

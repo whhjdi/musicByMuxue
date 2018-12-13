@@ -237,7 +237,7 @@ export default {
   .cart-list {
     position: absolute;
     right: 2px;
-    top: 40%;
+    top: 50%;
     margin-top: -50%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;

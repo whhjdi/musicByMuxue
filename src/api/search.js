@@ -16,14 +16,6 @@ class Search {
       }
     });
   }
-  static getSearchResult(keywords) {
-    return fetch("search", {
-      params: {
-        keywords,
-        xhrFields: { withCredentials: true }
-      }
-    });
-  }
 }
 
 export default Search;

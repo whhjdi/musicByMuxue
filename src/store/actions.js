@@ -1,5 +1,11 @@
 import * as types from "./mutationTypes";
-import { playMode, shuffle } from "@/utils/index.js";
+import {
+  playMode,
+  shuffle,
+  cacheSearchHistory,
+  deleteCacheSearchHistory,
+  deleteAllCacheSearchHistory
+} from "@/utils/index.js";
 export const selectPlay = function({ commit, state }, { list, index }) {
   commit(types.SET_SEQUENCE_LIST, list);
   if (state.mode === playMode.random) {
@@ -64,4 +70,14 @@ export const insertSong = function({ commit, state }, song) {
   commit(types.SET_CURRENT_INDEX, currentIndex);
   commit(types.SET_FULL_SCREEN, true);
   commit(types.SET_PLAYING_STATE, true);
+};
+
+export const saveSearchHistory = function({ commit }, query) {
+  commit(types.SET_SEARCH_HISTORY, cacheSearchHistory(query));
+};
+export const deleteSearchHistory = function({ commit }, query) {
+  commit(types.SET_SEARCH_HISTORY, deleteCacheSearchHistory(query));
+};
+export const deleteAllSearchHistory = function({ commit }, query) {
+  commit(types.SET_SEARCH_HISTORY, deleteAllCacheSearchHistory());
 };

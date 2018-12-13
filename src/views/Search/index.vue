@@ -1,13 +1,13 @@
 <template>
   <div class="search">
     <search-bar ref="searchbar"></search-bar>
-    <h2 class="title">热门搜索</h2>
-    <div class="hots" v-show="!query">
+    <h3 class="title">热门搜索</h3>
+    <div class="hots border-bottom" v-show="!query">
       <div
         class="hot"
         v-for="hot in hots"
         :key="hot.first"
-        @click="addQuery(hot.first);"
+        @click="setQuery(hot.first);"
       >
         {{ hot.first }}
       </div>
@@ -17,6 +17,12 @@
       @handleSinger="getSinger"
       @handleSong="setSong"
     ></Suggest>
+    <History
+      @selectItem="setQuery"
+      @deleteOne="deleteSearchHistory"
+      @deleteAll="deleteAllSearchHistory"
+      v-show="!query && searchHistory && searchHistory.length > 0"
+    ></History>
     <router-view
       :title="title"
       :songs="songsList"
@@ -30,15 +36,16 @@
 </template>
 
 <script>
-import SearchBar from "./SearchBar.vue";
+import SearchBar from "@/components/Search/SearchBar.vue";
 import Search from "@/api/search.js";
-import Suggest from "./Suggest";
+import Suggest from "@/components/Search/Suggest.vue";
+import History from "@/components/Search/History.vue";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "Search",
-  components: { SearchBar, Suggest },
+  components: { SearchBar, Suggest, History },
   props: {},
   data() {
     return {
@@ -49,7 +56,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["query"]),
+    ...mapGetters(["query", "searchHistory"]),
     title() {
       return this.singer.singer;
     },
@@ -65,7 +72,14 @@ export default {
       setQuery: "SET_QUERY",
       setSinger: "SET_SINGER"
     }),
-    ...mapActions(["selectPlay", "randomPlay", "insertSong"]),
+    ...mapActions([
+      "selectPlay",
+      "randomPlay",
+      "insertSong",
+      "saveSearchHistory",
+      "deleteSearchHistory",
+      "deleteAllSearchHistory"
+    ]),
     selectItem(song, index) {
       this.selectPlay({ list: this.songsList, index });
     },
@@ -89,6 +103,7 @@ export default {
       return ret;
     },
     getSinger(singer) {
+      this.saveSearchHistory(this.query);
       this.singer = singer;
       let id = singer.id;
       this.getDeatil(id);
@@ -97,12 +112,8 @@ export default {
       });
     },
     setSong(song) {
-      // let songs = [song];
-      // this.selectPlay({ list: songs, index: 0 });
+      this.saveSearchHistory(this.query);
       this.insertSong(song);
-    },
-    addQuery(key) {
-      this.setQuery(key);
     }
   },
   created() {
@@ -124,12 +135,13 @@ export default {
   background: #fff;
   .title {
     font-size: 16px;
-    margin: 5px 0 5px 10px;
+    margin: 15px 0 5px 10px;
   }
   .hots {
     display: flex;
     flex-wrap: wrap;
     padding-left: 5px;
+    padding-bottom: 10px;
     .hot {
       padding: 5px;
       margin: 5px;

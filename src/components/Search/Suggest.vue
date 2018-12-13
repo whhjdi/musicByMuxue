@@ -1,7 +1,7 @@
 <template>
   <div class="suggest">
-    <Scroll :data="songs" class="scroll-wrapper">
-      <div class="suggest-detail">
+    <Scroll :data="songs" class="scroll-wrapper" ref="list">
+      <div class="list-detail">
         <div class="album" v-show="album && album.length > 0">
           <ul class="list">
             <h3 class="title">专辑</h3>
@@ -55,9 +55,11 @@
 import Search from "@/api/search.js";
 import { mapGetters } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
+import { playListMixin } from "@/mixin.js";
 export default {
   name: "",
   components: { Scroll },
+  mixins: [playListMixin],
   props: {},
   data() {
     return {
@@ -133,6 +135,11 @@ export default {
         let singer = item.artists[0].name;
         this.songs.push({ id, name, singer, picUrl });
       });
+    },
+    handlePlayList(playList) {
+      const bottom = playList.length > 0 ? "54px" : "";
+      this.$refs.list.$el.style.bottom = bottom;
+      this.$refs.list.refresh();
     }
   },
   created() {},
