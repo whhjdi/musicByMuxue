@@ -82,6 +82,9 @@ export default {
     },
     discId() {
       return this.list.id;
+    },
+    allData() {
+      return this.banners.concat(this.newDiscs, this.recommendSongs);
     }
   },
   methods: {

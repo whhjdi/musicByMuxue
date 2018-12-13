@@ -140,7 +140,7 @@ export default {
       });
     },
     handlePlayList(playList) {
-      const bottom = playList.length > 0 ? "54px" : "";
+      const bottom = playList.length > 0 ? "52px" : "";
       this.$refs.list.$el.style.bottom = bottom;
       this.$refs.list.refresh();
     }
@@ -156,9 +156,12 @@ export default {
   bottom: 0;
   width: 100%;
   background: #fff;
+  overflow: hidden;
   .scroll-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
     width: 100%;
-    height: calc(100% - 52px);
     overflow: hidden;
     .album {
       .list {
