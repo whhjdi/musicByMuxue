@@ -163,7 +163,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  bottom: 0;
+  bottom: 52px;
   width: 100%;
   background: #fff;
   z-index: 99;

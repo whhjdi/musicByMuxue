@@ -15,19 +15,27 @@
           <div class="filterR"></div>
         </div>
         <div class="top">
-          <svg class="icon" aria-hidden="true" @click="goBack">
+          <svg class="icon i-left" aria-hidden="true" @click="goBack">
             <use xlink:href="#icon-down"></use>
           </svg>
           <div class="name">
             <h1 class="title">{{ currentSong.name }}</h1>
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
+          <svg class="icon  i-right" aria-hidden="true">
+            <use xlink:href="#icon-heart"></use>
+          </svg>
         </div>
         <div class="middle" @click="changeMiddle">
           <div class="middle-l" v-show="currentShow === 'cd'">
-            <div class="cd-wrapper" ref="cdWrapper" @click.stop="togglePlaying">
+            <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" :class="playing ? 'play' : 'pause'">
-                <img :src="currentSong.picUrl" alt="" class="image" />
+                <img
+                  :src="currentSong.picUrl"
+                  alt=""
+                  class="image"
+                  @click.stop="togglePlaying"
+                />
               </div>
             </div>
           </div>
@@ -94,8 +102,8 @@
             >
               <use xlink:href="#icon-step-forward"></use>
             </svg>
-            <svg class="icon  i-right" aria-hidden="true">
-              <use xlink:href="#icon-heart"></use>
+            <svg class="icon i-right" aria-hidden="true">
+              <use xlink:href="#icon-menu"></use>
             </svg>
           </div>
         </div>
@@ -436,13 +444,23 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 5px;
       .icon {
-        position: absolute;
+        /* position: absolute;
         left: 15px;
-        top: 10px;
+        top: 10px; */
         width: 24px;
         height: 24px;
-        margin-right: 20px;
+        padding:5px;
+        &.i-left{
+          margin-left:5px;
+        }
+        &.i-right{
+        margin-right: 5px;
+        }
       }
       .name {
         text-align: center;
@@ -479,12 +497,11 @@ export default {
           top: 0;
           width: 80%;
           height: 100%;
-          border-radius: 50%;
           .cd {
             width: 100%;
             height: 100%;
             box-sizing: border-box;
-            border: 15px solid rgba(255, 255, 255, 0.1);
+            border: 15px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             &.play {
               animation: rotate 20s linear infinite;
@@ -496,6 +513,7 @@ export default {
               position: absolute;
               left: 0;
               top: 0;
+              box-sizing: border-box;
               width: 100%;
               height: 100%;
               border-radius: 50%;
@@ -555,8 +573,8 @@ export default {
           height: 24px;
           padding: 6px;
           &.i-center {
-            width: 36px;
-            height: 36px;
+            width: 50px;
+            height: 50px;
           }
         }
       }

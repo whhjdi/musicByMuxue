@@ -200,7 +200,7 @@ export default {
 <style lang="scss" scoped>
 .singer-list {
   overflow: hidden;
-  height: 100%;
+  height: calc(100% - 52px);
   width: 100%;
   top: 40px;
   .list-wrapper {

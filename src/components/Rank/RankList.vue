@@ -1,5 +1,5 @@
 <template>
-  <Scroll :data="topList" class="rankList">
+  <Scroll :data="topList" class="rank-list">
     <ul class="list-wrapper">
       <li
         v-for="item in topList"
@@ -49,10 +49,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.rankList {
+.rank-list {
   overflow: hidden;
-  height: 100%;
   width: 100%;
+  height: calc(100% - 52px);
   .list-wrapper {
     .list {
       display: flex;

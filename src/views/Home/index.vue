@@ -161,7 +161,7 @@ export default {
   }
   .scroll-wrapper {
     overflow: hidden;
-    height: 100%;
+    height: calc(100% - 54px);
     width: 100%;
     .recommend {
       .slides {
