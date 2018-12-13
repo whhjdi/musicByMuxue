@@ -627,13 +627,22 @@ export default {
         position: absolute;
         left: 70px;
         top: 10px;
+        right: 100px;
         font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .singer {
         position: absolute;
         left: 70px;
         top: 30px;
         color: rgb(105, 105, 105);
+        right: 100px;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .right {
