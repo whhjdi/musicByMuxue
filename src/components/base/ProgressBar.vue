@@ -48,6 +48,7 @@ export default {
       if (!this.touch.inited) {
         return;
       }
+      this.triggerPercent();
       const barWidth = this.$refs.progressBar.clientWidth - 16;
       const deltaX = e.touches[0].pageX - this.touch.startX;
       const offsetWidth = Math.min(
