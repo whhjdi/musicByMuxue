@@ -173,6 +173,7 @@ export default {
   watch: {
     currentSong(newVal, oldVal) {
       if (!newVal.id) {
+        this.$refs.audio.pause();
         return;
       }
       console.log(1);
@@ -312,7 +313,7 @@ export default {
           this.togglePlaying();
         }
       }
-      this.songReadyfalse;
+      this.songReady = false;
     },
     next() {
       if (!this.songReady) {
@@ -362,10 +363,7 @@ export default {
     onProgressChange(percent) {
       this.move = true;
       const currentTime = this.duration * percent;
-      this.$refs.audio.currentTime = currentTime;
-      if (!this.playing) {
-        this.togglePlaying();
-      }
+      this.currentTime = currentTime;
       if (this.currentLyric) {
         this.currentLyric.seek(currentTime * 1000);
       }
