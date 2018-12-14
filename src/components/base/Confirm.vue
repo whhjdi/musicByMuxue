@@ -1,6 +1,6 @@
 <template>
   <transition name="show">
-    <div class="confirm" v-show="showConfirm">
+    <div class="confirm" v-show="showConfirm" @click.stop>
       <div class="confirm-wrapper">
         <div class="confirm-content">
           <p class="text">{{ text }}</p>

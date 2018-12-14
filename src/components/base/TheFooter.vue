@@ -1,26 +1,26 @@
 <template>
-<transition name="normal">
-  <div class="footer" v-show="showFooter">
-    <div class="footer-wrapper">
-      <router-link
-        :to="nav.link"
-        v-for="nav in navigation"
-        :key="nav.icon"
-        active-class="on"
-        tag="div"
-        class="nav"
-      >
-        <svg class="icon" aria-hidden="true">
-          <use
-            :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon"
-          ></use></svg
-        ><span>{{ nav.name }}</span></router-link
-      >
+  <transition name="normal">
+    <div class="footer" v-show="showFooter">
+      <div class="footer-wrapper">
+        <router-link
+          :to="nav.link"
+          v-for="nav in navigation"
+          :key="nav.icon"
+          active-class="on"
+          tag="div"
+          class="nav"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use
+              :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon"
+            ></use></svg
+          ><span>{{ nav.name }}</span></router-link
+        >
+      </div>
+      <div class="circle" @click="showPlayer" :class="setClass">
+        <img :src="picBg" alt="" class="circle-bg" />
+      </div>
     </div>
-    <div class="circle" @click="showPlayer" :class="setClass">
-      <img :src="picBg" alt="" class="circle-bg" />
-    </div>
-  </div>
   </transition>
 </template>
 
@@ -86,7 +86,7 @@ export default {
     }),
     showPlayer() {
       if (!this.currentSong.picUrl) {
-        return 
+        return;
       }
       this.setFullScreen(true);
       this.setShowFooter(false);
@@ -119,7 +119,7 @@ export default {
       align-items: center;
       flex: 1 1 auto;
       &.on {
-        color: #FF3F72;
+        color: #ff3f72;
       }
       .icon {
         width: 24px;

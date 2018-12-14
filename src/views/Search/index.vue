@@ -52,7 +52,7 @@ import History from "@/components/Search/History.vue";
 import Artist from "@/api/artist.js";
 import { createSong } from "@/utils";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import Confirm from "@/components/Search/Confirm.vue";
+import Confirm from "@/components/base/Confirm.vue";
 import Scroll from "@/components/base/Scroll.vue";
 import { playListMixin } from "@/mixin.js";
 export default {

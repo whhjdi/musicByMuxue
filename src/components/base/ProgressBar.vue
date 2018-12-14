@@ -58,7 +58,9 @@ export default {
     },
     progressTouchend() {
       this.touch.inited = false;
-      this.triggerPercent();
+      const barWidth = this.$refs.progressBar.clientWidth - 16;
+      const percent = this.$refs.progress.clientWidth / barWidth;
+      this.$emit("percentChangeEnd", percent);
     },
     triggerPercent() {
       const barWidth = this.$refs.progressBar.clientWidth - 16;

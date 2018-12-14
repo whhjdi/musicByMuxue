@@ -70,6 +70,7 @@
               <progress-bar
                 :percent="percent"
                 @percentChange="onProgressChange"
+                @percentChangeEnd="onProgressChangeEnd"
               ></progress-bar>
             </div>
             <span class="time time-r">{{ format(duration) }}</span>
@@ -102,7 +103,7 @@
             >
               <use xlink:href="#icon-step-forward"></use>
             </svg>
-            <svg class="icon i-right" aria-hidden="true">
+            <svg class="icon i-right" aria-hidden="true" @click="showPlayList">
               <use xlink:href="#icon-menu"></use>
             </svg>
           </div>
@@ -129,7 +130,7 @@
             <use :xlink:href="miniIcon"></use>
           </svg>
 
-          <svg class="icon" aria-hidden="true">
+          <svg class="icon" aria-hidden="true" @click.stop="showPlayList">
             <use xlink:href="#icon-menu"></use>
           </svg>
         </div>
@@ -142,6 +143,7 @@
       @timeupdate="updateTime"
       @ended="ended"
     ></audio>
+    <play-list ref="playList" @modeChange="changeMode"></play-list>
   </div>
 </template>
 
@@ -152,9 +154,10 @@ import ProgressBar from "../base/ProgressBar";
 import { playMode, shuffle } from "@/utils/index.js";
 import Lyric from "lyric-parser";
 import Scroll from "../base/Scroll";
+import PlayList from "./PlayList";
 export default {
   name: "",
-  components: { ProgressBar, Scroll },
+  components: { ProgressBar, Scroll, PlayList },
   props: {},
   data() {
     return {
@@ -172,25 +175,17 @@ export default {
       if (!newVal.id) {
         return;
       }
+      console.log(1);
       if (newVal.id === oldVal.id) {
         return;
       }
-      if (this.playing) {
-        this.$refs.audio.pause();
-      }
-      if (this.currentLyric) {
-        this.currentLyric.stop();
-      }
+      this.$refs.audio.pause();
+      this.$refs.audio.currentTime = 0;
       this.getSong(newVal.id);
-      this.getLyric(newVal.id);
     },
     url(newVal) {
       this.$refs.audio.src = newVal;
       this.$refs.audio.play();
-      //获取duration
-      this.$refs.audio.oncanplay = () => {
-        this.duration = this.$refs.audio.duration;
-      };
       this.setPlayingState(true);
     }
   },
@@ -242,6 +237,9 @@ export default {
       setPlayList: "SET_PLAY_LIST",
       setShowFooter: "SET_SHOW_FOOTER"
     }),
+    showPlayList() {
+      this.$refs.playList.show();
+    },
     goBack() {
       this.setFullScreen(false);
       if (this.$route.name && this.$route.name !== "search") {
@@ -271,6 +269,7 @@ export default {
         setTimeout(() => {
           this.$refs.audio.play();
         }, 1000);
+        this.getLyric(id);
       });
     },
     getLyric(id) {
@@ -335,11 +334,15 @@ export default {
     },
     ready() {
       this.songReady = true;
+      this.duration = this.$refs.audio.duration;
     },
     error() {
       this.songReady = true;
     },
     updateTime(e) {
+      if (this.move) {
+        return;
+      }
       this.currentTime = e.target.currentTime;
     },
     format(interval) {
@@ -357,11 +360,23 @@ export default {
       return num;
     },
     onProgressChange(percent) {
-      this.$refs.audio.currentTime = this.duration * percent;
-      const currentTime = this.$refs.audio.currentTime;
-      this.currentTime = currentTime;
+      this.move = true;
+      const currentTime = this.duration * percent;
+      this.$refs.audio.currentTime = currentTime;
       if (!this.playing) {
         this.togglePlaying();
+      }
+      if (this.currentLyric) {
+        this.currentLyric.seek(currentTime * 1000);
+      }
+    },
+    onProgressChangeEnd(percent) {
+      this.move = false;
+      const currentTime = this.duration * percent;
+      this.$refs.audio.currentTime = currentTime;
+      if (!this.playing) {
+        this.$refs.audio.play();
+        this.setPlayingState(true);
       }
       if (this.currentLyric) {
         this.currentLyric.seek(currentTime * 1000);
@@ -407,7 +422,9 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    this.move = false;
+  },
   mounted() {}
 };
 </script>

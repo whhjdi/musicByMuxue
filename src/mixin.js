@@ -1,4 +1,5 @@
 import { mapGetters } from "vuex";
+
 export const playListMixin = {
   computed: {
     ...mapGetters(["playList"])
