@@ -172,15 +172,13 @@ export default {
   },
   watch: {
     currentSong(newVal, oldVal) {
-      if (!newVal.id) {
-        this.$refs.audio.pause();
-        return;
-      }
-      console.log(1);
       if (newVal.id === oldVal.id) {
         return;
       }
       this.$refs.audio.pause();
+      if (!newVal.id) {
+        return;
+      }
       this.$refs.audio.currentTime = 0;
       this.getSong(newVal.id);
     },
