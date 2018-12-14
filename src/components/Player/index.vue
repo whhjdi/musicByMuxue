@@ -654,7 +654,7 @@ export default {
         top: 30px;
         color: rgb(105, 105, 105);
         right: 100px;
-        font-size: 14px;
+        font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
