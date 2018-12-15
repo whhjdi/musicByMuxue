@@ -34,7 +34,7 @@
                 v-for="(song, index) in songs"
                 :key="song.id"
                 class="song border-bottom"
-                @click="selectItem(song, index);"
+                @click="selectItem(song);"
               >
                 <div class="number">{{ index + 1 }}</div>
                 <div class="right">
@@ -56,7 +56,7 @@
           </div>
         </div>
       </Scroll>
-      <pop-menu ref="popMenu"></pop-menu>
+      <pop-menu ref="popMenu" @nextPlay="nextPlay"></pop-menu>
     </div>
   </transition>
 </template>
@@ -65,6 +65,7 @@
 import Scroll from "../base/Scroll";
 import { playListMixin } from "@/mixin.js";
 import PopMenu from "./PopMenu";
+import { mapActions } from "vuex";
 export default {
   name: "MusicList",
   components: { Scroll, PopMenu },
@@ -112,17 +113,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["insertSongNext", "insertSong"]),
     goBack() {
       this.$router.go(-1);
     },
     scroll(pos) {
       this.scrollY = pos.y;
     },
-    selectItem(song, index) {
-      this.$emit("select", song, index);
+    selectItem(song) {
+      this.insertSong(song);
     },
     playAll() {
-      this.$emit("play");
+      this.randomPlay({ list: this.songs });
     },
     handlePlayList(playList) {
       const bottom = playList.length > 0 ? "54px" : "";
@@ -134,6 +136,11 @@ export default {
     },
     showPopOver(song) {
       this.$refs.popMenu.show(song);
+    },
+    nextPlay(song) {
+      console.log(song);
+
+      this.insertSongNext(song);
     }
   },
   created() {

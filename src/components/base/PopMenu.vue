@@ -5,7 +5,7 @@
         <Scroll class="list-content" ref="listContent" :data="scrollData">
           <div class="item-wrapper">
             <div class="header  item border-bottom">歌曲：{{ song.name }}</div>
-            <div class="next-play item border-bottom">
+            <div class="next-play item border-bottom" @click="playNext">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use></svg
               >下一首播放
@@ -58,6 +58,9 @@ export default {
     },
     hide() {
       this.isShow = false;
+    },
+    playNext() {
+      this.$emit("nextPlay", this.song);
     }
   },
   created() {},

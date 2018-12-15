@@ -39,8 +39,8 @@ function findIdx(list, song) {
     return item.id === song.id;
   });
 }
-//插入到下一首
-export const insertSong = function({ commit, state }, song) {
+//插入到下一首播放
+export const insertSongNext = function({ commit, state }, song) {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
   let currentIndex = state.currentIndex;
@@ -53,6 +53,45 @@ export const insertSong = function({ commit, state }, song) {
   let newIndex = currentIndex++;
 
   playList.splice(newIndex, 0, song);
+  if (fdIndex > -1) {
+    if (currentIndex > fdIndex) {
+      playList.splice(fdIndex, 1);
+      currentIndex--;
+    } else {
+      playList.splice(fdIndex + 1, 1);
+    }
+  }
+
+  let currentSIndex = findIdx(sequenceList, currentSong) + 1;
+  let fsIndex = findIdx(sequenceList, song);
+  sequenceList.splice(currentSIndex, 0, song);
+  if (fsIndex > -1) {
+    if (currentSIndex > fsIndex) {
+      sequenceList.splice(fsIndex, 1);
+    } else {
+      sequenceList.splice(fsIndex + 1, 1);
+    }
+  }
+
+  commit(types.SET_PLAY_LIST, playList);
+  commit(types.SET_SEQUENCE_LIST, sequenceList);
+  commit(types.SET_CURRENT_INDEX, currentIndex);
+  commit(types.SET_PLAYING_STATE, true);
+};
+//插入播放列表直接播放
+export const insertSong = function({ commit, state }, song) {
+  let playList = state.playList.slice();
+  let sequenceList = state.sequenceList.slice();
+  let currentIndex = state.currentIndex;
+
+  let currentSong = playList[currentIndex];
+  //查找播放列表中是否有当前歌曲
+  let fdIndex = findIdx(playList, song);
+
+  //插入歌曲到列表中
+  currentIndex++;
+
+  playList.splice(currentIndex, 0, song);
   if (fdIndex > -1) {
     if (currentIndex > fdIndex) {
       playList.splice(fdIndex, 1);

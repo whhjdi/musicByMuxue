@@ -33,8 +33,6 @@
       :songs="songsList"
       :picUrl="picUrl"
       :id="id"
-      @select="selectItem"
-      @play="playAll"
       ref="musicList"
     ></router-view>
 
@@ -102,18 +100,13 @@ export default {
       "selectPlay",
       "randomPlay",
       "insertSong",
+      "insertSongNext",
       "saveSearchHistory",
       "deleteSearchHistory",
       "deleteAllSearchHistory"
     ]),
     showConfirm() {
       this.$refs.confirm.show();
-    },
-    selectItem(song, index) {
-      this.selectPlay({ list: this.songsList, index });
-    },
-    playAll() {
-      this.randomPlay({ list: this.songs });
     },
     getDeatil(id) {
       Artist.getSingerDetail(id).then(res => {
@@ -142,7 +135,7 @@ export default {
     },
     setSong(song) {
       this.saveSearchHistory(this.query);
-      this.insertSong(song);
+      this.insertSongNext(song);
     },
     handlePlayList(playList) {
       const bottom = playList.length > 0 ? "54px" : "";
