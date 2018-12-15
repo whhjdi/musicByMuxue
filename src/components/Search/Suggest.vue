@@ -106,13 +106,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["query"]),
+    ...mapGetters(["query", "currentIndex"]),
     allData() {
       return this.album.concat(this.artists, this.songs);
     }
   },
   methods: {
-    ...mapActions(["insertSongNext"]),
+    ...mapActions(["insertSongNext", "insertSong"]),
     selectSinger(item) {
       this.$emit("handleSinger", item);
     },
@@ -181,8 +181,10 @@ export default {
       this.$refs.popMenu.show(song);
     },
     nextPlay(song) {
-      console.log(song);
-
+      if (this.currentIndex == -1) {
+        this.insertSong(song);
+        return;
+      }
       this.insertSongNext(song);
     }
   },

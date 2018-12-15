@@ -71,7 +71,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["playHistory"])
+    ...mapGetters(["playHistory", "currentIndex"])
   },
   methods: {
     ...mapActions([
@@ -94,6 +94,10 @@ export default {
       this.$refs.popMenu.show(song);
     },
     nextPlay(song) {
+      if (this.currentIndex === -1) {
+        this.insertSong(song);
+        return;
+      }
       this.insertSongNext(song);
     },
     confirm() {

@@ -65,7 +65,7 @@
 import Scroll from "../base/Scroll";
 import { playListMixin } from "@/mixin.js";
 import PopMenu from "./PopMenu";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "MusicList",
   components: { Scroll, PopMenu },
@@ -108,6 +108,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["currentIndex"]),
     bgStyle() {
       return `background-image:url(${this.picUrl})`;
     }
@@ -138,8 +139,10 @@ export default {
       this.$refs.popMenu.show(song);
     },
     nextPlay(song) {
-      console.log(song);
-
+      if (this.currentIndex === -1) {
+        this.insertSong(song);
+        return;
+      }
       this.insertSongNext(song);
     }
   },
