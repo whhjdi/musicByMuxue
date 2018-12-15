@@ -52,7 +52,7 @@ export const insertSongNext = function({ commit, state }, song) {
   let fdIndex = findIdx(playList, song);
 
   //插入歌曲到列表中
-  let newIndex = currentIndex++;
+  let newIndex = currentIndex + 1;
 
   playList.splice(newIndex, 0, song);
   if (fdIndex > -1) {
@@ -68,16 +68,18 @@ export const insertSongNext = function({ commit, state }, song) {
   let fsIndex = findIdx(sequenceList, song);
   sequenceList.splice(currentSIndex, 0, song);
   if (fsIndex > -1) {
+    commit(types.SET_CURRENT_INDEX, currentIndex);
     if (currentSIndex > fsIndex) {
       sequenceList.splice(fsIndex, 1);
     } else {
       sequenceList.splice(fsIndex + 1, 1);
     }
+  } else {
+    commit(types.SET_CURRENT_INDEX, newIndex);
   }
 
   commit(types.SET_PLAY_LIST, playList);
   commit(types.SET_SEQUENCE_LIST, sequenceList);
-  commit(types.SET_CURRENT_INDEX, currentIndex);
   commit(types.SET_PLAYING_STATE, true);
 };
 //插入播放列表直接播放

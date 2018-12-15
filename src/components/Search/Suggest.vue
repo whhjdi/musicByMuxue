@@ -181,6 +181,8 @@ export default {
       this.$refs.popMenu.show(song);
     },
     nextPlay(song) {
+      console.log(song);
+
       this.insertSongNext(song);
     }
   },

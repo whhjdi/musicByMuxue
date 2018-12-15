@@ -59,7 +59,7 @@ export default {
     }
     &.active {
       color: #ff5582;
-      box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
     }
     .text {
       font-size: 14px;
