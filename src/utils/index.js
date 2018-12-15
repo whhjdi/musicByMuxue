@@ -119,3 +119,24 @@ export function deleteAllCacheSearchHistory() {
   Storage.remove(SEARCH_KEY, []);
   return [];
 }
+
+//播放记录
+const PLAY_KEY = "__play__";
+const PLAY_MAX_LENGTH = 200;
+
+export function savePlay(song) {
+  let songs = Storage.get(PLAY_KEY, []);
+  insertArray(
+    songs,
+    song,
+    item => {
+      return item.id === song.id;
+    },
+    PLAY_MAX_LENGTH
+  );
+  Storage.set(PLAY_KEY, songs);
+  return songs;
+}
+export function loadPlay() {
+  return Storage.get(PLAY_KEY, []);
+}

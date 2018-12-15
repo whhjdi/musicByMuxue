@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import Song from "@/api/song.js";
 import ProgressBar from "../base/ProgressBar";
 import { playMode, shuffle } from "@/utils/index.js";
@@ -228,6 +228,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["savePlayHistory"]),
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
       setPlayingState: "SET_PLAYING_STATE",
@@ -334,6 +335,7 @@ export default {
     ready() {
       this.songReady = true;
       this.duration = this.$refs.audio.duration;
+      this.savePlayHistory(this.currentSong);
     },
     error() {
       this.songReady = true;

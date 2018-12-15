@@ -14,3 +14,4 @@ export const transitionName = state => state.transitionName;
 export const disc = state => state.disc;
 export const query = state => state.query;
 export const searchHistory = state => state.searchHistory;
+export const playHistory = state => state.playHistory;

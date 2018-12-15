@@ -10,3 +10,4 @@ export const SET_TRANSITION_NAME = "SET_TRANSITION_NAME";
 export const SET_DISC = "SET_DISC";
 export const SET_QUERY = "SET_QUERY";
 export const SET_SEARCH_HISTORY = "SET_SEARCH_HISTORY";
+export const SET_PLAY_HISTORY = "SET_PLAY_HISTORY";

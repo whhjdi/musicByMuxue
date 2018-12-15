@@ -1,4 +1,4 @@
-import { playMode, loadSearch } from "@/utils/index.js";
+import { playMode, loadSearch, loadPlay } from "@/utils/index.js";
 const state = {
   singer: {},
   playing: false,
@@ -11,7 +11,8 @@ const state = {
   transitionName: "page-left",
   disc: {},
   query: "",
-  searchHistory: loadSearch()
+  searchHistory: loadSearch(),
+  playHistory: loadPlay()
 };
 
 export default state;

@@ -56,6 +56,7 @@ import Search from "@/api/search.js";
 import { mapGetters } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
 import { playListMixin } from "@/mixin.js";
+import { Song } from "@/utils";
 export default {
   name: "",
   components: { Scroll },
@@ -124,6 +125,8 @@ export default {
     setArtist(artist) {
       this.artists = [];
       artist.forEach(item => {
+        console.log(item);
+
         let id = item.id;
         let singer = item.name;
         let picUrl = item.picUrl;
@@ -136,7 +139,8 @@ export default {
         let id = item.id;
         let name = item.name;
         let singer = item.artists[0].name;
-        this.songs.push({ id, name, singer, picUrl });
+        let album = item.album.name;
+        this.songs.push(new Song({ id, name, singer, picUrl, album }));
       });
     },
     handlePlayList(playList) {

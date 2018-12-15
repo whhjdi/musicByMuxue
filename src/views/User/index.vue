@@ -1,14 +1,20 @@
 <template>
-  <div class="user">暂未开发，敬请期待<router-view></router-view></div>
+  <div class="user">
+    最近播放{{ playHistory.length }}<router-view></router-view>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "user",
   components: {},
   props: {},
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(["playHistory"])
   }
 };
 </script>

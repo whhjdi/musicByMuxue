@@ -39,13 +39,24 @@
                 <div class="number">{{ index + 1 }}</div>
                 <div class="right">
                   <div class="name">{{ song.name }}</div>
-                  <div class="singer">{{ song.singer }}</div>
+                  <div class="singer">
+                    {{ song.singer }}
+                    <span class="album">-{{ song.album }}</span>
+                  </div>
                 </div>
+                <svg
+                  class="icon i-switch"
+                  aria-hidden="true"
+                  @click.stop="showPopOver(song);"
+                >
+                  <use xlink:href="#icon-switch"></use>
+                </svg>
               </li>
             </ul>
           </div>
         </div>
       </Scroll>
+      <pop-menu ref="popMenu"></pop-menu>
     </div>
   </transition>
 </template>
@@ -53,9 +64,10 @@
 <script>
 import Scroll from "../base/Scroll";
 import { playListMixin } from "@/mixin.js";
+import PopMenu from "./PopMenu";
 export default {
   name: "MusicList",
-  components: { Scroll },
+  components: { Scroll, PopMenu },
   mixins: [playListMixin],
   props: {
     songs: {
@@ -119,6 +131,9 @@ export default {
     },
     refresh() {
       this.$refs.list.refresh();
+    },
+    showPopOver(song) {
+      this.$refs.popMenu.show(song);
     }
   },
   created() {
@@ -216,7 +231,7 @@ export default {
           .song {
             padding: 10px 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             .number {
               width: 46px;
@@ -224,7 +239,9 @@ export default {
               text-align: center;
             }
             .right {
-              flex: 1;
+              flex: 1 0 70%;
+              width: 70%;
+              padding-right: 20px;
               .name {
                 margin-bottom: 6px;
                 font-size: 12px;
@@ -232,7 +249,16 @@ export default {
               .singer {
                 color: darkgray;
                 font-size: 10px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
+            }
+            .i-switch {
+              width: 24px;
+              height: 24px;
+              padding: 5px;
+              margin-right: 5px;
             }
           }
         }
