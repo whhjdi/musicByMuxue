@@ -33,20 +33,6 @@
           </ul>
         </div>
         <div class="songs" v-show="songs && songs.length > 0">
-          <!--
-            <ul class="list">
-
-              <li
-                v-for="item in songs"
-                :key="item.id"
-                class="item border-bottom"
-                @click="selectSong(item);"
-              >
-                <div class="name">{{ item.name }}</div>
-                <div class="singer">{{ item.singer }}</div>
-              </li>
-            </ul>
-          -->
           <ul class="song-list" ref="wrapper">
             <h3 class="title">歌曲</h3>
             <li
@@ -71,7 +57,11 @@
               </svg>
             </li>
           </ul>
-          <pop-menu ref="popMenu" @nextPlay="nextPlay"></pop-menu>
+          <pop-menu
+            ref="popMenu"
+            @nextPlay="nextPlay"
+            @playNow="nowPlay"
+          ></pop-menu>
         </div>
       </div>
     </Scroll>
@@ -80,15 +70,15 @@
 
 <script>
 import Search from "@/api/search.js";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
-import { playListMixin } from "@/mixin.js";
+import { playListMixin, popMenuPlay } from "@/mixin.js";
 import { Song } from "@/utils";
 import PopMenu from "../base/PopMenu";
 export default {
   name: "",
   components: { Scroll, PopMenu },
-  mixins: [playListMixin],
+  mixins: [playListMixin, popMenuPlay],
   props: {},
   data() {
     return {
@@ -106,13 +96,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["query", "currentIndex"]),
+    ...mapGetters(["query"]),
     allData() {
       return this.album.concat(this.artists, this.songs);
     }
   },
   methods: {
-    ...mapActions(["insertSongNext", "insertSong"]),
     selectSinger(item) {
       this.$emit("handleSinger", item);
     },
@@ -154,8 +143,6 @@ export default {
     setArtist(artist) {
       this.artists = [];
       artist.forEach(item => {
-        console.log(item);
-
         let id = item.id;
         let singer = item.name;
         let picUrl = item.picUrl;
@@ -171,21 +158,6 @@ export default {
         let album = item.album.name;
         this.songs.push(new Song({ id, name, singer, picUrl, album }));
       });
-    },
-    handlePlayList(playList) {
-      const bottom = playList.length > 0 ? "52px" : "";
-      this.$refs.list.$el.style.bottom = bottom;
-      this.$refs.list.refresh();
-    },
-    showPopOver(song) {
-      this.$refs.popMenu.show(song);
-    },
-    nextPlay(song) {
-      if (this.currentIndex == -1) {
-        this.insertSong(song);
-        return;
-      }
-      this.insertSongNext(song);
     }
   },
   created() {},

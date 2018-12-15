@@ -47,7 +47,9 @@
     <pop-menu
       ref="popMenu"
       @nextPlay="nextPlay"
+      @playNow="nowPlay"
       @deleteOne="deleteOne"
+      :showDelete="true"
     ></pop-menu>
     <Confirm
       text="确定要清空所有播放记录吗"
@@ -62,25 +64,21 @@ import Scroll from "../base/Scroll";
 import PopMenu from "../base/PopMenu";
 import { mapActions, mapGetters } from "vuex";
 import Confirm from "../base/Confirm";
+import { popMenuPlay } from "@/mixin.js";
 export default {
   name: "HistoryList",
   components: { Scroll, PopMenu, Confirm },
+  mixins: [popMenuPlay],
   props: {},
   data() {
     return {};
   },
   watch: {},
   computed: {
-    ...mapGetters(["playHistory", "currentIndex"])
+    ...mapGetters(["playHistory"])
   },
   methods: {
-    ...mapActions([
-      "insertSongNext",
-      "insertSong",
-      "randomPlay",
-      "clearPlayHistory",
-      "deleteOnePlayHistory"
-    ]),
+    ...mapActions(["randomPlay", "clearPlayHistory", "deleteOnePlayHistory"]),
     selectItem(song) {
       this.insertSong(song);
     },
@@ -90,16 +88,7 @@ export default {
     refresh() {
       this.$refs.list.refresh();
     },
-    showPopOver(song) {
-      this.$refs.popMenu.show(song);
-    },
-    nextPlay(song) {
-      if (this.currentIndex === -1) {
-        this.insertSong(song);
-        return;
-      }
-      this.insertSongNext(song);
-    },
+
     confirm() {
       this.$refs.confirm.show();
     },

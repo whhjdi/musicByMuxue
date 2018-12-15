@@ -136,11 +136,6 @@ export default {
     setSong(song) {
       this.saveSearchHistory(this.query);
       this.insertSong(song);
-    },
-    handlePlayList(playList) {
-      const bottom = playList.length > 0 ? "54px" : "";
-      this.$refs.list.$el.style.bottom = bottom;
-      this.$refs.list.refresh();
     }
   },
   created() {

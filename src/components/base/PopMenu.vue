@@ -4,7 +4,9 @@
       <div class="list-wrapper" @click.stop>
         <Scroll class="list-content" ref="listContent" :data="scrollData">
           <div class="item-wrapper">
-            <div class="header  item border-bottom">歌曲：{{ song.name }}</div>
+            <div class="header  item border-bottom" @click="play">
+              歌曲：{{ song.name }}
+            </div>
             <div class="next-play item border-bottom" @click="playNext">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use></svg
@@ -25,7 +27,11 @@
                 <use xlink:href="#icon-album"></use></svg
               >专辑：{{ song.album }}
             </div>
-            <div class="delete item border-bottom" @click="deleteOne(song);">
+            <div
+              class="delete item border-bottom"
+              @click="deleteOne(song);"
+              v-show="showDelete"
+            >
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-close"></use></svg
               >删除
@@ -42,7 +48,12 @@ import Scroll from "../base/Scroll";
 export default {
   name: "popMenu",
   components: { Scroll },
-  props: {},
+  props: {
+    showDelete: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       isShow: false,
@@ -66,6 +77,9 @@ export default {
     },
     playNext() {
       this.$emit("nextPlay", this.song);
+    },
+    play() {
+      this.$emit("playNow", this.song);
     },
     deleteOne(song) {
       this.hide();

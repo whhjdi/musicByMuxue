@@ -1,4 +1,4 @@
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export const playListMixin = {
   computed: {
@@ -16,8 +16,32 @@ export const playListMixin = {
     }
   },
   methods: {
-    handlePlayList() {
-      throw new Error("component must implement handlePlayList method");
+    handlePlayList(playList) {
+      const bottom = playList.length > 0 ? "52px" : "";
+      this.$refs.list.$el.style.bottom = bottom;
+      this.$refs.list.refresh();
+    }
+  }
+};
+
+export const popMenuPlay = {
+  computed: {
+    ...mapGetters(["currentIndex"])
+  },
+  methods: {
+    ...mapActions(["insertSongNext", "insertSong"]),
+    nextPlay(song) {
+      if (this.currentIndex == -1) {
+        this.insertSong(song);
+        return;
+      }
+      this.insertSongNext(song);
+    },
+    nowPlay(song) {
+      this.insertSong(song);
+    },
+    showPopOver(song) {
+      this.$refs.popMenu.show(song);
     }
   }
 };

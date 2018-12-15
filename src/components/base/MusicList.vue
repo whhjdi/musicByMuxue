@@ -127,11 +127,6 @@ export default {
     playAll() {
       this.randomPlay({ list: this.songs });
     },
-    handlePlayList(playList) {
-      const bottom = playList.length > 0 ? "54px" : "";
-      this.$refs.list.$el.style.bottom = bottom;
-      this.$refs.list.refresh();
-    },
     refresh() {
       this.$refs.list.refresh();
     },
