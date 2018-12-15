@@ -27,6 +27,7 @@
       @handleSinger="getSinger"
       @handleSong="setSong"
     ></Suggest>
+
     <router-view
       :title="title"
       :songs="songsList"
@@ -36,6 +37,7 @@
       @play="playAll"
       ref="musicList"
     ></router-view>
+
     <Confirm
       ref="confirm"
       @deleteAll="deleteAllSearchHistory"

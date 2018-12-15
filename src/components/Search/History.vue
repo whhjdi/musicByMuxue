@@ -2,7 +2,7 @@
   <div class="history">
     <h3 class="title">搜索历史</h3>
     <p class="delete" @click.stop="deleteAll">清空历史</p>
-    <ul class="list">
+    <transition-group tag="ul" name="list" class="list">
       <li
         class="item border-bottom"
         v-for="item in searchHistory"
@@ -18,7 +18,7 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -73,6 +73,14 @@ export default {
       justify-content: space-between;
       margin: 5px;
       padding: 5px;
+      &.list-enter-active,
+      &.list-leave-active {
+        transition: all 0.1s linear;
+      }
+      &.list-enter,
+      &.list-leave-to {
+        height: 0;
+      }
       .icon {
         padding: 10px 5px;
       }

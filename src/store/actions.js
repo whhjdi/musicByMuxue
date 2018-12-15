@@ -7,6 +7,8 @@ import {
   deleteAllCacheSearchHistory,
   savePlay
 } from "@/utils/index.js";
+
+//播放
 export const selectPlay = function({ commit, state }, { list, index }) {
   commit(types.SET_SEQUENCE_LIST, list);
   if (state.mode === playMode.random) {
@@ -20,6 +22,8 @@ export const selectPlay = function({ commit, state }, { list, index }) {
   commit(types.SET_FULL_SCREEN, true);
   commit(types.SET_PLAYING_STATE, true);
 };
+
+//随机播放
 export const randomPlay = function({ commit }, { list }) {
   commit(types.SET_PLAYING_MODE, playMode.random);
   commit(types.SET_SEQUENCE_LIST, list);
@@ -35,7 +39,7 @@ function findIdx(list, song) {
     return item.id === song.id;
   });
 }
-
+//插入到下一首
 export const insertSong = function({ commit, state }, song) {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
@@ -44,9 +48,11 @@ export const insertSong = function({ commit, state }, song) {
   let currentSong = playList[currentIndex];
   //查找播放列表中是否有当前歌曲
   let fdIndex = findIdx(playList, song);
+
   //插入歌曲到列表中
-  currentIndex++;
-  playList.splice(currentIndex, 0, song);
+  let newIndex = currentIndex++;
+
+  playList.splice(newIndex, 0, song);
   if (fdIndex > -1) {
     if (currentIndex > fdIndex) {
       playList.splice(fdIndex, 1);
@@ -66,6 +72,7 @@ export const insertSong = function({ commit, state }, song) {
       sequenceList.splice(fsIndex + 1, 1);
     }
   }
+
   commit(types.SET_PLAY_LIST, playList);
   commit(types.SET_SEQUENCE_LIST, sequenceList);
   commit(types.SET_CURRENT_INDEX, currentIndex);
@@ -73,6 +80,7 @@ export const insertSong = function({ commit, state }, song) {
   commit(types.SET_PLAYING_STATE, true);
 };
 
+//搜索历史
 export const saveSearchHistory = function({ commit }, query) {
   commit(types.SET_SEARCH_HISTORY, cacheSearchHistory(query));
 };
@@ -112,6 +120,7 @@ export const clearSong = function({ commit }) {
   commit(types.SET_PLAYING_STATE, false);
 };
 
+//播放历史
 export const savePlayHistory = function({ commit }, song) {
   commit(types.SET_PLAY_HISTORY, savePlay(song));
 };
