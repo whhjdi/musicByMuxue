@@ -15,3 +15,4 @@ export const disc = state => state.disc;
 export const query = state => state.query;
 export const searchHistory = state => state.searchHistory;
 export const playHistory = state => state.playHistory;
+export const favoriteList = state => state.favoriteList;

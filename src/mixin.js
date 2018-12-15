@@ -45,3 +45,31 @@ export const popMenuPlay = {
     }
   }
 };
+
+export const favoriteSong = {
+  computed: {
+    ...mapGetters(["favoriteList"])
+  },
+  methods: {
+    ...mapActions(["cancelFavorite", "saveToFavoriteList"]),
+    isFavorite(song) {
+      const index = this.favoriteList.findIndex(item => {
+        return item.id === song.id;
+      });
+      return index > -1;
+    },
+    getFavoriteIcon(song) {
+      if (this.isFavorite(song)) {
+        return "#icon-heart-fill";
+      }
+      return "#icon-heart";
+    },
+    toggleFavorite(song) {
+      if (this.isFavorite(song)) {
+        this.cancelFavorite(song);
+      } else {
+        this.saveToFavoriteList(song);
+      }
+    }
+  }
+};

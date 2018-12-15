@@ -7,7 +7,10 @@ import {
   deleteAllCacheSearchHistory,
   savePlay,
   deleteAllCachePlayHistory,
-  deleteOneCachePlayHistory
+  deleteOneCachePlayHistory,
+  saveToFavorite,
+  deleteFromFavoriteList,
+  deleteAllFavoriteList
 } from "@/utils/index.js";
 
 //播放
@@ -170,4 +173,16 @@ export const clearPlayHistory = function({ commit }) {
 };
 export const deleteOnePlayHistory = function({ commit }, song) {
   commit(types.SET_PLAY_HISTORY, deleteOneCachePlayHistory(song));
+};
+
+//收藏
+
+export const saveToFavoriteList = function({ commit }, song) {
+  commit(types.SET_FAVORITE_LIST, saveToFavorite(song));
+};
+export const cancelFavorite = function({ commit }, song) {
+  commit(types.SET_FAVORITE_LIST, deleteFromFavoriteList(song));
+};
+export const clearAllFavorite = function({ commit }, song) {
+  commit(types.SET_FAVORITE_LIST, deleteAllFavoriteList(song));
 };

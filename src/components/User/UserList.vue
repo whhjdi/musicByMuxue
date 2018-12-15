@@ -1,12 +1,12 @@
 <template>
-  <div class="history-list">
+  <div class="user-list">
     <Scroll
-      :data="playHistory"
+      :data="userList"
       :probe-type="probeType"
       :listenscroll="listenScroll"
       class="wrapper"
       ref="list"
-      v-show="playHistory"
+      v-show="userList"
     >
       <div class="list-wrapper">
         <div class="control-wrapper border-bottom">
@@ -14,13 +14,13 @@
             <use xlink:href="#icon-play-circle"></use>
           </svg>
           <span class="desc" @click="playAll"
-            >播放全部（共{{ playHistory.length }}首）</span
+            >播放全部（共{{ userList.length }}首）</span
           >
           <div class="clear" @click.stop="confirm">清空历史</div>
         </div>
         <ul class="song-list" ref="wrapper">
           <li
-            v-for="(song, index) in playHistory"
+            v-for="(song, index) in userList"
             :key="song.id"
             class="song border-bottom"
             @click="selectItem(song);"
@@ -43,7 +43,7 @@
         </ul>
       </div>
     </Scroll>
-    <div class="void" v-show="!playHistory">什么都没有呢</div>
+    <div class="void" v-show="!userList">什么都没有呢</div>
     <pop-menu
       ref="popMenu"
       @nextPlay="nextPlay"
@@ -66,38 +66,42 @@ import { mapActions, mapGetters } from "vuex";
 import Confirm from "../base/Confirm";
 import { popMenuPlay } from "@/mixin.js";
 export default {
-  name: "HistoryList",
+  name: "userList",
   components: { Scroll, PopMenu, Confirm },
   mixins: [popMenuPlay],
-  props: {},
+  props: {
+    userList: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {};
   },
   watch: {},
   computed: {
-    ...mapGetters(["playHistory"])
+    ...mapGetters(["playList"])
   },
   methods: {
-    ...mapActions(["randomPlay", "clearPlayHistory", "deleteOnePlayHistory"]),
+    ...mapActions(["randomPlay"]),
     selectItem(song) {
       this.insertSong(song);
     },
     playAll() {
-      this.randomPlay({ list: this.playHistory });
+      this.randomPlay({ list: this.userList });
     },
     refresh() {
       this.$refs.list.refresh();
     },
-
     confirm() {
       this.$refs.confirm.show();
     },
     clear() {
-      this.clearPlayHistory();
+      this.$emit("clear");
       this.$refs.confirm.hide();
     },
     deleteOne(song) {
-      this.deleteOnePlayHistory(song);
+      this.$emit("deleteOne", song);
     }
   },
   created() {
@@ -110,7 +114,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.history-list {
+.user-list {
   position: fixed;
   width: 100%;
   bottom: 52px;

@@ -1,4 +1,4 @@
-import { playMode, loadSearch, loadPlay } from "@/utils/index.js";
+import { playMode, loadSearch, loadPlay, loadFavorite } from "@/utils/index.js";
 const state = {
   singer: {},
   playing: false,
@@ -12,7 +12,8 @@ const state = {
   disc: {},
   query: "",
   searchHistory: loadSearch(),
-  playHistory: loadPlay()
+  playHistory: loadPlay(),
+  favoriteList: loadFavorite()
 };
 
 export default state;

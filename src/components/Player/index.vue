@@ -22,8 +22,12 @@
             <h1 class="title">{{ currentSong.name }}</h1>
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
-          <svg class="icon  i-right" aria-hidden="true">
-            <use xlink:href="#icon-heart"></use>
+          <svg
+            class="icon  i-right"
+            aria-hidden="true"
+            @click="toggleFavorite(currentSong);"
+          >
+            <use :xlink:href="getFavoriteIcon(currentSong)"></use>
           </svg>
         </div>
         <div class="middle" @click="changeMiddle">
@@ -155,9 +159,11 @@ import { playMode, shuffle } from "@/utils/index.js";
 import Lyric from "lyric-parser";
 import Scroll from "../base/Scroll";
 import PlayList from "./PlayList";
+import { favoriteSong } from "@/mixin.js";
 export default {
   name: "",
   components: { ProgressBar, Scroll, PlayList },
+  mixins: [favoriteSong],
   props: {},
   data() {
     return {

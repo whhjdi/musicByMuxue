@@ -153,3 +153,37 @@ export function deleteAllCachePlayHistory() {
   Storage.remove(PLAY_KEY, []);
   return [];
 }
+
+//收藏
+
+const FAVORITE_KEY = "__favourite__";
+const FAVORITE_MAX_LENGTH = 200;
+
+export function loadFavorite() {
+  return Storage.get(FAVORITE_KEY, []);
+}
+export function saveToFavorite(song) {
+  let favoriteList = Storage.get(FAVORITE_KEY, []);
+  insertArray(
+    favoriteList,
+    song,
+    item => {
+      return item.id === song.id;
+    },
+    FAVORITE_MAX_LENGTH
+  );
+  Storage.set(FAVORITE_KEY, favoriteList);
+  return favoriteList;
+}
+export function deleteFromFavoriteList(song) {
+  let favoriteList = Storage.get(FAVORITE_KEY, []);
+  deleteFromArray(favoriteList, item => {
+    return item.id === song.id;
+  });
+  Storage.set(FAVORITE_KEY, favoriteList);
+  return favoriteList;
+}
+export function deleteAllFavoriteList() {
+  Storage.remove(FAVORITE_KEY, []);
+  return [];
+}

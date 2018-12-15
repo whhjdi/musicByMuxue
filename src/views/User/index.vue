@@ -13,9 +13,19 @@
     </div>
     <div class="content">
       <div class="play-history-wrapper" v-if="currentIndex == 0">
-        <history-list></history-list>
+        <user-list
+          :userList="playHistory"
+          @clear="clearHistory"
+          @deleteOne="deleteOneHistory"
+        ></user-list>
       </div>
-      <div class="like-wrapper" v-else-if="currentIndex == 1">2</div>
+      <div class="like-wrapper" v-else-if="currentIndex == 1">
+        <user-list
+          :userList="favoriteList"
+          @clear="clearFavorite"
+          @deleteOne="deleteOneFavorite"
+        ></user-list>
+      </div>
       <div class="random-wrapepr" v-else-if="currentIndex == 2">3</div>
       <div class="about-wrapper" v-else>4</div>
     </div>
@@ -23,13 +33,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import SearchNav from "@/components/base/SearchNav";
 import UserTab from "@/components/User/UserTab.vue";
-import HistoryList from "@/components/User/HistoryList";
+import UserList from "@/components/User/UserList";
 export default {
   name: "user",
-  components: { SearchNav, UserTab, HistoryList },
+  components: { SearchNav, UserTab, UserList },
   props: {},
   data() {
     return {
@@ -43,11 +53,29 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["playHistory"])
+    ...mapGetters(["playHistory", "favoriteList"])
   },
   methods: {
+    ...mapActions([
+      "clearPlayHistory",
+      "deleteOnePlayHistory",
+      "cancelFavorite",
+      "clearAllFavorite"
+    ]),
     selectItem(index) {
       this.currentIndex = index;
+    },
+    clearHistory() {
+      this.clearPlayHistory();
+    },
+    clearFavorite() {
+      this.clearAllFavorite();
+    },
+    deleteOneHistory(song) {
+      this.deleteOnePlayHistory(song);
+    },
+    deleteOneFavorite(song) {
+      this.cancelFavorite(song);
     }
   }
 };

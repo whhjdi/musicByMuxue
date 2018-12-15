@@ -12,9 +12,9 @@
                 <use xlink:href="#icon-play-circle"></use></svg
               >下一首播放
             </div>
-            <div class="like item border-bottom">
+            <div class="like item border-bottom" @click="toggleFavorite(song);">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-heart"></use></svg
+                <use :xlink:href="getFavoriteIcon(song)"></use></svg
               >喜欢
             </div>
             <div class="singer item border-bottom">
@@ -45,9 +45,11 @@
 
 <script>
 import Scroll from "../base/Scroll";
+import { favoriteSong } from "@/mixin.js";
 export default {
   name: "popMenu",
   components: { Scroll },
+  mixins: [favoriteSong],
   props: {
     showDelete: {
       type: Boolean,
