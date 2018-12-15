@@ -1,6 +1,6 @@
 <template>
   <transition name="normal">
-    <div class="footer" v-show="showFooter">
+    <div class="footer" v-show="showFooter && !fullScreen">
       <div class="footer-wrapper">
         <router-link
           :to="nav.link"
@@ -85,7 +85,7 @@ export default {
       setShowFooter: "SET_SHOW_FOOTER"
     }),
     showPlayer() {
-      if (!this.currentSong.picUrl) {
+      if (!this.currentSong.id) {
         return;
       }
       this.setFullScreen(true);

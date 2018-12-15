@@ -135,7 +135,7 @@ export default {
     },
     setSong(song) {
       this.saveSearchHistory(this.query);
-      this.insertSongNext(song);
+      this.insertSong(song);
     },
     handlePlayList(playList) {
       const bottom = playList.length > 0 ? "54px" : "";

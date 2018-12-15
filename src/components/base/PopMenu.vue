@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="pop-menu" v-show="isShow" @click="hide">
+    <div class="pop-menu" v-show="isShow" @click="hide" @click.stop>
       <div class="list-wrapper" @click.stop>
         <Scroll class="list-content" ref="listContent" :data="scrollData">
           <div class="item-wrapper">
@@ -24,6 +24,11 @@
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-album"></use></svg
               >专辑：{{ song.album }}
+            </div>
+            <div class="delete item border-bottom" @click="deleteOne(song);">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-close"></use></svg
+              >删除
             </div>
           </div>
         </Scroll>
@@ -61,6 +66,10 @@ export default {
     },
     playNext() {
       this.$emit("nextPlay", this.song);
+    },
+    deleteOne(song) {
+      this.hide();
+      this.$emit("deleteOne", song);
     }
   },
   created() {},

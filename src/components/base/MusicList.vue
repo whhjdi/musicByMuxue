@@ -34,7 +34,7 @@
                 v-for="(song, index) in songs"
                 :key="song.id"
                 class="song border-bottom"
-                @click="selectItem(song);"
+                @click="selectItem(song, index);"
               >
                 <div class="number">{{ index + 1 }}</div>
                 <div class="right">
@@ -113,15 +113,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["insertSongNext", "insertSong"]),
+    ...mapActions(["insertSongNext", "insertSong", "randomPlay", "selectPlay"]),
     goBack() {
       this.$router.go(-1);
     },
     scroll(pos) {
       this.scrollY = pos.y;
     },
-    selectItem(song) {
-      this.insertSong(song);
+    selectItem(song, index) {
+      this.$emit("select", song, index);
     },
     playAll() {
       this.randomPlay({ list: this.songs });

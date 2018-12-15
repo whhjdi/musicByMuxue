@@ -33,18 +33,45 @@
           </ul>
         </div>
         <div class="songs" v-show="songs && songs.length > 0">
-          <ul class="list">
+          <!--
+            <ul class="list">
+
+              <li
+                v-for="item in songs"
+                :key="item.id"
+                class="item border-bottom"
+                @click="selectSong(item);"
+              >
+                <div class="name">{{ item.name }}</div>
+                <div class="singer">{{ item.singer }}</div>
+              </li>
+            </ul>
+          -->
+          <ul class="song-list" ref="wrapper">
             <h3 class="title">歌曲</h3>
             <li
-              v-for="item in songs"
-              :key="item.id"
-              class="item border-bottom"
-              @click="selectSong(item);"
+              v-for="(song, index) in songs"
+              :key="song.id"
+              class="song border-bottom"
+              @click="selectSong(song);"
             >
-              <div class="name">{{ item.name }}</div>
-              <div class="singer">{{ item.singer }}</div>
+              <div class="number">{{ index + 1 }}</div>
+              <div class="right">
+                <div class="name">{{ song.name }}</div>
+                <div class="singer">
+                  {{ song.singer }} <span class="album">-{{ song.album }}</span>
+                </div>
+              </div>
+              <svg
+                class="icon i-switch"
+                aria-hidden="true"
+                @click.stop="showPopOver(song);"
+              >
+                <use xlink:href="#icon-switch"></use>
+              </svg>
             </li>
           </ul>
+          <pop-menu ref="popMenu" @nextPlay="nextPlay"></pop-menu>
         </div>
       </div>
     </Scroll>
@@ -53,13 +80,14 @@
 
 <script>
 import Search from "@/api/search.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
 import { playListMixin } from "@/mixin.js";
 import { Song } from "@/utils";
+import PopMenu from "../base/PopMenu";
 export default {
   name: "",
-  components: { Scroll },
+  components: { Scroll, PopMenu },
   mixins: [playListMixin],
   props: {},
   data() {
@@ -84,6 +112,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["insertSongNext"]),
     selectSinger(item) {
       this.$emit("handleSinger", item);
     },
@@ -147,6 +176,12 @@ export default {
       const bottom = playList.length > 0 ? "52px" : "";
       this.$refs.list.$el.style.bottom = bottom;
       this.$refs.list.refresh();
+    },
+    showPopOver(song) {
+      this.$refs.popMenu.show(song);
+    },
+    nextPlay(song) {
+      this.insertSongNext(song);
     }
   },
   created() {},
@@ -175,8 +210,7 @@ export default {
         .item {
           display: flex;
           align-items: center;
-          padding: 5px 10px;
-          margin-bottom: 5px;
+          padding: 10px;
           .img {
             width: 50px;
             height: 50px;
@@ -204,7 +238,7 @@ export default {
         .item {
           display: flex;
           align-items: center;
-          padding: 5px 10px;
+          padding: 10px;
           .img {
             width: 50px;
             height: 50px;
@@ -219,12 +253,50 @@ export default {
       }
     }
     .songs {
-      .list {
+      .song-list {
+        .title {
+          padding: 10px;
+        }
+        .song {
+          padding: 10px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .number {
+            width: 46px;
+            padding: 10px 5px;
+            text-align: center;
+          }
+          .right {
+            flex: 1 0 70%;
+            width: 70%;
+            padding-right: 20px;
+            .name {
+              margin-bottom: 6px;
+              font-size: 12px;
+            }
+            .singer {
+              color: darkgray;
+              font-size: 10px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+          .i-switch {
+            width: 24px;
+            height: 24px;
+            padding: 5px;
+            margin-right: 5px;
+          }
+        }
+      }
+      /* .list {
         .title {
           padding: 10px;
         }
         .item {
-          padding: 5px 10px;
+          padding: 10px;
           .name {
             font-size: 12px;
             color: #000;
@@ -234,7 +306,7 @@ export default {
             font-size: 10px;
           }
         }
-      }
+      } */
     }
   }
 }

@@ -5,7 +5,9 @@ import {
   cacheSearchHistory,
   deleteCacheSearchHistory,
   deleteAllCacheSearchHistory,
-  savePlay
+  savePlay,
+  deleteAllCachePlayHistory,
+  deleteOneCachePlayHistory
 } from "@/utils/index.js";
 
 //播放
@@ -162,4 +164,10 @@ export const clearSong = function({ commit }) {
 //播放历史
 export const savePlayHistory = function({ commit }, song) {
   commit(types.SET_PLAY_HISTORY, savePlay(song));
+};
+export const clearPlayHistory = function({ commit }) {
+  commit(types.SET_PLAY_HISTORY, deleteAllCachePlayHistory());
+};
+export const deleteOnePlayHistory = function({ commit }, song) {
+  commit(types.SET_PLAY_HISTORY, deleteOneCachePlayHistory(song));
 };

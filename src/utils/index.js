@@ -140,3 +140,16 @@ export function savePlay(song) {
 export function loadPlay() {
   return Storage.get(PLAY_KEY, []);
 }
+
+export function deleteOneCachePlayHistory(song) {
+  let history = Storage.get(PLAY_KEY, []);
+  deleteFromArray(history, item => {
+    return item.id === song.id;
+  });
+  Storage.set(PLAY_KEY, history);
+  return history;
+}
+export function deleteAllCachePlayHistory() {
+  Storage.remove(PLAY_KEY, []);
+  return [];
+}

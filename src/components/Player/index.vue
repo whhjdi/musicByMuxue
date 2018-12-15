@@ -248,6 +248,7 @@ export default {
     },
     open() {
       this.setFullScreen(true);
+      this.setShowFooter(false);
     },
     togglePlaying() {
       if (!this.songReady) {
@@ -435,8 +436,8 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    background: #eee;
     z-index: 999;
+    background: #eee;
     overflow: hidden;
     color: #191516;
     font-weight: 200;

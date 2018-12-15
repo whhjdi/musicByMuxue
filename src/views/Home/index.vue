@@ -1,7 +1,7 @@
 <template>
   <div class="home" ref="home">
     <nav>
-      <h1 class="title">沐雪music</h1>
+      <h2 class="title">沐雪music</h2>
       <search-bar></search-bar>
     </nav>
     <div class="scroll-wrapper">
@@ -161,7 +161,8 @@ export default {
     align-items: center;
     margin-bottom: 10px;
     .title {
-      margin-left: 10px;
+      flex: 1;
+      text-align: center;
     }
   }
   .scroll-wrapper {
