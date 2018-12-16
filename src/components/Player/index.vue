@@ -186,7 +186,7 @@ export default {
         return;
       }
       this.$refs.audio.currentTime = 0;
-      this.getSong(newVal.id);
+      this.getSongUrl(newVal.id);
     },
     url(newVal) {
       this.$refs.audio.src = newVal;
@@ -270,8 +270,8 @@ export default {
       });
       this.songReadyfalse;
     },
-    getSong(id) {
-      Song.song(id).then(res => {
+    getSongUrl(id) {
+      Song.getSong(id).then(res => {
         this.url = res.data[0].url;
         setTimeout(() => {
           this.$refs.audio.play();

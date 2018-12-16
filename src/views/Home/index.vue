@@ -93,6 +93,9 @@ export default {
     }),
     ...mapActions(["selectPlay", "randomPlay"]),
     handleDisc(item) {
+      this.$router.push({
+        path: `/home/${item.id}`
+      });
       Recommend.getDisc(item.id).then(res => {
         this.setList(res);
       });

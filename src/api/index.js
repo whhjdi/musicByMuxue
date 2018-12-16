@@ -12,7 +12,9 @@ const urls = {
   song: "/song/url",
   lyric: "/lyric",
   hotSearch: "/search/hot",
-  suggest: "/search/suggest"
+  suggest: "/search/suggest",
+  radio: "/dj/recommend",
+  radioProgram: "/dj/program"
 };
 
 for (let key in urls) {

@@ -1,23 +1,22 @@
 import fetch from "./fetch.js";
 
-class Song {
-  static getSong(id) {
-    return fetch("song", {
+class Radio {
+  static getRadio() {
+    return fetch("radio", {
       params: {
-        id,
-        br: 320000,
         xhrFields: { withCredentials: true }
       }
     });
   }
-  static getLyric(id) {
-    return fetch("lyric", {
+  static getRadioProgram(rid) {
+    return fetch("radioProgram", {
       params: {
-        id,
+        rid,
+        asc: true,
         xhrFields: { withCredentials: true }
       }
     });
   }
 }
 
-export default Song;
+export default Radio;

@@ -7,7 +7,7 @@ export class Singer {
 }
 
 //构造歌曲类,包含基本的5个属性
-export class Song {
+export class MySong {
   constructor({ id, singer, name, album, picUrl }) {
     this.id = id;
     this.name = name;
@@ -18,7 +18,7 @@ export class Song {
 }
 //生成歌曲
 export function createSong(musicData) {
-  return new Song({
+  return new MySong({
     id: musicData.id,
     singer: singerName(musicData.ar),
     name: musicData.name,

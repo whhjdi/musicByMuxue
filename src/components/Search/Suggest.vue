@@ -73,7 +73,6 @@ import Search from "@/api/search.js";
 import { mapGetters } from "vuex";
 import Scroll from "@/components/base/Scroll.vue";
 import { playListMixin, popMenuPlay } from "@/mixin.js";
-import { Song } from "@/utils";
 import PopMenu from "../base/PopMenu";
 export default {
   name: "",
@@ -156,7 +155,7 @@ export default {
         let name = item.name;
         let singer = item.artists[0].name;
         let album = item.album.name;
-        this.songs.push(new Song({ id, name, singer, picUrl, album }));
+        this.songs.push({ id, name, singer, picUrl, album });
       });
     }
   },

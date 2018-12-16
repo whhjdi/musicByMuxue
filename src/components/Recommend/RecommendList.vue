@@ -49,9 +49,6 @@ export default {
     },
     selectItem(item) {
       this.$emit("setDiscList", item);
-      this.$router.push({
-        path: `/home/${item.id}`
-      });
     }
   },
   created() {},

@@ -26,7 +26,9 @@
           @deleteOne="deleteOneFavorite"
         ></user-list>
       </div>
-      <div class="random-wrapepr" v-else-if="currentIndex == 2">3</div>
+      <div class="random-wrapepr" v-else-if="currentIndex == 2">
+        <listen-random></listen-random>
+      </div>
       <div class="about-wrapper" v-else>4</div>
     </div>
   </div>
@@ -37,9 +39,10 @@ import { mapGetters, mapActions } from "vuex";
 import SearchNav from "@/components/base/SearchNav";
 import UserTab from "@/components/User/UserTab.vue";
 import UserList from "@/components/User/UserList";
+import ListenRandom from "@/components/User/ListenRandom";
 export default {
   name: "user",
-  components: { SearchNav, UserTab, UserList },
+  components: { SearchNav, UserTab, UserList, ListenRandom },
   props: {},
   data() {
     return {
