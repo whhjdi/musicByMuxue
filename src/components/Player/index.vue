@@ -687,12 +687,10 @@ export default {
   }
 }
 
-.normal-enter-active,
-.normal-leave-active {
+.normal-enter-active {
   transition: all 0.3s;
 }
-.normal-enter,
-.normal-leave-to {
+.normal-enter {
   transform: translateY(100%);
 }
 </style>
