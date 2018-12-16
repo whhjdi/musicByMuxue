@@ -28,7 +28,7 @@
         ></user-list>
       </div>
       <div class="random-wrapepr" v-else-if="currentIndex == 2">
-        <user-list :userList="favoriteList"></user-list>
+        <UserRecommend :userList="recommends"></UserRecommend>
       </div>
       <div class="about-wrapper" v-else><About></About></div>
     </div>
@@ -40,12 +40,13 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import SearchNav from "@/components/base/SearchNav";
 import UserTab from "@/components/User/UserTab.vue";
 import UserList from "@/components/User/UserList";
+import UserRecommend from "@/components/User/UserRecommend";
 import About from "@/components/User/About";
 import Recommend from "@/api/recommend.js";
 import Login from "@/api/login.js";
 export default {
   name: "user",
-  components: { SearchNav, UserTab, UserList, About },
+  components: { SearchNav, UserTab, UserList, UserRecommend, About },
   props: {},
   data() {
     return {
@@ -64,7 +65,7 @@ export default {
       if (newVal === 2) {
         Recommend.getRecommend()
           .then(res => {
-            console.log(res);
+            this.setRecommends(res);
           })
           .catch(err => {
             console.log(err);
@@ -104,7 +105,17 @@ export default {
       this.cancelFavorite(song);
     },
     setRecommends(res) {
-      this.recommends = res.recommend;
+      let list = res.recommend;
+      console.log(list);
+      list.forEach(item => {
+        let id = item.id;
+        let name = item.name;
+        let picUrl = item.album.picUrl;
+        let album = item.album.name;
+        let albumId = item.album.id;
+        let singer = item.artists ? item.artists[0].name : "";
+        this.recommends.push({ id, name, picUrl, album, albumId, singer });
+      });
     }
   },
   created() {

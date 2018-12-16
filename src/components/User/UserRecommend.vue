@@ -47,8 +47,7 @@
       ref="popMenu"
       @nextPlay="nextPlay"
       @playNow="nowPlay"
-      @deleteOne="deleteOne"
-      :showDelete="true"
+      :showDelete="false"
     ></pop-menu>
   </div>
 </template>
