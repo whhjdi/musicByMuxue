@@ -6,9 +6,8 @@
       :listenscroll="listenScroll"
       class="wrapper"
       ref="list"
-      v-show="userList"
     >
-      <div class="list-wrapper">
+      <div class="list-wrapper" v-show="userList && userList.length > 0">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle"></use>
@@ -16,7 +15,7 @@
           <span class="desc" @click="playAll"
             >播放全部（共{{ userList.length }}首）</span
           >
-          <div class="clear" @click.stop="confirm">清空历史</div>
+          <div class="clear" @click.stop="confirm">{{ deleteText }}</div>
         </div>
         <ul class="song-list" ref="wrapper">
           <li
@@ -42,8 +41,8 @@
           </li>
         </ul>
       </div>
+      <h2 class="void" v-show="userList.length === 0">{{ tips }}</h2>
     </Scroll>
-    <div class="void" v-show="!userList">什么都没有呢</div>
     <pop-menu
       ref="popMenu"
       @nextPlay="nextPlay"
@@ -62,13 +61,13 @@
 <script>
 import Scroll from "../base/Scroll";
 import PopMenu from "../base/PopMenu";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import Confirm from "../base/Confirm";
-import { popMenuPlay } from "@/mixin.js";
+import { popMenuPlay, userListMixin } from "@/mixin.js";
 export default {
   name: "userList",
   components: { Scroll, PopMenu, Confirm },
-  mixins: [popMenuPlay],
+  mixins: [popMenuPlay, userListMixin],
   props: {
     userList: {
       type: Array,
@@ -77,6 +76,14 @@ export default {
     showDelete: {
       type: Boolean,
       default: false
+    },
+    deleteText: {
+      type: String,
+      default: "清空收藏"
+    },
+    tips: {
+      type: String,
+      default: "哈哈哈，这里是空的呢"
     }
   },
   data() {
@@ -87,16 +94,6 @@ export default {
     ...mapGetters(["playList"])
   },
   methods: {
-    ...mapActions(["randomPlay"]),
-    selectItem(song) {
-      this.insertSong(song);
-    },
-    playAll() {
-      this.randomPlay({ list: this.userList });
-    },
-    refresh() {
-      this.$refs.list.refresh();
-    },
     confirm() {
       this.$refs.confirm.show();
     },
@@ -107,13 +104,6 @@ export default {
     deleteOne(song) {
       this.$emit("deleteOne", song);
     }
-  },
-  created() {
-    this.probeType = 3;
-    this.listenScroll = true;
-  },
-  mounted() {
-    this.refresh();
   }
 };
 </script>
@@ -124,7 +114,11 @@ export default {
   bottom: 52px;
   top: 120px;
   .void {
-    font-size: 18px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
   }
   .wrapper {
     background: #fff;

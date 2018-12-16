@@ -73,3 +73,26 @@ export const favoriteSong = {
     }
   }
 };
+
+export const userListMixin = {
+  computed: {},
+  methods: {
+    ...mapActions(["randomPlay"]),
+    selectItem(song) {
+      this.insertSong(song);
+    },
+    playAll() {
+      this.randomPlay({ list: this.userList });
+    },
+    refresh() {
+      this.$refs.list.refresh();
+    }
+  },
+  created() {
+    this.probeType = 3;
+    this.listenScroll = true;
+  },
+  mounted() {
+    this.refresh();
+  }
+};

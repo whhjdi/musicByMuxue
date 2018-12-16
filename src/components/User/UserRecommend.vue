@@ -8,7 +8,7 @@
       ref="list"
       v-show="userList"
     >
-      <div class="list-wrapper">
+      <div class="list-wrapper" v-show="isLogin">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle"></use>
@@ -41,8 +41,10 @@
           </li>
         </ul>
       </div>
+      <h2 class="void" v-show="!isLogin">
+        <span class="toLogin" @click="toLogin">登录</span>才能找到你喜欢的歌曲呢
+      </h2>
     </Scroll>
-    <div class="void" v-show="!userList">什么都没有呢</div>
     <pop-menu
       ref="popMenu"
       @nextPlay="nextPlay"
@@ -55,12 +57,12 @@
 <script>
 import Scroll from "../base/Scroll";
 import PopMenu from "../base/PopMenu";
-import { mapActions, mapGetters } from "vuex";
-import { popMenuPlay } from "@/mixin.js";
+import { mapGetters } from "vuex";
+import { popMenuPlay, userListMixin } from "@/mixin.js";
 export default {
   name: "userList",
   components: { Scroll, PopMenu },
-  mixins: [popMenuPlay],
+  mixins: [popMenuPlay, userListMixin],
   props: {
     userList: {
       type: Array,
@@ -72,26 +74,12 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["playList"])
+    ...mapGetters(["isLogin"])
   },
   methods: {
-    ...mapActions(["randomPlay"]),
-    selectItem(song) {
-      this.insertSong(song);
-    },
-    playAll() {
-      this.randomPlay({ list: this.userList });
-    },
-    refresh() {
-      this.$refs.list.refresh();
+    toLogin() {
+      this.$router.push({ path: "/login" });
     }
-  },
-  created() {
-    this.probeType = 3;
-    this.listenScroll = true;
-  },
-  mounted() {
-    this.refresh();
   }
 };
 </script>
@@ -102,7 +90,14 @@ export default {
   bottom: 52px;
   top: 120px;
   .void {
-    font-size: 18px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    .toLogin {
+      color: #ff5582;
+    }
   }
   .wrapper {
     background: #fff;

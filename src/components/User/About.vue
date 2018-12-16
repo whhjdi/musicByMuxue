@@ -75,7 +75,7 @@ export default {
   .content {
     .text {
       position: absolute;
-      top: 50px;
+      top: 30%;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
@@ -83,13 +83,14 @@ export default {
     }
     .toLogin {
       position: absolute;
-      top: 100px;
+      top: 40%;
       left: 50%;
       transform: translateX(-50%);
-      padding: 5px;
+      padding: 5px 10px;
       background: #ff5582;
       border-radius: 4px;
       color: #fff;
+      font-size: 16px;
     }
   }
 }

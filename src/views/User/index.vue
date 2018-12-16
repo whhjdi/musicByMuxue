@@ -18,6 +18,7 @@
           @clear="clearHistory"
           @deleteOne="deleteOneHistory"
           :showDelete="true"
+          deleteText="清空历史"
         ></user-list>
       </div>
       <div class="like-wrapper" v-else-if="currentIndex == 1">
@@ -53,7 +54,7 @@ export default {
       list: [
         { text: "最近播放", icon: "#icon-history" },
         { text: "收藏夹", icon: "#icon-like" },
-        { text: "随便听听", icon: "#icon-listen" },
+        { text: "个性推荐", icon: "#icon-listen" },
         { text: "关于 ", icon: "#icon-playlist" }
       ],
       currentIndex: 0,
@@ -62,7 +63,7 @@ export default {
   },
   watch: {
     currentIndex(newVal) {
-      if (newVal === 2) {
+      if (newVal === 2 && this.recommends.length === 0) {
         Recommend.getRecommend()
           .then(res => {
             this.setRecommends(res);
@@ -76,7 +77,7 @@ export default {
   computed: {
     ...mapGetters(["playHistory", "favoriteList", "isLogin", "userInfo"]),
     title() {
-      return !this.isLogin ? "去登录" : `${this.userInfo.name}`;
+      return !this.isLogin ? "你好呀" : `${this.userInfo.name}`;
     }
   },
   methods: {
