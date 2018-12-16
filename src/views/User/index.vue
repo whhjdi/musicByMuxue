@@ -76,7 +76,7 @@ export default {
   computed: {
     ...mapGetters(["playHistory", "favoriteList", "isLogin", "userInfo"]),
     title() {
-      return !this.isLogin ? "去登陆" : `${this.userInfo.name}`;
+      return !this.isLogin ? "去登录" : `${this.userInfo.name}`;
     }
   },
   methods: {
@@ -106,7 +106,6 @@ export default {
     },
     setRecommends(res) {
       let list = res.recommend;
-      console.log(list);
       list.forEach(item => {
         let id = item.id;
         let name = item.name;

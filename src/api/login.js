@@ -15,6 +15,9 @@ class Login {
   static refreshLogin() {
     return fetch("loginRefresh");
   }
+  static logout() {
+    return fetch("logout");
+  }
 }
 
 export default Login;

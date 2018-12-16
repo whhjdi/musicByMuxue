@@ -20,7 +20,7 @@
         <ul class="song-list" ref="wrapper">
           <li
             v-for="(song, index) in userList"
-            :key="song.id"
+            :key="index"
             class="song border-bottom"
             @click="selectItem(song);"
           >

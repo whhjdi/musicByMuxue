@@ -13,9 +13,11 @@ const urls = {
   lyric: "/lyric",
   hotSearch: "/search/hot",
   suggest: "/search/suggest",
+  //登录之后
   login: "/login/cellphone",
   loginStatus: "/login/status",
   loginRefresh: "/login/refresh",
+  logout: "/logout",
   recommend: "/recommend/songs"
 };
 
