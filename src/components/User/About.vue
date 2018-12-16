@@ -1,5 +1,5 @@
 <template>
-  <div class=""></div>
+  <div class=""><button @click="toLogin">登录</button></div>
 </template>
 
 <script>
@@ -12,7 +12,11 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {},
+  methods: {
+    toLogin() {
+      this.$router.push({ path: "/login" });
+    }
+  },
   created() {},
   mounted() {}
 };

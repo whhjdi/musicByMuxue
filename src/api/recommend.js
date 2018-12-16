@@ -2,32 +2,25 @@ import fetch from "./fetch.js";
 
 class Recommend {
   static getBanner() {
-    return fetch("banner", {
-      params: {
-        xhrFields: { withCredentials: true }
-      }
-    });
+    return fetch("banner");
+  }
+  static getRecommend() {
+    return fetch("recommend");
   }
   static getRecommendSongs() {
     return fetch("personalized", {
       params: {
-        limit: 6,
-        xhrFields: { withCredentials: true }
+        limit: 6
       }
     });
   }
   static getNewSong() {
-    return fetch("newSong", {
-      params: {
-        xhrFields: { withCredentials: true }
-      }
-    });
+    return fetch("newSong", {});
   }
   static getDisc(id) {
     return fetch("disc", {
       params: {
-        id,
-        xhrFields: { withCredentials: true }
+        id
       }
     });
   }
@@ -35,8 +28,7 @@ class Recommend {
     return fetch("newDisc", {
       params: {
         order: "new",
-        limit: 6,
-        xhrFields: { withCredentials: true }
+        limit: 6
       }
     });
   }

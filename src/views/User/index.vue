@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="header">
-      <h2 class="title">个人中心</h2>
+      <h2 class="title">{{ title }}</h2>
       <search-nav></search-nav>
     </div>
     <div class="tab-wrapper">
@@ -17,6 +17,7 @@
           :userList="playHistory"
           @clear="clearHistory"
           @deleteOne="deleteOneHistory"
+          :showDelete="true"
         ></user-list>
       </div>
       <div class="like-wrapper" v-else-if="currentIndex == 1">
@@ -27,22 +28,24 @@
         ></user-list>
       </div>
       <div class="random-wrapepr" v-else-if="currentIndex == 2">
-        <listen-random></listen-random>
+        <user-list :userList="favoriteList"></user-list>
       </div>
-      <div class="about-wrapper" v-else>4</div>
+      <div class="about-wrapper" v-else><About></About></div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import SearchNav from "@/components/base/SearchNav";
 import UserTab from "@/components/User/UserTab.vue";
 import UserList from "@/components/User/UserList";
-import ListenRandom from "@/components/User/ListenRandom";
+import About from "@/components/User/About";
+import Recommend from "@/api/recommend.js";
+import Login from "@/api/login.js";
 export default {
   name: "user",
-  components: { SearchNav, UserTab, UserList, ListenRandom },
+  components: { SearchNav, UserTab, UserList, About },
   props: {},
   data() {
     return {
@@ -52,13 +55,33 @@ export default {
         { text: "随便听听", icon: "#icon-listen" },
         { text: "关于 ", icon: "#icon-playlist" }
       ],
-      currentIndex: 0
+      currentIndex: 0,
+      recommends: []
     };
   },
+  watch: {
+    currentIndex(newVal) {
+      if (newVal === 2) {
+        Recommend.getRecommend()
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }
+  },
   computed: {
-    ...mapGetters(["playHistory", "favoriteList"])
+    ...mapGetters(["playHistory", "favoriteList", "isLogin", "userInfo"]),
+    title() {
+      return !this.isLogin ? "去登陆" : `${this.userInfo.name}`;
+    }
   },
   methods: {
+    ...mapMutations({
+      setUserInfo: "SET_USER_INFO"
+    }),
     ...mapActions([
       "clearPlayHistory",
       "deleteOnePlayHistory",
@@ -79,7 +102,23 @@ export default {
     },
     deleteOneFavorite(song) {
       this.cancelFavorite(song);
+    },
+    setRecommends(res) {
+      this.recommends = res.recommend;
     }
+  },
+  created() {
+    Login.getLoginStatus().then(res => {
+      if (res.code === 200) {
+        let profile = res.profile;
+        let info = {
+          name: profile.nickname,
+          id: profile.userId,
+          picUrl: profile.avatarUrl
+        };
+        this.setUserInfo(info);
+      }
+    });
   }
 };
 </script>

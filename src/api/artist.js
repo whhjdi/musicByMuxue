@@ -2,17 +2,12 @@ import fetch from "./fetch.js";
 
 class Artist {
   static singer() {
-    return fetch("artist", {
-      params: {
-        xhrFields: { withCredentials: true }
-      }
-    });
+    return fetch("artist", {});
   }
   static getSingerDetail(id) {
     return fetch("singerDetail", {
       params: {
-        id,
-        xhrFields: { withCredentials: true }
+        id
       }
     });
   }

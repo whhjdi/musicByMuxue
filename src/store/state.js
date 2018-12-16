@@ -13,7 +13,8 @@ const state = {
   query: "",
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
-  favoriteList: loadFavorite()
+  favoriteList: loadFavorite(),
+  userInfo: null
 };
 
 export default state;

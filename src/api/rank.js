@@ -2,17 +2,12 @@ import fetch from "./fetch.js";
 
 class Rank {
   static getTopList() {
-    return fetch("topList", {
-      params: {
-        xhrFields: { withCredentials: true }
-      }
-    });
+    return fetch("topList");
   }
   static getTopListDetail(idx) {
     return fetch("topListDetail", {
       params: {
-        idx,
-        xhrFields: { withCredentials: true }
+        idx
       }
     });
   }

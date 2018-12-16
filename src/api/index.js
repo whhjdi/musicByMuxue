@@ -13,8 +13,10 @@ const urls = {
   lyric: "/lyric",
   hotSearch: "/search/hot",
   suggest: "/search/suggest",
-  radio: "/dj/recommend",
-  radioProgram: "/dj/program"
+  login: "/login/cellphone",
+  loginStatus: "/login/status",
+  loginRefresh: "/login/refresh",
+  recommend: "/recommend/songs"
 };
 
 for (let key in urls) {

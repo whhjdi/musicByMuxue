@@ -19,7 +19,7 @@ Vue.prototype.$fetch = fetch;
 Vue.prototype.$NProgress = NProgress;
 Vue.use(VueLazyload);
 router.beforeEach((to, from, next) => {
-  if (!to.name || to.name === "search") {
+  if (!to.name || to.name === "search" || to.name === "login") {
     store.commit("SET_SHOW_FOOTER", false);
   } else {
     store.commit("SET_SHOW_FOOTER", true);

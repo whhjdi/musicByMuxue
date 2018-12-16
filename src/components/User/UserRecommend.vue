@@ -16,7 +16,6 @@
           <span class="desc" @click="playAll"
             >播放全部（共{{ userList.length }}首）</span
           >
-          <div class="clear" @click.stop="confirm">清空历史</div>
         </div>
         <ul class="song-list" ref="wrapper">
           <li
@@ -49,13 +48,8 @@
       @nextPlay="nextPlay"
       @playNow="nowPlay"
       @deleteOne="deleteOne"
-      :showDelete="showDelete"
+      :showDelete="true"
     ></pop-menu>
-    <Confirm
-      text="确定要清空所有播放记录吗"
-      @deleteAll="clear"
-      ref="confirm"
-    ></Confirm>
   </div>
 </template>
 
@@ -63,20 +57,15 @@
 import Scroll from "../base/Scroll";
 import PopMenu from "../base/PopMenu";
 import { mapActions, mapGetters } from "vuex";
-import Confirm from "../base/Confirm";
 import { popMenuPlay } from "@/mixin.js";
 export default {
   name: "userList",
-  components: { Scroll, PopMenu, Confirm },
+  components: { Scroll, PopMenu },
   mixins: [popMenuPlay],
   props: {
     userList: {
       type: Array,
       default: () => []
-    },
-    showDelete: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -96,16 +85,6 @@ export default {
     },
     refresh() {
       this.$refs.list.refresh();
-    },
-    confirm() {
-      this.$refs.confirm.show();
-    },
-    clear() {
-      this.$emit("clear");
-      this.$refs.confirm.hide();
-    },
-    deleteOne(song) {
-      this.$emit("deleteOne", song);
     }
   },
   created() {

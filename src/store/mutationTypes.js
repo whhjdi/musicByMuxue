@@ -12,3 +12,4 @@ export const SET_QUERY = "SET_QUERY";
 export const SET_SEARCH_HISTORY = "SET_SEARCH_HISTORY";
 export const SET_PLAY_HISTORY = "SET_PLAY_HISTORY";
 export const SET_FAVORITE_LIST = "SET_FAVORITE_LIST";
+export const SET_USER_INFO = "SET_USER_INFO";
