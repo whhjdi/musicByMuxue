@@ -34,6 +34,7 @@
       :picUrl="picUrl"
       :id="id"
       ref="musicList"
+      @select="selectItem"
     ></router-view>
 
     <Confirm
@@ -135,6 +136,9 @@ export default {
     },
     setSong(song) {
       this.saveSearchHistory(this.query);
+      this.insertSong(song);
+    },
+    selectItem(song) {
       this.insertSong(song);
     }
   },
