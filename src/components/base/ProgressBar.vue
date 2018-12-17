@@ -104,7 +104,7 @@ export default {
     }
     .progress-btn-wrapper {
       position: absolute;
-      left: -7px;
+      left: -8px;
       top: -13px;
       width: 30px;
       height: 30px;

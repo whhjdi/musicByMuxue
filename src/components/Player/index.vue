@@ -142,7 +142,7 @@
     </transition>
     <audio
       ref="audio"
-      @play="ready"
+      @canplay="ready"
       @error="error"
       @timeupdate="updateTime"
       @ended="ended"
@@ -273,10 +273,7 @@ export default {
       }
       this.setPlayingState(!this.playing);
       const audio = this.$refs.audio;
-      this.$nextTick(() => {
-        this.playing ? audio.play() : audio.pause();
-      });
-      this.songReady = false;
+      this.playing ? audio.play() : audio.pause();
     },
     getSongUrl(id) {
       Song.getSong(id).then(res => {
@@ -289,15 +286,20 @@ export default {
         this.currentLyric.stop();
         this.currentLyric = null;
       }
-      this.noLyric = false;
-      Song.getLyric(id).then(res => {
-        this.currentLyric = new Lyric(res.lrc.lyric, this.handleLyric);
-        if (this.playing) {
-          this.currentLyric.play();
-          this.currentLineNum = 0;
-          this.$refs.lyricList.scrollTo(0, 0, 1000);
-        }
-      });
+      Song.getLyric(id)
+        .then(res => {
+          this.currentLyric = new Lyric(res.lrc.lyric, this.handleLyric);
+          this.noLyric = false;
+          if (this.playing) {
+            this.currentLyric.play();
+            this.currentLineNum = 0;
+            this.$refs.lyricList.scrollTo(0, 0, 1000);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.noLyric = true;
+        });
     },
     handleLyric({ lineNum }) {
       this.currentLineNum = lineNum;
@@ -314,6 +316,7 @@ export default {
       }
       if (this.playList.length === 1) {
         this.loop();
+        console.log(11);
       } else {
         let index = this.currentIndex - 1;
         if (index === -1) {
@@ -423,6 +426,7 @@ export default {
       }
       this.$refs.audio.currentTime = 0;
       this.$refs.audio.play();
+      this.setPlayingState(true);
     },
     changeMiddle() {
       if (this.currentShow === "cd") {
@@ -434,6 +438,7 @@ export default {
   },
   created() {
     this.move = false;
+    this.noLyric = "歌词加载中";
   },
   mounted() {}
 };
