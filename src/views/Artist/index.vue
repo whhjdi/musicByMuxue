@@ -24,7 +24,7 @@ import Artist from "../../api/artist.js";
 import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
 import SearchBar from "@/components/base/SearchNav.vue";
 const HOT_NAME = "热门";
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       singers: [],
-      singer: [],
+      singer: {},
       songs: []
     };
   },
