@@ -98,7 +98,6 @@ export default {
       setQuery: "SET_QUERY"
     }),
     ...mapActions([
-      "selectPlay",
       "randomPlay",
       "insertSong",
       "insertSongNext",

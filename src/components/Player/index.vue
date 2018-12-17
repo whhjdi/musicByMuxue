@@ -189,6 +189,9 @@ export default {
       this.getSongUrl(newVal.id);
     },
     url(newVal) {
+      if (!newVal) {
+        return;
+      }
       this.$refs.audio.src = newVal;
       this.$refs.audio.play();
       this.setPlayingState(true);
