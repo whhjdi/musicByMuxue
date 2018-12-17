@@ -24,6 +24,7 @@
     </Scroll>
     <Suggest
       v-show="query"
+      @handleAlbum="getAlbum"
       @handleSinger="getSinger"
       @handleSong="setSong"
     ></Suggest>
@@ -65,7 +66,7 @@ export default {
     return {
       hots: [],
       songsList: [],
-      singer: {}
+      list: {}
     };
   },
   watch: {
@@ -80,13 +81,13 @@ export default {
   computed: {
     ...mapGetters(["query", "searchHistory"]),
     title() {
-      return this.singer.singer;
+      return this.list.name;
     },
     picUrl() {
-      return this.singer.picUrl;
+      return this.list.picUrl;
     },
     id() {
-      return this.singer.id;
+      return this.list.id;
     },
     shortCut() {
       return this.hots.concat(this.searchHistory);
@@ -94,8 +95,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setQuery: "SET_QUERY",
-      setSinger: "SET_SINGER"
+      setQuery: "SET_QUERY"
     }),
     ...mapActions([
       "selectPlay",
@@ -109,14 +109,23 @@ export default {
     showConfirm() {
       this.$refs.confirm.show();
     },
-    getDeatil(id) {
-      Artist.getSingerDetail(id).then(res => {
-        this.setSingerDetail(res);
+    getAlbumDetail(id) {
+      Search.getAlbumDetail(id).then(res => {
+        let songs = res.songs;
+        this.setDetail(songs, id);
       });
     },
-    setSingerDetail(res) {
-      let songs = res.hotSongs;
+    getDeatil(id) {
+      Artist.getSingerDetail(id).then(res => {
+        let songs = res.hotSongs;
+        this.setDetail(songs, id);
+      });
+    },
+    setDetail(songs, id) {
       this.songsList = this.normalizeSongs(songs);
+      this.$router.push({
+        path: `/search/${id}`
+      });
     },
     normalizeSongs(list) {
       let ret = [];
@@ -125,14 +134,18 @@ export default {
       });
       return ret;
     },
+    getAlbum(album) {
+      this.saveSearchHistory(this.query);
+      this.list = album;
+      let id = album.id;
+      console.log(id);
+      this.getAlbumDetail(id);
+    },
     getSinger(singer) {
       this.saveSearchHistory(this.query);
-      this.singer = singer;
+      this.list = singer;
       let id = singer.id;
       this.getDeatil(id);
-      this.$router.push({
-        path: `/search/${id}`
-      });
     },
     setSong(song) {
       this.saveSearchHistory(this.query);

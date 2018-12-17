@@ -13,6 +13,7 @@ const urls = {
   lyric: "/lyric",
   hotSearch: "/search/hot",
   suggest: "/search/suggest",
+  album: "/album",
   //登录之后
   login: "/login/cellphone",
   loginStatus: "/login/status",

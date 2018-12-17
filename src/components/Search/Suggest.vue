@@ -9,6 +9,7 @@
               v-for="item in album"
               :key="item.albumId"
               class="item border-bottom"
+              @click="selectAlbum(item);"
             >
               <img :src="item.picUrl" alt="" class="img" />
               <div class="right">
@@ -101,6 +102,9 @@ export default {
     }
   },
   methods: {
+    selectAlbum(item) {
+      this.$emit("handleAlbum", item);
+    },
     selectSinger(item) {
       this.$emit("handleSinger", item);
     },
@@ -132,11 +136,11 @@ export default {
     setAlbum(album) {
       this.album = [];
       album.forEach(item => {
-        let albumId = item.id;
+        let id = item.id;
         let name = item.name;
         let singer = item.artist.name;
         let picUrl = item.artist.picUrl;
-        this.album.push({ albumId, name, singer, picUrl });
+        this.album.push({ id, name, singer, picUrl });
       });
     },
     setArtist(artist) {

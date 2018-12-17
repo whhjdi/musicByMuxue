@@ -11,6 +11,13 @@ class Search {
       }
     });
   }
+  static getAlbumDetail(id) {
+    return fetch("album", {
+      params: {
+        id
+      }
+    });
+  }
 }
 
 export default Search;
