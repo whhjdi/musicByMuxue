@@ -133,7 +133,6 @@ export default {
     },
     setAllRecommend(res) {
       let [banners, recommendSongs, newDisc] = res;
-      console.log(recommendSongs);
       this.setBanner(banners);
       this.setRecommendSongs(recommendSongs);
       this.setNewDisc(newDisc);

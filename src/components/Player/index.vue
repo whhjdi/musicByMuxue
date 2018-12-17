@@ -311,7 +311,6 @@ export default {
       }
       if (this.playList.length === 1) {
         this.loop();
-        console.log(11);
       } else {
         let index = this.currentIndex - 1;
         if (index === -1) {

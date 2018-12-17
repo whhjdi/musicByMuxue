@@ -137,7 +137,6 @@ export default {
       this.saveSearchHistory(this.query);
       this.list = album;
       let id = album.id;
-      console.log(id);
       this.getAlbumDetail(id);
     },
     getSinger(singer) {

@@ -25,7 +25,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["transitionName", "showSearch", "tipText"])
+    ...mapGetters(["transitionName", "tipText"])
   },
   watch: {
     $route(to, from) {
