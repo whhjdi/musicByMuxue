@@ -34,12 +34,7 @@
           <div class="middle-l" v-show="currentShow === 'cd'">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" :class="playing ? 'play' : 'pause'">
-                <img
-                  :src="currentSong.picUrl"
-                  alt=""
-                  class="image"
-                  @click.stop="togglePlaying"
-                />
+                <img :src="currentSong.picUrl" alt="" class="image" />
               </div>
             </div>
           </div>
@@ -532,8 +527,6 @@ export default {
           .cd {
             width: 100%;
             height: 100%;
-            box-sizing: border-box;
-            border: 15px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             &.play {
               animation: rotate 20s linear infinite;
@@ -542,6 +535,7 @@ export default {
               animation-play-state: paused;
             }
             .image {
+              border: 15px solid rgba(255, 255, 255, 0.15);
               position: absolute;
               left: 0;
               top: 0;
