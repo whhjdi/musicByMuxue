@@ -2,6 +2,9 @@
   <div class="login">
     <header><h1 class="title">欢迎使用沐雪MUSIC</h1></header>
     <div class="form">
+      <svg class="icon i-back" aria-hidden="true" @click="goBack">
+        <use xlink:href="#icon-arrowleft"></use>
+      </svg>
       <h2 class="text">登录</h2>
       <input
         class="input border-bottom"
@@ -39,7 +42,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setUserInfo: "SET_USER_INFO"
+      setUserInfo: "SET_USER_INFO",
+      setShowFooter: "SET_SHOW_FOOTER"
     }),
     handleLogin() {
       Login.login(this.userName, this.userPassword).then(res => {
@@ -53,6 +57,10 @@ export default {
         Login.refreshLogin();
         this.$router.go(-1);
       });
+    },
+    goBack() {
+      this.setShowFooter(true);
+      this.$router.go(-1);
     }
   }
 };
@@ -66,6 +74,15 @@ export default {
   right: 0;
   margin: 0 auto;
   text-align: center;
+  .i-back {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px;
+    color: #ff5582;
+  }
   header {
     height: 50%;
     width: 100%;

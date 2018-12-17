@@ -137,7 +137,11 @@ export default {
         .item {
           height: 52px;
           line-height: 52px;
-          font-size: 20px;
+          font-size: 18px;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           .icon {
             width: 20px;
             height: 20px;

@@ -119,17 +119,21 @@ export default {
     }
   },
   created() {
-    Login.getLoginStatus().then(res => {
-      if (res.code === 200) {
-        let profile = res.profile;
-        let info = {
-          name: profile.nickname,
-          id: profile.userId,
-          picUrl: profile.avatarUrl
-        };
-        this.setUserInfo(info);
-      }
-    });
+    Login.getLoginStatus()
+      .then(res => {
+        if (res.code === 200) {
+          let profile = res.profile;
+          let info = {
+            name: profile.nickname,
+            id: profile.userId,
+            picUrl: profile.avatarUrl
+          };
+          this.setUserInfo(info);
+        }
+      })
+      .catch(err => {
+        console.log(err + "还没有登录");
+      });
   }
 };
 </script>
