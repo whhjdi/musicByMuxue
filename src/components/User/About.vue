@@ -4,6 +4,7 @@
       <img :src="userInfo.picUrl" alt="" class="pic" />
       <h1 class="name">{{ userInfo.name }}</h1>
       <p class="id">{{ userInfo.id }}</p>
+      <div class="signin" @click="signin">签到</div>
       <div class="toLogout" v-show="isLogin" @click="toLogout">退出登录</div>
     </div>
     <div class="content" v-else>
@@ -35,6 +36,19 @@ export default {
     toLogout() {
       Login.logout();
       this.setUserInfo(null);
+    },
+    signin() {
+      Login.signin()
+        .then(res => {
+          if (res.code === 200) {
+            console.log("签到成功！经验+" + res.point + "");
+          } else {
+            console.log("你今天已经签过到了");
+          }
+        })
+        .catch(() => {
+          console.log("你今天可能已经签过到了");
+        });
     }
   },
   created() {},
@@ -70,6 +84,13 @@ export default {
       background: #ff5582;
       border-radius: 4px;
       color: #fff;
+    }
+    .signin {
+      background: #ff5482;
+      color: #fff;
+      padding: 5px;
+      border-radius: 4px;
+      margin-top: 10px;
     }
   }
   .content {

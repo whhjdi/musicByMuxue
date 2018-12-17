@@ -18,6 +18,9 @@ class Login {
   static logout() {
     return fetch("logout");
   }
+  static signin() {
+    return fetch("signin");
+  }
 }
 
 export default Login;

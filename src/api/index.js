@@ -20,7 +20,8 @@ const urls = {
   loginRefresh: "/login/refresh",
   logout: "/logout",
   recommend: "/recommend/songs",
-  resource: "/recommend/resource"
+  resource: "/recommend/resource",
+  signin: "/daily_signin"
 };
 
 for (let key in urls) {
