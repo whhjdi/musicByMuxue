@@ -29,13 +29,14 @@ export const popMenuPlay = {
     ...mapGetters(["currentIndex"])
   },
   methods: {
-    ...mapActions(["insertSongNext", "insertSong"]),
+    ...mapActions(["insertSongNext", "insertSong", "setTips"]),
     nextPlay(song) {
       if (this.currentIndex == -1) {
         this.insertSong(song);
         return;
       }
       this.insertSongNext(song);
+      this.setTips("已经将一首歌曲添加到播放队列");
     },
     nowPlay(song) {
       this.insertSong(song);
@@ -51,7 +52,7 @@ export const favoriteSong = {
     ...mapGetters(["favoriteList"])
   },
   methods: {
-    ...mapActions(["cancelFavorite", "saveToFavoriteList"]),
+    ...mapActions(["cancelFavorite", "saveToFavoriteList", "setTips"]),
     isFavorite(song) {
       const index = this.favoriteList.findIndex(item => {
         return item.id === song.id;
@@ -67,8 +68,10 @@ export const favoriteSong = {
     toggleFavorite(song) {
       if (this.isFavorite(song)) {
         this.cancelFavorite(song);
+        this.setTips("你不喜欢这首歌了吗，已经从收藏夹移出了");
       } else {
         this.saveToFavoriteList(song);
+        this.setTips("已经添加歌曲到收藏夹");
       }
     }
   }

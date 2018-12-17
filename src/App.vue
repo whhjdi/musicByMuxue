@@ -5,22 +5,27 @@
     </transition>
     <Player></Player>
     <the-footer></the-footer>
+    <Tips ref="tips">
+      <span class="text">{{ tipText }}</span>
+    </Tips>
   </div>
 </template>
 <script>
 import Player from "./components/Player";
 import TheFooter from "./components/base/TheFooter";
 import { mapGetters, mapMutations } from "vuex";
+import Tips from "./components/base/Tips";
 export default {
   components: {
     Player,
-    TheFooter
+    TheFooter,
+    Tips
   },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["transitionName", "showSearch"])
+    ...mapGetters(["transitionName", "showSearch", "tipText"])
   },
   watch: {
     $route(to, from) {

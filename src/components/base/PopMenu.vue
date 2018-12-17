@@ -46,6 +46,7 @@
 <script>
 import Scroll from "../base/Scroll";
 import { favoriteSong } from "@/mixin.js";
+import { mapActions } from "vuex";
 export default {
   name: "popMenu",
   components: { Scroll },
@@ -70,6 +71,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setTips"]),
     show(song) {
       this.isShow = true;
       this.song = song;
@@ -79,6 +81,7 @@ export default {
     },
     playNext() {
       this.$emit("nextPlay", this.song);
+      this.setTips("已经将一首歌曲添加到播放队列");
     },
     play() {
       this.$emit("playNow", this.song);
@@ -86,6 +89,7 @@ export default {
     deleteOne(song) {
       this.hide();
       this.$emit("deleteOne", song);
+      this.setTips("已经删除一首歌曲啦");
     }
   },
   created() {},

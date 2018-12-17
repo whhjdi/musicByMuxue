@@ -42,6 +42,12 @@ const mutations = {
   },
   [types.SET_USER_INFO](state, info) {
     state.userInfo = info;
+  },
+  [types.SET_SHOW_TIPS](state, flag) {
+    state.showTips = flag;
+  },
+  [types.SET_TIP_TEXT](state, text) {
+    state.tipText = text;
   }
 };
 

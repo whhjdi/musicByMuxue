@@ -12,6 +12,7 @@ import {
   deleteFromFavoriteList,
   deleteAllFavoriteList
 } from "@/utils/index.js";
+import { clearTimeout } from "timers";
 
 //播放
 export const selectPlay = function({ commit, state }, { list, index }) {
@@ -185,4 +186,13 @@ export const cancelFavorite = function({ commit }, song) {
 };
 export const clearAllFavorite = function({ commit }, song) {
   commit(types.SET_FAVORITE_LIST, deleteAllFavoriteList(song));
+};
+
+export const setTips = function({ commit }, text) {
+  commit(types.SET_SHOW_TIPS, true);
+  commit(types.SET_TIP_TEXT, text);
+  clearTimeout(timer);
+  let timer = setTimeout(() => {
+    commit(types.SET_SHOW_TIPS, false);
+  }, 2000);
 };

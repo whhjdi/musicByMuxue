@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import Login from "@/api/login.js";
 export default {
   name: "",
@@ -30,24 +30,26 @@ export default {
     ...mapMutations({
       setUserInfo: "SET_USER_INFO"
     }),
+    ...mapActions(["setTips"]),
     toLogin() {
       this.$router.push({ path: "/login" });
     },
     toLogout() {
       Login.logout();
       this.setUserInfo(null);
+      this.setTips("已为您退出登录");
     },
     signin() {
       Login.signin()
         .then(res => {
           if (res.code === 200) {
-            console.log("签到成功！经验+" + res.point + "");
+            this.setTips("签到成功！经验+" + res.point + "");
           } else {
-            console.log("你今天已经签过到了");
+            this.setTips("不要重复签到哦");
           }
         })
         .catch(() => {
-          console.log("你今天可能已经签过到了");
+          this.setTips("签到失败，可能已经签到过了");
         });
     }
   },

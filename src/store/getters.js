@@ -17,3 +17,5 @@ export const playHistory = state => state.playHistory;
 export const favoriteList = state => state.favoriteList;
 export const userInfo = state => state.userInfo;
 export const isLogin = state => !!state.userInfo;
+export const showTips = state => state.showTips;
+export const tipText = state => state.tipText;

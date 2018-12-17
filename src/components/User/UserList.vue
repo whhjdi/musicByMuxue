@@ -61,7 +61,7 @@
 <script>
 import Scroll from "../base/Scroll";
 import PopMenu from "../base/PopMenu";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Confirm from "../base/Confirm";
 import { popMenuPlay, userListMixin } from "@/mixin.js";
 export default {
@@ -94,12 +94,14 @@ export default {
     ...mapGetters(["playList"])
   },
   methods: {
+    ...mapActions(["setTips"]),
     confirm() {
       this.$refs.confirm.show();
     },
     clear() {
       this.$emit("clear");
       this.$refs.confirm.hide();
+      this.setTips("已清空");
     },
     deleteOne(song) {
       this.$emit("deleteOne", song);

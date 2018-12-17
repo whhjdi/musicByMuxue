@@ -12,3 +12,5 @@ export const SET_SEARCH_HISTORY = "SET_SEARCH_HISTORY";
 export const SET_PLAY_HISTORY = "SET_PLAY_HISTORY";
 export const SET_FAVORITE_LIST = "SET_FAVORITE_LIST";
 export const SET_USER_INFO = "SET_USER_INFO";
+export const SET_SHOW_TIPS = "SET_SHOW_TIPS";
+export const SET_TIP_TEXT = "SET_TIP_TEXT ";

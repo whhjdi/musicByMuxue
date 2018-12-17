@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 import Login from "@/api/login.js";
 export default {
   name: "",
@@ -45,17 +45,20 @@ export default {
       setUserInfo: "SET_USER_INFO",
       setShowFooter: "SET_SHOW_FOOTER"
     }),
+    ...mapActions(["setTips"]),
     handleLogin() {
       Login.login(this.userName, this.userPassword).then(res => {
-        console.log(res);
         let info = {
           name: res.profile.nickname,
           id: res.profile.userId,
           picUrl: res.profile.avatarUrl
         };
         this.setUserInfo(info);
+        this.setTips("登录成功,正在为您跳转");
         Login.refreshLogin();
-        this.$router.go(-1);
+        setTimeout(() => {
+          this.$router.go(-1);
+        }, 1000);
       });
     },
     goBack() {

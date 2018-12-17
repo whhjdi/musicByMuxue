@@ -86,7 +86,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["deleteSong", "clearSong"]),
+    ...mapActions(["deleteSong", "clearSong", "setTips"]),
     ...mapMutations({
       setCurrentIndex: "SET_CURRENT_INDEX"
     }),
@@ -132,6 +132,7 @@ export default {
     confirmClear() {
       this.clearSong();
       this.hide();
+      this.setTips("已经清空播放列表啦");
     }
   },
   created() {},
