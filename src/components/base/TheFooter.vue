@@ -17,8 +17,8 @@
           ><span>{{ nav.name }}</span></router-link
         >
       </div>
-      <div class="circle" @click="showPlayer" :class="setClass">
-        <img :src="picBg" alt="" class="circle-bg" />
+      <div class="circle" @click="showPlayer">
+        <img :src="picBg" alt="" class="circle-bg" :class="setClass" />
       </div>
     </div>
   </transition>
@@ -138,13 +138,14 @@ export default {
     box-sizing: border-box;
     padding: 4px;
     background: #fff;
-    &.play {
-      animation: rotate 20s linear infinite;
-    }
+    box-shadow: 0 -2px 2px 0 rgba(128, 128, 128, 0.1);
     .circle-bg {
       width: 100%;
       height: 100%;
       border-radius: 50%;
+      &.play {
+        animation: rotate 20s linear infinite;
+      }
     }
   }
 }

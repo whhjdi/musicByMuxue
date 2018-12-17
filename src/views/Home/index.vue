@@ -132,7 +132,15 @@ export default {
       this.setNewDisc(newDisc);
     },
     setBanner(res) {
-      this.banners = res.banners;
+      let banners = res.banners;
+      let list = [];
+      banners.forEach(item => {
+        if (!item.url) {
+          let newItem = { id: item.targetId, ...item };
+          list.push(newItem);
+        }
+      });
+      this.banners = list;
     },
     setRecommendSongs(res) {
       this.recommendSongs = res.result;
