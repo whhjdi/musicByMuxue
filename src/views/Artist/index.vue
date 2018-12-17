@@ -36,12 +36,13 @@ export default {
   data() {
     return {
       singers: [],
+      singer: [],
       songs: []
     };
   },
   watch: {},
   computed: {
-    ...mapGetters(["showFooter", "singer"]),
+    ...mapGetters(["showFooter"]),
     title() {
       return this.singer.name;
     },
@@ -53,9 +54,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setSinger: "SET_SINGER"
-    }),
     ...mapActions(["selectPlay", "randomPlay"]),
     selectItem(song, index) {
       this.selectPlay({ list: this.songs, index });
@@ -143,13 +141,12 @@ export default {
       return hot.concat(ret);
     },
     chooseSinger(singer) {
+      this.singer = singer;
       this.$NProgress.start();
       this.getDeatil(this.singer.id);
       this.$router.push({
         path: `/artist/${singer.id}`
       });
-
-      this.setSinger(singer);
     }
   },
   created() {

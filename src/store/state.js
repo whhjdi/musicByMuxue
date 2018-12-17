@@ -1,6 +1,5 @@
 import { playMode, loadSearch, loadPlay, loadFavorite } from "@/utils/index.js";
 const state = {
-  singer: {},
   playing: false,
   fullScreen: false,
   playList: [],

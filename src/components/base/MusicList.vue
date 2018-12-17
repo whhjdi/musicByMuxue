@@ -146,10 +146,6 @@ export default {
     this.listenScroll = true;
   },
   mounted() {
-    if (!this.id) {
-      this.$router.go(-1);
-      return;
-    }
     this.$refs.list.$el.style.top;
     this.imageHeight = this.$refs.bg.clientHeight;
     this.minTranslateHeight = -this.imageHeight + 44;
