@@ -19,7 +19,8 @@ const urls = {
   loginStatus: "/login/status",
   loginRefresh: "/login/refresh",
   logout: "/logout",
-  recommend: "/recommend/songs"
+  recommend: "/recommend/songs",
+  resource: "/recommend/resource"
 };
 
 for (let key in urls) {

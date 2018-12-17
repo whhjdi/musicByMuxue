@@ -51,7 +51,7 @@ import Slide from "@/components/Recommend/Slide.vue";
 import Recommend from "@/api/recommend.js";
 import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 import { createSong } from "@/utils";
 import SearchBar from "@/components/base/SearchNav.vue";
 export default {
@@ -74,6 +74,7 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapGetters(["isLogin"]),
     title() {
       return this.list.name;
     },
@@ -121,12 +122,18 @@ export default {
 
     getAllRecommend() {
       let p1 = Recommend.getBanner();
-      let p2 = Recommend.getRecommendSongs();
+      let p2;
+      if (this.isLogin) {
+        p2 = Recommend.getResource();
+      } else {
+        p2 = Recommend.getRecommendSongs();
+      }
       let p3 = Recommend.getNewDisc();
       return Promise.all([p1, p2, p3]);
     },
     setAllRecommend(res) {
       let [banners, recommendSongs, newDisc] = res;
+      console.log(recommendSongs);
       this.setBanner(banners);
       this.setRecommendSongs(recommendSongs);
       this.setNewDisc(newDisc);
@@ -143,7 +150,11 @@ export default {
       this.banners = list;
     },
     setRecommendSongs(res) {
-      this.recommendSongs = res.result;
+      if (this.isLogin) {
+        this.recommendSongs = res.recommend;
+      } else {
+        this.recommendSongs = res.result;
+      }
     },
     setNewDisc(res) {
       this.newDiscs = res.playlists;

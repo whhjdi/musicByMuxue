@@ -32,6 +32,13 @@ class Recommend {
       }
     });
   }
+  static getResource() {
+    return fetch("resource", {
+      params: {
+        limit: 6
+      }
+    });
+  }
 }
 
 export default Recommend;
