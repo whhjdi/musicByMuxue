@@ -135,13 +135,15 @@ export default {
     border-radius: 50%;
     width: 60px;
     height: 60px;
+    box-sizing: border-box;
+    padding: 4px;
+    background: #fff;
     &.play {
       animation: rotate 20s linear infinite;
     }
     .circle-bg {
       width: 100%;
       height: 100%;
-      opacity: 1;
       border-radius: 50%;
     }
   }
