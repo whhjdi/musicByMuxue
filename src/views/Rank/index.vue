@@ -93,9 +93,6 @@ export default {
       this.topList = newList;
     },
     chooseItem(item) {
-      this.$router.push({
-        path: `/rank/${item.id}`
-      });
       let curIndex = 0;
       for (let i = 0; i < RANK_LIST.length; i++) {
         if (item.name === RANK_LIST[i]) {
@@ -103,6 +100,9 @@ export default {
         }
       }
       this.getTopListDetail(curIndex);
+      this.$router.push({
+        path: `/rank/${item.id}`
+      });
     },
     getTopListDetail(idx) {
       Rank.getTopListDetail(idx).then(res => {

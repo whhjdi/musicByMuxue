@@ -142,7 +142,7 @@
     </transition>
     <audio
       ref="audio"
-      @canplay="ready"
+      @play="ready"
       @error="error"
       @timeupdate="updateTime"
       @ended="ended"
@@ -193,7 +193,12 @@ export default {
         return;
       }
       this.$refs.audio.src = newVal;
-      this.$refs.audio.play();
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.$refs.audio.play().then(() => {
+          this.duration = this.$refs.audio.duration;
+        });
+      }, 1000);
       this.setPlayingState(true);
     }
   },
@@ -271,14 +276,11 @@ export default {
       this.$nextTick(() => {
         this.playing ? audio.play() : audio.pause();
       });
-      this.songReadyfalse;
+      this.songReady = false;
     },
     getSongUrl(id) {
       Song.getSong(id).then(res => {
         this.url = res.data[0].url;
-        setTimeout(() => {
-          this.$refs.audio.play();
-        }, 1000);
         this.getLyric(id);
       });
     },
