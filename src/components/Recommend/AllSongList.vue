@@ -20,6 +20,20 @@
               <use xlink:href="#icon-right"></use>
             </svg>
           </span>
+          <div class="sort">
+            <span
+              class="new"
+              :class="{ active: order === 'new' }"
+              @click="orderNew"
+              >最新</span
+            >|
+            <span
+              class="hot"
+              :class="{ active: order === 'hot' }"
+              @click="orderHot"
+              >最热</span
+            >
+          </div>
         </div>
         <ul class="list-wrapper">
           <li v-for="(item, index) in playList" :key="index" class="list">
@@ -54,10 +68,15 @@ export default {
       hasMore: true,
       catText: "全部",
       catList: [],
-      offset: 0
+      offset: 0,
+      order: "hot"
     };
   },
-  watch: {},
+  watch: {
+    order(newVal) {
+      this.getSongList(this.catText, this.offset, newVal);
+    }
+  },
   computed: {},
   methods: {
     ...mapMutations({
@@ -67,13 +86,15 @@ export default {
       if (!this.hasMore) {
         return;
       }
-      Recommend.getAllSongList(this.catText, this.offset).then(res => {
-        console.log(res);
-        let playList = res.playlists;
-        this.offset = this.offset + 10;
-        this.hasMore = res.more;
-        this.playList = this.playList.concat(playList);
-      });
+      Recommend.getAllSongList(this.catText, this.offset, this.order).then(
+        res => {
+          console.log(res);
+          let playList = res.playlists;
+          this.offset = this.offset + 10;
+          this.hasMore = res.more;
+          this.playList = this.playList.concat(playList);
+        }
+      );
     },
     goBack() {
       this.$router.go(-1);
@@ -102,25 +123,29 @@ export default {
         this.catList = arr;
       });
     },
-    selectItem(item) {
-      this.catText = item.name;
-      Recommend.getAllSongList(item.name, 0).then(res => {
+    getSongList(tag, offset, order) {
+      Recommend.getAllSongList(tag, offset, order).then(res => {
         console.log(res);
         let playList = res.playlists;
         this.offset = this.offset + 10;
         this.playList = playList;
         this.hasMore = res.more;
       });
+    },
+    selectItem(item) {
+      this.catText = item.name;
+      this.getSongList(item.name, 0, this.order);
+    },
+    orderNew() {
+      this.order = "new";
+    },
+    orderHot() {
+      this.order = "hot";
     }
   },
   created() {
     this.setShowFooter(false);
-    Recommend.getAllSongList().then(res => {
-      console.log(res);
-      this.playList = res.playlists;
-      this.offset = this.offset + 10;
-      this.hasMore = res.more;
-    });
+    this.getSongList(this.catText, 0, this.order);
   },
   mounted() {}
 };
@@ -154,10 +179,31 @@ export default {
     overflow: hidden;
     .nav {
       padding: 10px;
+      position: relative;
       .catText {
         height: 20px;
         line-height: 20px;
         padding: 5px 8px;
+      }
+      .sort {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        height: 20px;
+        line-height: 20px;
+        padding: 5px 8px;
+        color: #9e9e9e;
+        .new {
+          margin-right: 5px;
+          &.active {
+            color: #ff5482;
+          }
+        }
+        .hot {
+          &.active {
+            color: #ff5482;
+          }
+        }
       }
     }
     .list-wrapper {

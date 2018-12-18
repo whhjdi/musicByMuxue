@@ -39,12 +39,13 @@ class Recommend {
       }
     });
   }
-  static getAllSongList(cat, offset) {
+  static getAllSongList(cat, offset, order) {
     return fetch("newDisc", {
       params: {
         limit: 10,
         cat,
-        offset
+        offset,
+        order
       }
     });
   }
