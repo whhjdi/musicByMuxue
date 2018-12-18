@@ -151,6 +151,9 @@ export default {
       this.newDiscs = res.playlists;
     }
   },
+  activated() {
+    this.$refs.scrolls.refresh();
+  },
   created() {
     this.getAllRecommend().then(res => {
       this.setAllRecommend(res);

@@ -5,6 +5,7 @@
       <singer-list
         :singers="singers"
         @selectSinger="chooseSinger"
+        ref="singerList"
       ></singer-list>
     </div>
     <router-view
@@ -148,6 +149,9 @@ export default {
         path: `/artist/${singer.id}`
       });
     }
+  },
+  activated() {
+    this.$refs.singerList.$children[0].refresh();
   },
   created() {
     Artist.singer().then(res => {

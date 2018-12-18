@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :name="transitionName" @after-leave="afterLeave">
-      <router-view></router-view>
+      <keep-alive> <router-view></router-view> </keep-alive>
     </transition>
     <Player></Player>
     <the-footer></the-footer>
