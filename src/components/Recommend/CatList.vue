@@ -99,9 +99,13 @@ export default {
     }
   }
   .scroll {
-    width: 100%;
-    height: calc(100% - 40px);
+    position: fixed;
+    top: 40px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
     overflow: hidden;
+    background: #fff;
     .wrapper {
       padding: 5px;
       .all {
