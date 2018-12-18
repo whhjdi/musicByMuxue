@@ -1,5 +1,6 @@
 import { mapGetters, mapActions } from "vuex";
 import { createSong } from "@/utils";
+//底部bottom
 export const playListMixin = {
   computed: {
     ...mapGetters(["playList"])
@@ -23,7 +24,7 @@ export const playListMixin = {
     }
   }
 };
-
+//添加到下一曲播放部分逻辑
 export const popMenuPlay = {
   computed: {
     ...mapGetters(["currentIndex"])
@@ -47,6 +48,7 @@ export const popMenuPlay = {
   }
 };
 
+//添加到收藏夹部分逻辑
 export const favoriteSong = {
   computed: {
     ...mapGetters(["favoriteList"])
@@ -77,6 +79,7 @@ export const favoriteSong = {
   }
 };
 
+//userList部分逻辑
 export const userListMixin = {
   computed: {},
   methods: {
@@ -100,6 +103,7 @@ export const userListMixin = {
   }
 };
 
+//首页歌单和全部歌单共有的逻辑
 export const songsListPlayMixin = {
   methods: {
     ...mapActions(["selectPlay", "randomPlay"]),

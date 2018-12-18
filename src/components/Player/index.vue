@@ -287,7 +287,7 @@ export default {
           this.noLyric = false;
           if (this.playing) {
             this.currentLyric.play();
-            this.currentLineNum = 0;
+            this.currentLineNum = 1;
             this.$refs.lyricList.scrollTo(0, 0, 1000);
           }
         })
