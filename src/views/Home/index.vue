@@ -28,7 +28,7 @@
             <recommend-list
               :list="newDiscs"
               title="最新歌单"
-              @setDiscList="handleewDisc"
+              @setDiscList="handleDisc"
             ></recommend-list>
           </div>
         </div>

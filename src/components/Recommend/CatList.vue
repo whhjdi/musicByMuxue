@@ -4,11 +4,11 @@
       <svg class="icon i-back" aria-hidden="true" @click="goBack">
         <use xlink:href="#icon-arrowleft"></use>
       </svg>
-      <h2 class="title">筛选歌单</h2>
+      <h2 class="title">歌单分类</h2>
     </header>
-    <Scroll class="scroll" :data="catList">
+    <Scroll class="scroll" :data="catList" ref="list">
       <div class="wrapper">
-        <div class="all border">全部歌单</div>
+        <div class="all border" @click="selectAll">全部歌单</div>
         <ul class="list-wrapper">
           <li v-for="(item, index) in catList" :key="index" class="list">
             <div class="sub">{{ item.name }}</div>
@@ -31,9 +31,11 @@
 
 <script>
 import Scroll from "../base/Scroll";
+import { playListMixin } from "@/mixin.js";
 export default {
   name: "",
   components: { Scroll },
+  mixins: [playListMixin],
   props: {
     catList: {
       type: Array,
@@ -59,6 +61,10 @@ export default {
     },
     selectItem(item) {
       this.$emit("selectItem", item);
+      this.hide();
+    },
+    selectAll() {
+      this.$emit("selectAll");
       this.hide();
     }
   },

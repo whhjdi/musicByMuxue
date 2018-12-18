@@ -8,9 +8,10 @@
     </header>
     <Scroll
       class="scroll"
-      :data="playList"
+      :data="playLists"
       @scrollToEnd="loadMore"
       :pullup="pullup"
+      ref="list"
     >
       <div>
         <div class="nav">
@@ -37,7 +38,7 @@
         </div>
         <ul class="list-wrapper">
           <li
-            v-for="(item, index) in playList"
+            v-for="(item, index) in playLists"
             :key="index"
             class="list"
             @click="handleSongList(item);"
@@ -52,6 +53,7 @@
       :catList="catList"
       ref="catList"
       @selectItem="selectCat"
+      @selectAll="selectAll"
     ></cat-list>
     <router-view
       :title="title"
@@ -70,16 +72,16 @@ import Recommend from "@/api/recommend.js";
 import CatList from "./CatList";
 import Scroll from "../base/Scroll";
 import { mapMutations } from "vuex";
-import { songsListPlayMixin } from "@/mixin.js";
+import { songsListPlayMixin, playListMixin } from "@/mixin.js";
 export default {
   name: "allSongList",
   components: { Scroll, CatList },
-  mixins: [songsListPlayMixin],
+  mixins: [songsListPlayMixin, playListMixin],
   props: {},
   data() {
     return {
       pullup: true,
-      playList: [],
+      playLists: [],
       before: 0,
       hasMore: true,
       catText: "全部",
@@ -116,11 +118,10 @@ export default {
       }
       Recommend.getAllSongList(this.catText, this.offset, this.order).then(
         res => {
-          console.log(res);
-          let playList = res.playlists;
+          let playLists = res.playlists;
           this.offset = this.offset + 10;
           this.hasMore = res.more;
-          this.playList = this.playList.concat(playList);
+          this.playLists = this.playLists.concat(playLists);
         }
       );
     },
@@ -129,7 +130,6 @@ export default {
     },
     getCatList() {
       Recommend.getCatList().then(res => {
-        console.log(res);
         this.categories = Object.values(res.categories);
         this.sub = res.sub;
         this.$refs.catList.show();
@@ -153,16 +153,11 @@ export default {
     },
     getSongList(tag, offset, order) {
       Recommend.getAllSongList(tag, offset, order).then(res => {
-        console.log(res);
-        let playList = res.playlists;
+        let playLists = res.playlists;
         this.offset = this.offset + 10;
-        this.playList = playList;
+        this.playLists = playLists;
         this.hasMore = res.more;
       });
-    },
-    selectCat(item) {
-      this.catText = item.name;
-      this.getSongList(item.name, 0, this.order);
     },
     orderNew() {
       this.order = "new";
@@ -177,11 +172,21 @@ export default {
       Recommend.getDisc(item.id).then(res => {
         this.setList(res);
       });
+    },
+    selectCat(item) {
+      this.catText = item.name;
+      this.offset = 0;
+      this.getSongList(item.name, this.offset, this.order);
+    },
+    selectAll() {
+      this.catText = "全部";
+      this.offset = 0;
+      this.getSongList(this.catText, this.offset, this.order);
     }
   },
   created() {
     this.setShowFooter(false);
-    this.getSongList(this.catText, 0, this.order);
+    this.getSongList(this.catText, this.offset, this.order);
   },
   mounted() {}
 };
