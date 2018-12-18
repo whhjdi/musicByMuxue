@@ -3,7 +3,11 @@
     <div class="rank">
       <search-bar></search-bar>
       <div class="rank-list-wrapper">
-        <rank-list :topList="topList" @selectTopList="chooseItem"></rank-list>
+        <rank-list
+          :topList="topList"
+          @selectTopList="chooseItem"
+          ref="rankList"
+        ></rank-list>
       </div>
       <router-view
         :title="title"
@@ -124,6 +128,9 @@ export default {
     playAll() {
       this.randomPlay({ list: this.songs });
     }
+  },
+  activated() {
+    this.$refs.rankList.$children[0].refresh();
   },
   created() {
     this.getTopList();
