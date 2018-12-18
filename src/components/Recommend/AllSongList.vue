@@ -36,7 +36,12 @@
           </div>
         </div>
         <ul class="list-wrapper">
-          <li v-for="(item, index) in playList" :key="index" class="list">
+          <li
+            v-for="(item, index) in playList"
+            :key="index"
+            class="list"
+            @click="handleSongList(item);"
+          >
             <img :src="item.coverImgUrl" alt="" class="pic" />
             <div class="name">{{ item.name }}</div>
           </li>
@@ -46,8 +51,17 @@
     <cat-list
       :catList="catList"
       ref="catList"
-      @selectItem="selectItem"
+      @selectItem="selectCat"
     ></cat-list>
+    <router-view
+      :title="title"
+      :picUrl="picUrl"
+      :songs="songs"
+      :id="discId"
+      @select="selectItem"
+      @play="playAll"
+      ref="musicList"
+    ></router-view>
   </div>
 </template>
 
@@ -55,7 +69,8 @@
 import Recommend from "@/api/recommend.js";
 import CatList from "./CatList";
 import Scroll from "../base/Scroll";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
+import { createSong } from "@/utils";
 export default {
   name: "allSongList",
   components: { Scroll, CatList },
@@ -69,7 +84,9 @@ export default {
       catText: "全部",
       catList: [],
       offset: 0,
-      order: "hot"
+      order: "hot",
+      list: [],
+      songs: []
     };
   },
   watch: {
@@ -77,11 +94,22 @@ export default {
       this.getSongList(this.catText, this.offset, newVal);
     }
   },
-  computed: {},
+  computed: {
+    title() {
+      return this.list.name;
+    },
+    picUrl() {
+      return this.list.coverImgUrl;
+    },
+    discId() {
+      return this.list.id;
+    }
+  },
   methods: {
     ...mapMutations({
       setShowFooter: "SET_SHOW_FOOTER"
     }),
+    ...mapActions(["selectPlay", "randomPlay"]),
     loadMore() {
       if (!this.hasMore) {
         return;
@@ -132,7 +160,7 @@ export default {
         this.hasMore = res.more;
       });
     },
-    selectItem(item) {
+    selectCat(item) {
       this.catText = item.name;
       this.getSongList(item.name, 0, this.order);
     },
@@ -141,6 +169,32 @@ export default {
     },
     orderHot() {
       this.order = "hot";
+    },
+    handleSongList(item) {
+      this.$router.push({
+        path: `/songslist/${item.id}`
+      });
+      Recommend.getDisc(item.id).then(res => {
+        this.setList(res);
+      });
+    },
+    setList(res) {
+      this.list = res.playlist;
+      this.songs = this.normalizeSongs(this.list);
+    },
+    normalizeSongs() {
+      let ret = [];
+      let list = this.list;
+      list.tracks.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
     }
   },
   created() {
@@ -213,7 +267,7 @@ export default {
       padding: 5px;
       .list {
         width: 48%;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         .pic {
           border-radius: 4px;
           width: 100%;

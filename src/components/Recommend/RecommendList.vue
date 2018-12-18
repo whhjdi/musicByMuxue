@@ -46,7 +46,7 @@ export default {
   methods: {
     handleClick() {
       this.$router.push({
-        path: "/highquality"
+        path: "/songslist"
       });
     },
     selectItem(item) {
