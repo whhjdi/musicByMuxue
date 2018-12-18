@@ -39,6 +39,18 @@ class Recommend {
       }
     });
   }
+  static getAllSongList(cat, offset) {
+    return fetch("newDisc", {
+      params: {
+        limit: 10,
+        cat,
+        offset
+      }
+    });
+  }
+  static getCatList() {
+    return fetch("catList");
+  }
 }
 
 export default Recommend;

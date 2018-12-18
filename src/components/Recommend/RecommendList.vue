@@ -45,7 +45,9 @@ export default {
   computed: {},
   methods: {
     handleClick() {
-      console.log("全部歌单");
+      this.$router.push({
+        path: "/highquality"
+      });
     },
     selectItem(item) {
       this.$emit("setDiscList", item);

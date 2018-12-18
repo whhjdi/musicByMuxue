@@ -79,6 +79,11 @@ export default new Router({
       path: "/login",
       name: "login",
       component: () => import("./views/Login")
+    },
+    {
+      path: "/highquality",
+      name: "highquality",
+      component: () => import("./components/Recommend/AllSongList.vue")
     }
   ]
 });
