@@ -4,7 +4,7 @@
       <div class="normal-player" v-show="fullScreen">
         <div class="background">
           <img
-            v-lazy="currentSong.picUrl"
+            :src="currentSong.picUrl"
             alt=""
             width="100%"
             height="100%"
@@ -34,7 +34,7 @@
           <div class="middle-l" v-show="currentShow === 'cd'">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" :class="playing ? 'play' : 'pause'">
-                <img v-lazy="currentSong.picUrl" alt="" class="image" />
+                <img :src="currentSong.picUrl" alt="" class="image" />
               </div>
             </div>
           </div>
