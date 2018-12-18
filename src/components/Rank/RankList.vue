@@ -7,7 +7,7 @@
         class="list border-bottom"
         @click="selectTopList(item);"
       >
-        <img :src="item.coverImgUrl" alt="" class="pic" />
+        <img v-lazy="item.coverImgUrl" alt="" class="pic" />
         <div class="updateFrequency">{{ item.updateFrequency }}</div>
         <ul v-show="item.tracks.length" class="song-list">
           <li

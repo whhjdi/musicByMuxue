@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import NProgress from "nprogress";
-import fetch from "./api/fetch.js";
 import VueLazyload from "vue-lazyload";
 import "normalize.css";
 import "./assets/css/reset.css";
@@ -15,7 +14,6 @@ Vue.config.productionTip = false;
 NProgress.configure({
   showSpinner: false
 });
-Vue.prototype.$fetch = fetch;
 Vue.prototype.$NProgress = NProgress;
 Vue.use(VueLazyload);
 router.beforeEach((to, from, next) => {

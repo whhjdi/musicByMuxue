@@ -18,7 +18,7 @@
         >
       </div>
       <div class="circle" @click="showPlayer">
-        <img :src="picBg" alt="" class="circle-bg" :class="setClass" />
+        <img v-lazy="picBg" alt="" class="circle-bg" :class="setClass" />
       </div>
     </div>
   </transition>

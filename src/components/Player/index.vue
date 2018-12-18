@@ -4,7 +4,7 @@
       <div class="normal-player" v-show="fullScreen">
         <div class="background">
           <img
-            :src="currentSong.picUrl"
+            v-lazy="currentSong.picUrl"
             alt=""
             width="100%"
             height="100%"
@@ -34,7 +34,7 @@
           <div class="middle-l" v-show="currentShow === 'cd'">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" :class="playing ? 'play' : 'pause'">
-                <img :src="currentSong.picUrl" alt="" class="image" />
+                <img v-lazy="currentSong.picUrl" alt="" class="image" />
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@
         @click="open"
       >
         <div class="left">
-          <img :src="currentSong.picUrl" alt="" class="pic" />
+          <img v-lazy="currentSong.picUrl" alt="" class="pic" />
           <div class="name">{{ currentSong.name }}</div>
           <div class="singer">{{ currentSong.singer }}</div>
         </div>

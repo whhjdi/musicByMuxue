@@ -11,7 +11,7 @@
               class="item border-bottom"
               @click="selectAlbum(item);"
             >
-              <img :src="item.picUrl" alt="" class="img" />
+              <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="right">
                 <div class="name">专辑：{{ item.name }}</div>
                 <div class="singer">{{ item.singer }}</div>
@@ -28,7 +28,7 @@
               class="item border-bottom"
               @click="selectSinger(item);"
             >
-              <img :src="item.picUrl" alt="" class="img" />
+              <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="singer">歌手：{{ item.singer }}</div>
             </li>
           </ul>
