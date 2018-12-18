@@ -1,32 +1,34 @@
 <template>
-  <div class="allSongList" v-show="showCatList">
-    <header class="header border-bottom">
-      <svg class="icon i-back" aria-hidden="true" @click="goBack">
-        <use xlink:href="#icon-arrowleft"></use>
-      </svg>
-      <h2 class="title">歌单分类</h2>
-    </header>
-    <Scroll class="scroll" :data="catList" ref="list">
-      <div class="wrapper">
-        <div class="all border" @click="selectAll">全部歌单</div>
-        <ul class="list-wrapper">
-          <li v-for="(item, index) in catList" :key="index" class="list">
-            <div class="sub">{{ item.name }}</div>
-            <ul class="sub-wrapper border-bottom">
-              <li
-                class="sub-item"
-                v-for="ele in item[index]"
-                :key="ele.name"
-                @click="selectItem(ele);"
-              >
-                {{ ele.name }}
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </Scroll>
-  </div>
+  <transition name="slide-up">
+    <div class="allSongList" v-show="showCatList">
+      <header class="header border-bottom">
+        <svg class="icon i-back" aria-hidden="true" @click="goBack">
+          <use xlink:href="#icon-arrowleft"></use>
+        </svg>
+        <h2 class="title">歌单分类</h2>
+      </header>
+      <Scroll class="scroll" :data="catList" ref="list">
+        <div class="wrapper">
+          <div class="all border" @click="selectAll">全部歌单</div>
+          <ul class="list-wrapper">
+            <li v-for="(item, index) in catList" :key="index" class="list">
+              <div class="sub">{{ item.name }}</div>
+              <ul class="sub-wrapper border-bottom">
+                <li
+                  class="sub-item"
+                  v-for="ele in item[index]"
+                  :key="ele.name"
+                  @click="selectItem(ele);"
+                >
+                  {{ ele.name }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </Scroll>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -145,5 +147,13 @@ export default {
       }
     }
   }
+}
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.5s;
+}
+.slide-up-enter,
+.slide-up-leave-to {
+  transform: translateY(100%);
 }
 </style>

@@ -28,16 +28,16 @@
       @handleSinger="getSinger"
       @handleSong="setSong"
     ></Suggest>
-
-    <router-view
-      :title="title"
-      :songs="songsList"
-      :picUrl="picUrl"
-      :id="id"
-      ref="musicList"
-      @select="selectItem"
-    ></router-view>
-
+    <transition name="slide-left">
+      <router-view
+        :title="title"
+        :songs="songsList"
+        :picUrl="picUrl"
+        :id="id"
+        ref="musicList"
+        @select="selectItem"
+      ></router-view>
+    </transition>
     <Confirm
       ref="confirm"
       @deleteAll="deleteAllSearchHistory"

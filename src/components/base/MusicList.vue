@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="slide-left">
     <div class="music-list" ref="musicList">
       <header ref="header">
         <svg class="icon" aria-hidden="true" @click="goBack">
@@ -165,6 +165,14 @@ export default {
   z-index: 9999;
   overflow: hidden;
   background: #fff;
+  &.slide-left-enter-active,
+  &.slide-left-leave-active {
+    transition: all 0.5s;
+  }
+  &.slide-left-enter,
+  &.slide-left-leave-to {
+    transform: translateX(100%);
+  }
   header {
     background: rgba(0, 0, 0, 0);
     position: fixed;
@@ -269,13 +277,5 @@ export default {
       }
     }
   }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-  transform: translateX(100%);
 }
 </style>

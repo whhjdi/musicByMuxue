@@ -6,6 +6,7 @@
       </svg>
       <h2 class="title">歌单</h2>
     </header>
+
     <Scroll
       class="scroll"
       :data="playLists"
@@ -266,5 +267,13 @@ export default {
       }
     }
   }
+}
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s;
+}
+.slide-up-enter,
+.slide-up-leave-to {
+  transform: translateY(100%);
 }
 </style>
