@@ -8,7 +8,6 @@ const state = {
   currentIndex: -1,
   showFooter: false,
   transitionName: "page-left",
-  disc: {},
   query: "",
   searchHistory: loadSearch(),
   playHistory: loadPlay(),

@@ -69,11 +69,12 @@
 import Recommend from "@/api/recommend.js";
 import CatList from "./CatList";
 import Scroll from "../base/Scroll";
-import { mapMutations, mapActions } from "vuex";
-import { createSong } from "@/utils";
+import { mapMutations } from "vuex";
+import { songsListPlayMixin } from "@/mixin.js";
 export default {
   name: "allSongList",
   components: { Scroll, CatList },
+  mixins: [songsListPlayMixin],
   props: {},
   data() {
     return {
@@ -109,7 +110,6 @@ export default {
     ...mapMutations({
       setShowFooter: "SET_SHOW_FOOTER"
     }),
-    ...mapActions(["selectPlay", "randomPlay"]),
     loadMore() {
       if (!this.hasMore) {
         return;
@@ -177,24 +177,6 @@ export default {
       Recommend.getDisc(item.id).then(res => {
         this.setList(res);
       });
-    },
-    setList(res) {
-      this.list = res.playlist;
-      this.songs = this.normalizeSongs(this.list);
-    },
-    normalizeSongs() {
-      let ret = [];
-      let list = this.list;
-      list.tracks.forEach(item => {
-        ret.push(createSong(item));
-      });
-      return ret;
-    },
-    playAll() {
-      this.randomPlay({ list: this.songs });
-    },
-    selectItem(song, index) {
-      this.selectPlay({ list: this.songs, index });
     }
   },
   created() {

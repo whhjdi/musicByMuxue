@@ -1,5 +1,5 @@
 import { mapGetters, mapActions } from "vuex";
-
+import { createSong } from "@/utils";
 export const playListMixin = {
   computed: {
     ...mapGetters(["playList"])
@@ -97,5 +97,29 @@ export const userListMixin = {
   },
   mounted() {
     this.refresh();
+  }
+};
+
+export const songsListPlayMixin = {
+  methods: {
+    ...mapActions(["selectPlay", "randomPlay"]),
+    setList(res) {
+      this.list = res.playlist;
+      this.songs = this.normalizeSongs(this.list);
+    },
+    normalizeSongs() {
+      let ret = [];
+      let list = this.list;
+      list.tracks.forEach(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
+    },
+    playAll() {
+      this.randomPlay({ list: this.songs });
+    },
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index });
+    }
   }
 };

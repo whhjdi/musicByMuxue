@@ -25,9 +25,6 @@ const mutations = {
   [types.SET_TRANSITION_NAME](state, name) {
     state.transitionName = name;
   },
-  [types.SET_DISC](state, list) {
-    state.disc = list;
-  },
   [types.SET_QUERY](state, query) {
     state.query = query;
   },

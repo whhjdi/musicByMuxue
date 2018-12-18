@@ -28,7 +28,7 @@
             <recommend-list
               :list="newDiscs"
               title="最新歌单"
-              @setDiscList="handleDisc"
+              @setDiscList="handleewDisc"
             ></recommend-list>
           </div>
         </div>
@@ -51,9 +51,9 @@ import Slide from "@/components/Recommend/Slide.vue";
 import Recommend from "@/api/recommend.js";
 import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
-import { mapMutations, mapActions, mapGetters } from "vuex";
-import { createSong } from "@/utils";
+import { mapGetters } from "vuex";
 import SearchBar from "@/components/base/SearchNav.vue";
+import { songsListPlayMixin } from "@/mixin.js";
 export default {
   name: "home",
   components: {
@@ -62,6 +62,7 @@ export default {
     RecommendList,
     SearchBar
   },
+  mixins: [songsListPlayMixin],
   props: {},
   data() {
     return {
@@ -89,10 +90,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setDisc: "SET_DISC"
-    }),
-    ...mapActions(["selectPlay", "randomPlay"]),
     handleDisc(item) {
       this.$router.push({
         path: `/home/${item.id}`
@@ -101,25 +98,6 @@ export default {
         this.setList(res);
       });
     },
-    setList(res) {
-      this.list = res.playlist;
-      this.songs = this.normalizeSongs(this.list);
-    },
-    normalizeSongs() {
-      let ret = [];
-      let list = this.list;
-      list.tracks.forEach(item => {
-        ret.push(createSong(item));
-      });
-      return ret;
-    },
-    selectItem(song, index) {
-      this.selectPlay({ list: this.songs, index });
-    },
-    playAll() {
-      this.randomPlay({ list: this.songs });
-    },
-
     getAllRecommend() {
       let p1 = Recommend.getBanner();
       let p2;
