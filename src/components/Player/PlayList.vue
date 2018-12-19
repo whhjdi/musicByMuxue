@@ -202,11 +202,11 @@ export default {
         align-items: center;
         &.list-enter-active,
         &.list-leave-active {
-          transition: all 0.1s linear;
+          transition: all 0.3s linear;
         }
         &.list-enter,
         &.list-leave-to {
-          height: 0;
+          transform: translateX(100%);
         }
         &.on {
           color: #ff3f72;

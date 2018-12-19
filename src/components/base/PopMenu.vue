@@ -17,7 +17,7 @@
                 <use :xlink:href="getFavoriteIcon(song)"></use></svg
               >喜欢
             </div>
-            <div class="singer item border-bottom">
+            <div class="singer item border-bottom" @click="toSinger(song);">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-user"></use></svg
               >歌手：{{ song.singer }}
