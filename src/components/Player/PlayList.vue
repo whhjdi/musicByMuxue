@@ -88,7 +88,9 @@ export default {
   methods: {
     ...mapActions(["deleteSong", "clearSong", "setTips"]),
     ...mapMutations({
-      setCurrentIndex: "SET_CURRENT_INDEX"
+      setCurrentIndex: "SET_CURRENT_INDEX",
+      setShowFooter: "SET_SHOW_FOOTER",
+      setFullScreen: "SET_FULL_SCREEN"
     }),
     show() {
       this.isShow = true;
@@ -133,6 +135,10 @@ export default {
       this.clearSong();
       this.hide();
       this.setTips("已经清空播放列表啦");
+      this.setFullScreen(false);
+      if (this.$route.name && this.$route.name !== "search") {
+        this.setShowFooter(true);
+      }
     }
   },
   created() {},
