@@ -8,7 +8,7 @@ import "normalize.css";
 import "./assets/css/reset.css";
 import "nprogress/nprogress.css";
 import "./assets/css/border-1px.css";
-import VConsole from "vconsole";
+// import VConsole from "vconsole";
 Vue.config.productionTip = false;
 
 NProgress.configure({
@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done();
 });
-new VConsole();
+// new VConsole();
 new Vue({
   router,
   store,

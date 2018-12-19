@@ -1,22 +1,29 @@
 # mx-music
 
-## 开发日志
+## 项目总览
+- 首页·歌单·歌单分类
 
-### init
+![](https://ws3.sinaimg.cn/large/006tNbRwly1fyc9pf8jdwj315y0u0hdu.jpg)
 
-vue-cli3
-viewport 适配方案
-fastclick
-nprogress
-better-scroll
-路由全局守卫
-normalize.css
-reset.css
-HeaderBar 组件
-Tab 组件
-路由配置
+- 排行·歌手·排行榜详情
 
-### 
+![](https://ws2.sinaimg.cn/large/006tNbRwly1fyc9s6a1swj315j0u0hcj.jpg)
+
+- 歌手详情·评论·播放列表
+
+![](https://ws3.sinaimg.cn/large/006tNbRwly1fyc9vksa8bj315j0u0e81.jpg)
+
+- 最近播放·个人信息·登录
+
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fyc9ya5q8uj315j0u01kx.jpg)
+
+- 搜索推荐·搜索历史·收藏夹
+
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fyca10yxdtj315j0u0wpg.jpg)
+
+- 菜单·全屏播放·歌词
+
+![](https://ws2.sinaimg.cn/large/006tNbRwly1fyca3pegp2j315k0u0hdu.jpg)
 
 ## Project setup
 
