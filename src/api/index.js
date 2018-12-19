@@ -29,6 +29,7 @@ const urls = {
   suggest: "/search/suggest",
   //获取专辑详情
   album: "/album",
+  comment: "/comment/playlist",
   /*登录之后*/
   //手机登录
   login: "/login/cellphone",

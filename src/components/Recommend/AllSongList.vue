@@ -46,6 +46,18 @@
           >
             <img :src="item.coverImgUrl" alt="" class="pic" />
             <div class="name">{{ item.name }}</div>
+            <div class="number">
+              <svg class="icon i-count" aria-hidden="true">
+                <use xlink:href="#icon-music"></use>
+              </svg>
+              <div class="count">{{ item.playCount | setNumber }}</div>
+            </div>
+            <div class="author">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-user"></use>
+              </svg>
+              <span class="nickname">{{ item.creator.nickname }}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -78,6 +90,14 @@ export default {
   name: "allSongList",
   components: { Scroll, CatList },
   mixins: [songsListPlayMixin, playListMixin],
+  filters: {
+    setNumber(val) {
+      if (val < 10000) {
+        return "<1万";
+      }
+      return `${Math.ceil(val / 10000)}万`;
+    }
+  },
   props: {},
   data() {
     return {
@@ -256,6 +276,7 @@ export default {
       .list {
         width: 48%;
         margin-bottom: 15px;
+        position: relative;
         .pic {
           border-radius: 4px;
           width: 100%;
@@ -263,6 +284,29 @@ export default {
         }
         .name {
           font-size: 12px;
+        }
+        .number {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          color: #fff;
+          font-weight: 200;
+          .i-count {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 2px;
+          }
+          .count {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 10px;
+          }
+        }
+        .author {
+          position: absolute;
+          left: 5px;
+          bottom: 40px;
+          color: #fff;
         }
       }
     }

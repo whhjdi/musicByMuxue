@@ -2,7 +2,7 @@
   <transition name="slide-left">
     <div class="music-list" ref="musicList">
       <header ref="header">
-        <svg class="icon" aria-hidden="true" @click="goBack">
+        <svg class="icon i-back" aria-hidden="true" @click="goBack">
           <use xlink:href="#icon-arrowleft"></use>
         </svg>
         <h1 class="title">{{ headerTitle }}</h1>
@@ -20,9 +20,16 @@
             <div class="filter"></div>
             <h1 class="title">{{ title }}</h1>
           </div>
-          <div class="song-list-wrapper">
+          <div class="song-list-wrapper" v-show="!showComment">
+            <svg
+              class="icon i-comment"
+              aria-hidden="true"
+              @click.stop="toggleComment"
+            >
+              <use xlink:href="#icon-comment"></use>
+            </svg>
             <div class="control-wrapper border-bottom">
-              <svg class="icon" aria-hidden="true">
+              <svg class="icon i-play" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use>
               </svg>
               <span class="desc" @click="playAll"
@@ -54,6 +61,73 @@
               </li>
             </ul>
           </div>
+          <transition name="comment-show">
+            <div class="comment" v-show="showComment">
+              <svg
+                class="icon i-song"
+                aria-hidden="true"
+                @click.stop="toggleComment"
+              >
+                <use xlink:href="#icon-close"></use>
+              </svg>
+              <h3
+                class="hot-title"
+                v-show="hotComments && hotComments.length > 0"
+              >
+                热门评论({{ hotComments.length }})
+              </h3>
+              <ul
+                class="hot-list"
+                v-show="hotComments && hotComments.length > 0"
+              >
+                <li
+                  v-for="(comment, index) in hotComments"
+                  :key="index"
+                  class="hot"
+                >
+                  <img v-lazy="comment.user.avatarUrl" alt="" class="pic" />
+                  <div class="right border-bottom">
+                    <div class="nickname">{{ comment.user.nickname }}</div>
+                    <p class="content">{{ comment.content }}</p>
+                  </div>
+                  <div class="likedCount">
+                    <span class="like"> {{ comment.likedCount }} </span>
+                    <svg class="icon i-like" aria-hidden="true">
+                      <use xlink:href="#icon-like1"></use>
+                    </svg>
+                  </div>
+                </li>
+              </ul>
+              <h3 class="new-title" v-show="comments && comments.length > 0">
+                最新评论({{ comments.length }})
+              </h3>
+              <ul class="hot-list" v-show="comments && comments.length > 0">
+                <li
+                  v-for="(comment, index) in comments"
+                  :key="index"
+                  class="hot"
+                >
+                  <img v-lazy="comment.user.avatarUrl" alt="" class="pic" />
+                  <div class="right border-bottom">
+                    <div class="nickname">{{ comment.user.nickname }}</div>
+                    <p class="content">{{ comment.content }}</p>
+                  </div>
+                  <div class="likedCount">
+                    <span class="like"> {{ comment.likedCount }} </span>
+                    <svg class="icon i-like" aria-hidden="true">
+                      <use xlink:href="#icon-like1"></use>
+                    </svg>
+                  </div>
+                </li>
+              </ul>
+              <div
+                class="void"
+                v-show="comments.length === 0 && hotComments.length === 0"
+              >
+                暂时还没有评论
+              </div>
+            </div>
+          </transition>
         </div>
       </Scroll>
       <pop-menu ref="popMenu" @nextPlay="nextPlay"></pop-menu>
@@ -66,6 +140,7 @@ import Scroll from "../base/Scroll";
 import { playListMixin } from "@/mixin.js";
 import PopMenu from "./PopMenu";
 import { mapActions, mapGetters } from "vuex";
+import Recommend from "@/api/recommend.js";
 export default {
   name: "MusicList",
   components: { Scroll, PopMenu },
@@ -89,7 +164,10 @@ export default {
   data() {
     return {
       scrollY: 0,
-      headerTitle: ""
+      headerTitle: "",
+      showComment: false,
+      comments: [],
+      hotComments: []
     };
   },
   watch: {
@@ -139,6 +217,16 @@ export default {
         return;
       }
       this.insertSongNext(song);
+    },
+    toggleComment() {
+      if (!this.showComment) {
+        Recommend.getComment(this.id).then(res => {
+          console.log(res);
+          this.comments = res.comments;
+          this.hotComments = res.hotComments;
+        });
+      }
+      this.showComment = !this.showComment;
     }
   },
   created() {
@@ -184,7 +272,7 @@ export default {
     justify-content: flex-start;
     padding: 10px;
     z-index: 999;
-    .icon {
+    .i-back {
       width: 24px;
       height: 24px;
       color: #fff;
@@ -228,12 +316,21 @@ export default {
       }
       .song-list-wrapper {
         position: relative;
+        .i-comment {
+          position: absolute;
+          right: 10px;
+          top: 0;
+          width: 20px;
+          height: 20px;
+          padding: 10px;
+          z-index: 999;
+        }
         .control-wrapper {
           padding: 10px 0;
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          .icon {
+          .i-play {
             width: 20px;
             height: 20px;
             padding: 0 16px;
@@ -273,6 +370,117 @@ export default {
               margin-right: 5px;
             }
           }
+        }
+      }
+      .comment {
+        &.comment-show-enter-active,
+        &.comment-show-leave-active {
+          transition: all 0.3s;
+        }
+        &.comment-show-enter,
+        &.comment-show-leave-to {
+          transform: translateX(100%);
+        }
+        position: relative;
+        .i-song {
+          position: absolute;
+          right: 10px;
+          top: 0;
+          width: 20px;
+          height: 20px;
+          padding: 10px;
+          z-index: 999;
+        }
+        .hot-title {
+          padding: 10px 20px;
+        }
+        .hot-list {
+          .hot {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 10px;
+            .pic {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              padding: 10px 5px;
+              margin-right: 5px;
+            }
+            .right {
+              flex: 1;
+              padding: 10px 5px;
+              .nickname {
+                margin-bottom: 10px;
+                color: rgb(107, 107, 107);
+                font-size: 10px;
+              }
+              .content {
+                color: #5a5a5a;
+                font-size: 12px;
+              }
+            }
+            .likedCount {
+              .like {
+                display: inline-block;
+                vertical-align: top;
+                margin-right: 2px;
+              }
+              .i-like {
+                display: inline-block;
+                vertical-align: top;
+              }
+            }
+          }
+        }
+        .new-title {
+          padding: 10px 20px;
+        }
+        .new-list {
+          .hot {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 10px;
+            .pic {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              padding: 10px 5px;
+              margin-right: 5px;
+            }
+            .right {
+              flex: 1;
+              padding: 10px 5px;
+              .nickname {
+                margin-bottom: 10px;
+                color: rgb(107, 107, 107);
+                font-size: 10px;
+              }
+              .content {
+                color: #5a5a5a;
+                font-size: 12px;
+              }
+            }
+            .likedCount {
+              .like {
+                display: inline-block;
+                vertical-align: top;
+                margin-right: 2px;
+              }
+              .i-like {
+                display: inline-block;
+                vertical-align: top;
+              }
+            }
+          }
+        }
+        .void {
+          font-size: 18px;
+          position: absolute;
+          top: 100px;
+          left: 50%;
+          transform: translateX(-50%);
         }
       }
     }

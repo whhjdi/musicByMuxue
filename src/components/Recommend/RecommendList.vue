@@ -19,6 +19,12 @@
           class="pic"
         />
         <p class="name">{{ item.name }}</p>
+        <div class="number">
+          <svg class="icon i-count" aria-hidden="true">
+            <use xlink:href="#icon-music"></use>
+          </svg>
+          <div class="count">{{ item.playCount | setCount }}</div>
+        </div>
       </li>
     </ul>
   </div>
@@ -28,6 +34,14 @@
 export default {
   name: "",
   components: {},
+  filters: {
+    setCount(val) {
+      if (val < 10000) {
+        return "<1万";
+      }
+      return `${Math.ceil(val / 10000)}万`;
+    }
+  },
   props: {
     list: {
       type: Array,
@@ -80,6 +94,7 @@ export default {
     .list {
       width: 32%;
       margin-bottom: 20px;
+      position: relative;
       .pic {
         border-radius: 4px;
         width: 100%;
@@ -87,6 +102,26 @@ export default {
       }
       .name {
         font-size: 12px;
+      }
+      .number {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        color: #fff;
+        font-weight: 200;
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        padding: 2px;
+        .i-count {
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 2px;
+        }
+        .count {
+          display: inline-block;
+          vertical-align: top;
+          font-size: 10px;
+        }
       }
     }
   }

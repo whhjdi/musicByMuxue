@@ -5,16 +5,14 @@ class Song {
     return fetch("song", {
       params: {
         id,
-        br: 320000,
-        xhrFields: { withCredentials: true }
+        br: 320000
       }
     });
   }
   static getLyric(id) {
     return fetch("lyric", {
       params: {
-        id,
-        xhrFields: { withCredentials: true }
+        id
       }
     });
   }

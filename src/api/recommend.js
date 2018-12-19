@@ -52,6 +52,14 @@ class Recommend {
   static getCatList() {
     return fetch("catList");
   }
+  static getComment(id, offset) {
+    return fetch("comment", {
+      params: {
+        id,
+        offset
+      }
+    });
+  }
 }
 
 export default Recommend;
