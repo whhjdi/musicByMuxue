@@ -2,7 +2,9 @@ html {
   overflow-x: auto;
   overflow-y: scroll;
   height: 100%;
+  touch-action: manipulation;
 }
+
 body,
 dl,
 dt,
