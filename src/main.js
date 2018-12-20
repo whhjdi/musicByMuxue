@@ -8,9 +8,11 @@ import "normalize.css";
 import "./assets/css/reset.css";
 import "nprogress/nprogress.css";
 import "./assets/css/border-1px.css";
+import fastClick from "fastclick";
 // import VConsole from "vconsole";
 Vue.config.productionTip = false;
 
+fastClick.attach(document.body);
 NProgress.configure({
   showSpinner: false
 });

@@ -25,36 +25,71 @@
 
 ![](https://ws2.sinaimg.cn/large/006tNbRwly1fyca3pegp2j315k0u0hdu.jpg)
 
+## 注意功能
+
+### 歌单
+歌单分为四类：推荐歌单（登录前），推荐歌单（登录后），全部歌单，分类歌单。根据是否登录推荐你喜欢的歌单，支持歌单类型选择和按照最新和最热排序，歌单展示实现触底加载，加快加载速度，减少不必要流量消耗
+
+### 排行榜
+
+排行榜由于接口问题，原本的26个排行删减为23个，默认显示前三名，进入后显示全部歌曲。
+
+### 歌手
+
+右侧字母索引和左侧歌手联动，支持滑动和点击。
+
+### 我的
+
+实现最近播放，收藏夹，个性推荐（需登录），个人中心（个人信息展示，签到，登录）
+
+### 播放器
+
+实现顺序播放，随机播放，单曲循环，上一曲、下一曲，播放/暂停，收藏,播放列表，歌词展示等功能
+最小化之后显示mini播放器，支持播放/暂停，播放列表
+
+### 歌曲列表（通用组件）
+
+歌单详情，专辑详情，歌手详情都用这个组件展示，查看评论功能也在这个组件实现，歌曲支持直接播放，下一曲播放和收藏
+
+### 搜索
+
+实现热门搜索，搜索推荐（专辑，歌手，歌曲）等基本功能，歌曲支持直接播放，下一曲播放和收藏，考虑稳定性这些数据都保存在localstorage,暂时不会使用在线接口，防止收藏歌曲等误操作
+
+##技术栈
+
+###前端
+
+Vue：用于构建用户界面的 MVVM 框架
+vue-router：为单页面应用提供的路由系统，使用了 Lazy Loading Routes 技术来实现异步加载优化性能
+vuex：Vue 集中状态管理，在多个组件共享某些状态时非常便捷
+vue-lazyload：实现图片懒加载，节省用户流量，优化页面加载速度
+better-scroll：解决移动端各种滚动场景需求的插件，使移动端滑动体验更加流畅
+SCSS：css 预编译处理器
+ES6：ECMAScript 新一代语法，模块化、解构赋值、Promise、Class 等方法非常好用
+
+###后端
+
+Node.js：利用 Express 搭建的本地测试服务器
+vue-axios：用来请求后端 API 音乐数据
+NeteaseCloudMusicApi：网易云音乐 NodeJS 版 API，提供音乐数据
+
+###其他工具
+
+vue-cli：Vue 脚手架工具，快速初始化项目代码
+eslint：代码风格检查工具，帮助我们规范代码书写（一定要养成良好的代码规范）
+iconfont ：阿里巴巴图标库，谁用谁知道
+
+## 如果觉得我的项目还不错的话 👏，就给个 star ⭐️ 鼓励一下吧~
+
 ## Project setup
-
-```
+clone本项目和[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
+```bash
+//进入NeteaseCloudMusicApi目录
+node app.js
+//进入musicByMusic目录
 yarn install
+//开启serve
+yarn serve
+//编译打包
+yarn build
 ```
-
-### Compiles and hot-reloads for development
-
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn run build
-```
-
-### Run your tests
-
-```
-yarn run test
-```
-
-### Lints and fixes files
-
-```
-yarn run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
