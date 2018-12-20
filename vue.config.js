@@ -1,3 +1,3 @@
 module.exports = {
-  baseUrl: "/musicByMuxue/dist/"
+  baseUrl: process.env.NODE_ENV === "production" ? "/musicByMuxue/dist/" : "/"
 };
