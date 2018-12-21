@@ -2,6 +2,17 @@ import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
 
+const Home = () => import(/* webpackChunkName: "home" */ "./views/Home");
+const Rank = () => import(/* webpackChunkName: "rank" */ "./views/Rank");
+const Artist = () => import(/* webpackChunkName: "artist" */ "./views/Artist");
+const User = () => import(/* webpackChunkName: "user" */ "./views/User");
+const Search = () => import(/* webpackChunkName: "search" */ "./views/Search");
+const Login = () => import(/* webpackChunkName: "login" */ "./views/Login");
+const AllSongList = () =>
+  import(/* webpackChunkName: "allSongList" */ "./components/Recommend/AllSongList.vue");
+const MusicList = () =>
+  import(/* webpackChunkName: "musicList" */ "./components/base/MusicList.vue");
+
 export default new Router({
   routes: [
     {
@@ -11,86 +22,86 @@ export default new Router({
     {
       path: "/home",
       name: "home",
-      component: () => import("./views/Home"),
+      component: Home,
       meta: {
         index: 2
       },
       children: [
         {
           path: ":id",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     },
     {
       path: "/rank",
       name: "rank",
-      component: () => import("./views/Rank"),
+      component: Rank,
       meta: {
         index: 3
       },
       children: [
         {
           path: ":idx",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     },
     {
       path: "/artist",
       name: "artist",
-      component: () => import("./views/Artist"),
+      component: Artist,
       meta: {
         index: 4
       },
       children: [
         {
           path: ":id",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     },
     {
       path: "/user",
       name: "user",
-      component: () => import("./views/User"),
+      component: User,
       meta: {
         index: 1
       },
       children: [
         {
           path: ":id",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     },
     {
       path: "/search",
       name: "search",
-      component: () => import("./views/Search"),
+      component: Search,
       meta: {
         trans: 0
       },
       children: [
         {
           path: ":id",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     },
     {
       path: "/login",
       name: "login",
-      component: () => import("./views/Login")
+      component: Login
     },
     {
       path: "/songslist",
       name: "songslist",
-      component: () => import("./components/Recommend/AllSongList.vue"),
+      component: AllSongList,
       children: [
         {
           path: ":id",
-          component: () => import("./components/base/MusicList.vue")
+          component: MusicList
         }
       ]
     }
