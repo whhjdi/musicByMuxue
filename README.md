@@ -75,9 +75,9 @@ NeteaseCloudMusicApi：网易云音乐 NodeJS 版 API，提供音乐数据
 
 ###其他工具
 
-vue-cli：Vue 脚手架工具，快速初始化项目代码
-eslint：代码风格检查工具，帮助我们规范代码书写（一定要养成良好的代码规范）
-iconfont ：阿里巴巴图标库，谁用谁知道
+vue-cli3：Vue 脚手架工具
+eslint：代码风格检查工具
+iconfont ：阿里巴巴图标库
 
 ## 如果觉得我的项目还不错的话 👏，就给个 star ⭐️ 鼓励一下吧~
 
