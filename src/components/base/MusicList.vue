@@ -232,14 +232,19 @@ export default {
   created() {
     this.probeType = 3;
     this.listenScroll = true;
+    this.$nextTick(() => {
+      this.$refs.list.$el.style.top;
+      this.imageHeight = this.$refs.bg.clientHeight;
+      this.minTranslateHeight = -this.imageHeight + 44;
+    });
   },
-  mounted() {
-    if (!this.id) {
-      this.$router.go(-1);
-    }
-    this.$refs.list.$el.style.top;
-    this.imageHeight = this.$refs.bg.clientHeight;
-    this.minTranslateHeight = -this.imageHeight + 44;
+  mounted() {},
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (!vm.id) {
+        vm.$router.go(-1);
+      }
+    });
   }
 };
 </script>
