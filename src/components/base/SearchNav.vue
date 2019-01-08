@@ -5,6 +5,7 @@
       class="input"
       @click="clickInput"
       :placeholder="placeholder"
+      readonly
     />
     <svg class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-sousuo"></use>
