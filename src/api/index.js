@@ -1,4 +1,4 @@
-const host = "http://192.168.123.63:3000";
+const host = "https://muxue-music.herokuapp.com";
 
 const urls = {
   //banner

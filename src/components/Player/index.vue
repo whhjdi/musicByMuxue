@@ -5,7 +5,7 @@
         <div class="background">
           <img
             :src="currentSong.picUrl"
-            alt=""
+            alt
             width="100%"
             height="100%"
             class="img"
@@ -23,18 +23,18 @@
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
           <svg
-            class="icon  i-right"
+            class="icon i-right"
             aria-hidden="true"
             @click="toggleFavorite(currentSong);"
           >
-            <use :xlink:href="getFavoriteIcon(currentSong)"></use>
+            <use xlink:href="getFavoriteIcon(currentSong)"></use>
           </svg>
         </div>
         <div class="middle" @click="changeMiddle">
           <div class="middle-l" v-show="currentShow === 'cd'">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" :class="playing ? 'play' : 'pause'">
-                <img :src="currentSong.picUrl" alt="" class="image" />
+                <img :src="currentSong.picUrl" alt class="image" />
               </div>
             </div>
           </div>
@@ -76,30 +76,19 @@
           </div>
           <div class="operators">
             <svg class="icon i-left" aria-hidden="true" @click="changeMode">
-              <use :xlink:href="iconMode"></use>
+              <use xlink:href="iconMode"></use>
             </svg>
-            <svg
-              class="icon i-left"
-              aria-hidden="true"
-              @click="prev"
-              :class="disableClass"
-            >
+            <svg class="icon i-left" aria-hidden="true" @click="prev">
               <use xlink:href="#icon-step-backward"></use>
             </svg>
             <svg
               class="icon i-center"
               aria-hidden="true"
-              :class="disableClass"
               @click="togglePlaying"
             >
               <use :xlink:href="playIcon"></use>
             </svg>
-            <svg
-              class="icon i-right"
-              aria-hidden="true"
-              :class="disableClass"
-              @click="next"
-            >
+            <svg class="icon i-right" aria-hidden="true" @click="next">
               <use xlink:href="#icon-step-forward"></use>
             </svg>
             <svg class="icon i-right" aria-hidden="true" @click="showPlayList">
@@ -116,7 +105,7 @@
         @click="open"
       >
         <div class="left">
-          <img v-lazy="currentSong.picUrl" alt="" class="pic" />
+          <img v-lazy="currentSong.picUrl" alt class="pic" />
           <div class="name">{{ currentSong.name }}</div>
           <div class="singer">{{ currentSong.singer }}</div>
         </div>
@@ -126,7 +115,7 @@
             aria-hidden="true"
             @click.stop.prevent="togglePlaying"
           >
-            <use :xlink:href="miniIcon"></use>
+            <use xlink:href="miniIcon"></use>
           </svg>
 
           <svg class="icon" aria-hidden="true" @click.stop="showPlayList">
@@ -214,9 +203,6 @@ export default {
     miniIcon() {
       return this.playing ? "#icon-timeout" : "#icon-play-circle";
     },
-    disableClass() {
-      return this.songReady ? "" : "disable";
-    },
     percent() {
       return this.currentTime / this.duration;
     },
@@ -231,9 +217,7 @@ export default {
       if (this.noLyric) {
         return "暂无歌词";
       }
-      if (!this.noLyric) {
-        return "歌词加载中";
-      }
+      return "歌词加载中";
     }
   },
   methods: {
@@ -476,8 +460,8 @@ export default {
       padding-top: 5px;
       .icon {
         /* position: absolute;
-        left: 15px;
-        top: 10px; */
+	        left: 15px;
+	        top: 10px; */
         width: 24px;
         height: 24px;
         padding: 5px;

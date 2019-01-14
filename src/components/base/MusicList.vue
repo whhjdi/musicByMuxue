@@ -238,14 +238,22 @@ export default {
       this.minTranslateHeight = -this.imageHeight + 44;
     });
   },
-  mounted() {},
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (!vm.id) {
-        vm.$router.go(-1);
+  mounted() {
+    console.log(1);
+
+    setTimeout(() => {
+      if (!this.id) {
+        this.$router.go(-1);
       }
-    });
+    }, 1000);
   }
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     if (!vm.id) {
+  //       vm.$router.go(-1);
+  //     }
+  //   });
+  // }
 };
 </script>
 <style lang="scss" scoped>
