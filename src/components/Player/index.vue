@@ -115,7 +115,7 @@
             aria-hidden="true"
             @click.stop.prevent="togglePlaying"
           >
-            <use xlink:href="miniIcon"></use>
+            <use :xlink:href="miniIcon"></use>
           </svg>
 
           <svg class="icon" aria-hidden="true" @click.stop="showPlayList">

@@ -103,7 +103,7 @@ export default {
   left: 0;
   right: 0;
   height: 52px;
-  z-index: 1;
+  z-index: 9;
   background: #fff;
   opacity: 0.9;
   box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);

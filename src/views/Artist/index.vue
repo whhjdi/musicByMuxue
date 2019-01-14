@@ -25,7 +25,7 @@ import Artist from "../../api/artist.js";
 import { Singer } from "../../utils";
 import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
 import SearchBar from "@/components/base/SearchNav.vue";
 const HOT_NAME = "热门";
@@ -56,6 +56,9 @@ export default {
   },
   methods: {
     ...mapActions(["selectPlay", "randomPlay"]),
+    ...mapMutations({
+      setLoading: "SET_LOADING"
+    }),
     selectItem(song, index) {
       this.selectPlay({ list: this.songs, index });
     },
@@ -63,7 +66,9 @@ export default {
       this.randomPlay({ list: this.songs });
     },
     getDeatil(id) {
+      this.setLoading(true);
       Artist.getSingerDetail(id).then(res => {
+        this.setLoading(false);
         this.setSingerDetail(res);
       });
     },
@@ -154,7 +159,9 @@ export default {
     this.$refs.singerList.$children[0].refresh();
   },
   created() {
+    this.setLoading(true);
     Artist.singer().then(res => {
+      this.setLoading(false);
       this.setArtists(res);
     });
   },

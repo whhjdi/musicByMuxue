@@ -82,7 +82,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setUserInfo: "SET_USER_INFO"
+      setUserInfo: "SET_USER_INFO",
+      setLoading: "SET_LOADING"
     }),
     ...mapActions([
       "clearPlayHistory",
@@ -118,6 +119,7 @@ export default {
       });
     }
   },
+
   created() {
     Login.getLoginStatus()
       .then(res => {

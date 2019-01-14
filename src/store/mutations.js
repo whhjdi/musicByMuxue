@@ -45,6 +45,9 @@ const mutations = {
   },
   [types.SET_TIP_TEXT](state, text) {
     state.tipText = text;
+  },
+  [types.SET_LOADING](state, flag) {
+    state.loading = flag;
   }
 };
 

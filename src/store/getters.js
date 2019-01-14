@@ -17,3 +17,4 @@ export const userInfo = state => state.userInfo;
 export const isLogin = state => !!state.userInfo;
 export const showTips = state => state.showTips;
 export const tipText = state => state.tipText;
+export const loading = state => state.loading;

@@ -52,7 +52,7 @@ const RANK_LIST = [
 import { createSong } from "@/utils";
 import Rank from "@/api/rank.js";
 import RankList from "@/components/Rank/RankList.vue";
-import { mapActions } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import SearchBar from "@/components/base/SearchNav.vue";
 export default {
   name: "rank",
@@ -79,8 +79,12 @@ export default {
   },
   methods: {
     ...mapActions(["selectPlay", "randomPlay"]),
+    ...mapMutations({
+      setLoading: "SET_LOADING"
+    }),
     getTopList() {
       Rank.getTopList().then(res => {
+        this.setLoading(false);
         this.setTopList(res);
       });
     },
@@ -109,7 +113,9 @@ export default {
       });
     },
     getTopListDetail(idx) {
+      this.setLoading(true);
       Rank.getTopListDetail(idx).then(res => {
+        this.setLoading(false);
         this.topDetailList = res.playlist;
         let songs = this.topDetailList.tracks;
         this.songs = this.normalizeSongs(songs);
@@ -133,6 +139,7 @@ export default {
     this.$refs.rankList.$children[0].refresh();
   },
   created() {
+    this.setLoading(true);
     this.getTopList();
   },
   mounted() {}

@@ -14,7 +14,8 @@ const state = {
   favoriteList: loadFavorite(),
   userInfo: null,
   showTips: false,
-  tipText: ""
+  tipText: "",
+  loading: false
 };
 
 export default state;

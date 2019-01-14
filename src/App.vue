@@ -4,10 +4,11 @@
       <keep-alive> <router-view></router-view> </keep-alive>
     </transition>
     <Player></Player>
-    <the-footer></the-footer>
     <Tips ref="tips">
       <span class="text">{{ tipText }}</span>
     </Tips>
+    <Loading></Loading>
+    <the-footer></the-footer>
   </div>
 </template>
 <script>
@@ -15,11 +16,13 @@ import Player from "./components/Player";
 import TheFooter from "./components/base/TheFooter";
 import { mapGetters, mapMutations } from "vuex";
 import Tips from "./components/base/Tips";
+import Loading from "./components/base/Loading";
 export default {
   components: {
     Player,
     TheFooter,
-    Tips
+    Tips,
+    Loading
   },
   data() {
     return {};

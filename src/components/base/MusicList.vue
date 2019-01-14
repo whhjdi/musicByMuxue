@@ -139,7 +139,7 @@
 import Scroll from "../base/Scroll";
 import { playListMixin } from "@/mixin.js";
 import PopMenu from "./PopMenu";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import Recommend from "@/api/recommend.js";
 export default {
   name: "MusicList",
@@ -192,6 +192,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setLoading: "SET_LOADING"
+    }),
     ...mapActions(["insertSongNext", "insertSong", "randomPlay", "selectPlay"]),
     goBack() {
       this.$router.go(-1);
@@ -239,8 +242,6 @@ export default {
     });
   },
   mounted() {
-    console.log(1);
-
     setTimeout(() => {
       if (!this.id) {
         this.$router.go(-1);

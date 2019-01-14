@@ -51,7 +51,7 @@ import Slide from "@/components/Recommend/Slide.vue";
 import Recommend from "@/api/recommend.js";
 import Scroll from "@/components/base/Scroll.vue";
 import RecommendList from "@/components/Recommend/RecommendList.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import SearchBar from "@/components/base/SearchNav.vue";
 import { songsListPlayMixin } from "@/mixin.js";
 export default {
@@ -90,11 +90,16 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setLoading: "SET_LOADING"
+    }),
     handleDisc(item) {
       this.$router.push({
         path: `/home/${item.id}`
       });
+      this.setLoading(true);
       Recommend.getDisc(item.id).then(res => {
+        this.setLoading(false);
         this.setList(res);
       });
     },
@@ -133,7 +138,9 @@ export default {
     this.$refs.scrolls.refresh();
   },
   created() {
+    this.setLoading(true);
     this.getAllRecommend().then(res => {
+      this.setLoading(false);
       this.setAllRecommend(res);
     });
   }
