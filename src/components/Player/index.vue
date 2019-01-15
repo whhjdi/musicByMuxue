@@ -76,7 +76,7 @@
           </div>
           <div class="operators">
             <svg class="icon i-left" aria-hidden="true" @click="changeMode">
-              <use xlink:href="iconMode"></use>
+              <use :xlink:href="iconMode"></use>
             </svg>
             <svg class="icon i-left" aria-hidden="true" @click="prev">
               <use xlink:href="#icon-step-backward"></use>
