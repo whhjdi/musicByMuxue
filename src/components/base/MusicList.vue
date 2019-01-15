@@ -85,13 +85,13 @@
                   :key="index"
                   class="hot"
                 >
-                  <img v-lazy="comment.user.avatarUrl" alt="" class="pic" />
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
                   </div>
                   <div class="likedCount">
-                    <span class="like"> {{ comment.likedCount }} </span>
+                    <span class="like">{{ comment.likedCount }}</span>
                     <svg class="icon i-like" aria-hidden="true">
                       <use xlink:href="#icon-like1"></use>
                     </svg>
@@ -107,13 +107,13 @@
                   :key="index"
                   class="hot"
                 >
-                  <img v-lazy="comment.user.avatarUrl" alt="" class="pic" />
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
                   </div>
                   <div class="likedCount">
-                    <span class="like"> {{ comment.likedCount }} </span>
+                    <span class="like">{{ comment.likedCount }}</span>
                     <svg class="icon i-like" aria-hidden="true">
                       <use xlink:href="#icon-like1"></use>
                     </svg>
@@ -241,20 +241,17 @@ export default {
       this.minTranslateHeight = -this.imageHeight + 44;
     });
   },
-  mounted() {
-    setTimeout(() => {
-      if (!this.id) {
-        this.$router.go(-1);
-      }
-    }, 1000);
+  beforeRouteEnter(to, from, next) {
+    if (!from.name) {
+      next(vm => {
+        if (!vm.id) {
+          vm.$router.go(-1);
+        }
+      });
+    } else {
+      next();
+    }
   }
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     if (!vm.id) {
-  //       vm.$router.go(-1);
-  //     }
-  //   });
-  // }
 };
 </script>
 <style lang="scss" scoped>
