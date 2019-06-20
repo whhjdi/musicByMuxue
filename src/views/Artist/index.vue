@@ -2,11 +2,7 @@
   <div class="artist">
     <search-bar></search-bar>
     <div class="singer-list-wrapper">
-      <singer-list
-        :singers="singers"
-        @selectSinger="chooseSinger"
-        ref="singerList"
-      ></singer-list>
+      <singer-list :singers="singers" @selectSinger="chooseSinger" ref="singerList"></singer-list>
     </div>
     <router-view
       :title="title"
@@ -115,21 +111,20 @@ export default {
           );
         }
         const key = item.py;
-        if (key != "蔡") {
-          if (!map[key]) {
-            map[key] = {
-              title: key,
-              items: []
-            };
-          }
-          map[key].items.push(
-            new Singer({
-              id: item.id,
-              name: item.name,
-              avatar: item.picUrl
-            })
-          );
+
+        if (!map[key]) {
+          map[key] = {
+            title: key,
+            items: []
+          };
         }
+        map[key].items.push(
+          new Singer({
+            id: item.id,
+            name: item.name,
+            avatar: item.picUrl
+          })
+        );
       });
       let ret = [];
       let hot = [];
