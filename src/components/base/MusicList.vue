@@ -21,20 +21,14 @@
             <h1 class="title">{{ title }}</h1>
           </div>
           <div class="song-list-wrapper" v-show="!showComment">
-            <svg
-              class="icon i-comment"
-              aria-hidden="true"
-              @click.stop="toggleComment"
-            >
+            <svg class="icon i-comment" aria-hidden="true" @click.stop="toggleComment">
               <use xlink:href="#icon-comment"></use>
             </svg>
             <div class="control-wrapper border-bottom">
               <svg class="icon i-play" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use>
               </svg>
-              <span class="desc" @click="playAll"
-                >播放全部（共{{ this.songs.length }}首）</span
-              >
+              <span class="desc" @click="playAll">播放全部（共{{ this.songs.length }}首）</span>
             </div>
             <ul class="song-list" ref="wrapper">
               <li
@@ -51,11 +45,7 @@
                     <span class="album">-{{ song.album }}</span>
                   </div>
                 </div>
-                <svg
-                  class="icon i-switch"
-                  aria-hidden="true"
-                  @click.stop="showPopOver(song);"
-                >
+                <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
                   <use xlink:href="#icon-switch"></use>
                 </svg>
               </li>
@@ -63,29 +53,16 @@
           </div>
           <transition name="comment-show">
             <div class="comment" v-show="showComment">
-              <svg
-                class="icon i-song"
-                aria-hidden="true"
-                @click.stop="toggleComment"
-              >
+              <svg class="icon i-song" aria-hidden="true" @click.stop="toggleComment">
                 <use xlink:href="#icon-close"></use>
               </svg>
               <h3
                 class="hot-title"
                 v-show="hotComments && hotComments.length > 0"
-              >
-                热门评论({{ hotComments.length }})
-              </h3>
-              <ul
-                class="hot-list"
-                v-show="hotComments && hotComments.length > 0"
-              >
-                <li
-                  v-for="(comment, index) in hotComments"
-                  :key="index"
-                  class="hot"
-                >
-                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
+              >热门评论({{ hotComments.length }})</h3>
+              <ul class="hot-list" v-show="hotComments && hotComments.length > 0">
+                <li v-for="(comment, index) in hotComments" :key="index" class="hot">
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic">
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
@@ -98,16 +75,13 @@
                   </div>
                 </li>
               </ul>
-              <h3 class="new-title" v-show="comments && comments.length > 0">
-                最新评论({{ comments.length }})
-              </h3>
+              <h3
+                class="new-title"
+                v-show="comments && comments.length > 0"
+              >最新评论({{ comments.length }})</h3>
               <ul class="hot-list" v-show="comments && comments.length > 0">
-                <li
-                  v-for="(comment, index) in comments"
-                  :key="index"
-                  class="hot"
-                >
-                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
+                <li v-for="(comment, index) in comments" :key="index" class="hot">
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic">
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
@@ -120,12 +94,7 @@
                   </div>
                 </li>
               </ul>
-              <div
-                class="void"
-                v-show="comments.length === 0 && hotComments.length === 0"
-              >
-                暂时还没有评论
-              </div>
+              <div class="void" v-show="comments.length === 0 && hotComments.length === 0">暂时还没有评论</div>
             </div>
           </transition>
         </div>
@@ -236,7 +205,6 @@ export default {
     this.probeType = 3;
     this.listenScroll = true;
     this.$nextTick(() => {
-      this.$refs.list.$el.style.top;
       this.imageHeight = this.$refs.bg.clientHeight;
       this.minTranslateHeight = -this.imageHeight + 44;
     });
