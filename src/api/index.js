@@ -1,5 +1,9 @@
-const host = "https://muxue-music.herokuapp.com";
+// const host = "https://muxue-music.herokuapp.com";
 
+const host =
+  process.env.NODE_ENV === "production"
+    ? "https://muxue-music.herokuapp.com"
+    : "http://localhost:3000";
 const urls = {
   //banner
   banner: "/banner",
