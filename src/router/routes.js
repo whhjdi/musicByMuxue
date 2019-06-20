@@ -1,19 +1,16 @@
-import Vue from "vue";
-import Router from "vue-router";
-Vue.use(Router);
-
-const Home = () => import(/* webpackChunkName: "home" */ "./views/Home");
-const Rank = () => import(/* webpackChunkName: "rank" */ "./views/Rank");
-const Artist = () => import(/* webpackChunkName: "artist" */ "./views/Artist");
-const User = () => import(/* webpackChunkName: "user" */ "./views/User");
-const Search = () => import(/* webpackChunkName: "search" */ "./views/Search");
-const Login = () => import(/* webpackChunkName: "login" */ "./views/Login");
+const Home = () => import(/* webpackChunkName: "home" */ "@/views/Home");
+const Rank = () => import(/* webpackChunkName: "rank" */ "@/views/Rank");
+const Artist = () => import(/* webpackChunkName: "artist" */ "@/views/Artist");
+const User = () => import(/* webpackChunkName: "user" */ "@/views/User");
+const Search = () => import(/* webpackChunkName: "search" */ "@/views/Search");
+const Login = () => import(/* webpackChunkName: "login" */ "@/views/Login");
 const AllSongList = () =>
-  import(/* webpackChunkName: "allSongList" */ "./components/Recommend/AllSongList.vue");
+  import(
+    /* webpackChunkName: "allSongList" */ "@/components/Recommend/AllSongList.vue"
+  );
 const MusicList = () =>
-  import(/* webpackChunkName: "musicList" */ "./components/base/MusicList.vue");
-
-export default new Router({
+  import(/* webpackChunkName: "musicList" */ "@/components/base/MusicList.vue");
+export default {
   routes: [
     {
       path: "/",
@@ -106,4 +103,4 @@ export default new Router({
       ]
     }
   ]
-});
+};
