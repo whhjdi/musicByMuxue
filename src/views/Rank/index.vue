@@ -5,6 +5,7 @@
       <div class="rank-list-wrapper">
         <rank-list
           :topList="topList"
+          :otherList="otherList"
           @selectTopList="chooseItem"
           ref="rankList"
         ></rank-list>
@@ -61,6 +62,7 @@ export default {
   data() {
     return {
       topList: [],
+      otherList: [],
       songs: [],
       topDetailList: []
     };
@@ -91,14 +93,20 @@ export default {
     setTopList(res) {
       let topList = res.list;
       let newList = [];
+      let otherList = [];
       topList.forEach(item1 => {
         RANK_LIST.forEach(item2 => {
           if (item1.name === item2) {
-            newList.push(item1);
+            if (item1.tracks && item1.tracks.length > 0) {
+              newList.push(item1);
+            } else {
+              otherList.push(item1);
+            }
           }
         });
       });
       this.topList = newList;
+      this.otherList = otherList;
     },
     chooseItem(item) {
       let curIndex = 0;
