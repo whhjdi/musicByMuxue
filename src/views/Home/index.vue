@@ -4,13 +4,14 @@
       <h2 class="title">沐雪music</h2>
       <search-bar></search-bar>
     </nav>
-    <div class="scroll-wrapper">
+    <home-skeleton v-show="showSkeleton"></home-skeleton>
+    <div class="scroll-wrapper" v-show="!loading">
       <Scroll :data="recommendSongs" ref="scrolls" class="scroll">
         <div class="recommend">
           <div class="slides" v-if="this.banners && this.banners.length">
             <slide :autoPlay="true" :interval="3000" :loop="true">
               <div v-for="banner in banners" :key="banner.imageUrl" class="slide-item">
-                <img :src="banner.imageUrl" alt class="slide-img">
+                <img :src="banner.imageUrl" alt class="slide-img" />
               </div>
             </slide>
           </div>
@@ -43,13 +44,16 @@ import RecommendList from "@/components/Recommend/RecommendList.vue";
 import { mapGetters, mapMutations } from "vuex";
 import SearchBar from "@/components/base/SearchNav.vue";
 import { songsListPlayMixin } from "@/mixin.js";
+import HomeSkeleton from "@/components/Skeletons/HomeSkeleton.vue";
+
 export default {
   name: "home",
   components: {
     Slide,
     Scroll,
     RecommendList,
-    SearchBar
+    SearchBar,
+    HomeSkeleton
   },
   mixins: [songsListPlayMixin],
   props: {},
@@ -59,12 +63,13 @@ export default {
       recommendSongs: [],
       newDiscs: [],
       songs: [],
-      list: []
+      list: [],
+      showSkeleton: false
     };
   },
   watch: {},
   computed: {
-    ...mapGetters(["isLogin"]),
+    ...mapGetters(["isLogin", "loading"]),
     title() {
       return this.list.name;
     },
@@ -128,8 +133,10 @@ export default {
   },
   created() {
     this.setLoading(true);
+    this.showSkeleton = true;
     this.getAllRecommend().then(res => {
       this.setLoading(false);
+      this.showSkeleton = false;
       this.setAllRecommend(res);
     });
   }
