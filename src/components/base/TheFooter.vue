@@ -11,14 +11,18 @@
           class="nav"
         >
           <svg class="icon" aria-hidden="true">
-            <use
-              :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon"
-            ></use></svg
-          ><span>{{ nav.name }}</span></router-link
-        >
+            <use :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon" />
+          </svg>
+          <span>{{ nav.name }}</span>
+        </router-link>
       </div>
       <div class="circle" @click="showPlayer">
-        <img :src="picBg" alt="" class="circle-bg" :class="setClass" />
+        <img
+          :src="this.currentSong.picUrl?this.currentSong.picUrl:require('@/assets/default.png')"
+          alt
+          class="circle-bg"
+          :class="setClass"
+        />
       </div>
     </div>
   </transition>
@@ -26,6 +30,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+
 const navigation = [
   {
     name: "我的",
@@ -70,11 +75,6 @@ export default {
   watch: {},
   computed: {
     ...mapGetters(["currentSong", "showFooter", "fullScreen", "playing"]),
-    picBg() {
-      return this.currentSong.picUrl
-        ? this.currentSong.picUrl
-        : "https://ws1.sinaimg.cn/large/006tNbRwly1fy1lzl0xf9j31040pjb2a.jpg";
-    },
     setClass() {
       return this.playing ? "play" : "";
     }

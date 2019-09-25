@@ -3,7 +3,7 @@
     <div class="music-list" ref="musicList">
       <header ref="header">
         <svg class="icon i-back" aria-hidden="true" @click="goBack">
-          <use xlink:href="#icon-arrowleft"></use>
+          <use xlink:href="#icon-arrowleft" />
         </svg>
         <h1 class="title">{{ headerTitle }}</h1>
       </header>
@@ -22,11 +22,11 @@
           </div>
           <div class="song-list-wrapper" v-show="!showComment">
             <svg class="icon i-comment" aria-hidden="true" @click.stop="toggleComment">
-              <use xlink:href="#icon-comment"></use>
+              <use xlink:href="#icon-comment" />
             </svg>
             <div class="control-wrapper border-bottom">
               <svg class="icon i-play" aria-hidden="true">
-                <use xlink:href="#icon-play-circle"></use>
+                <use xlink:href="#icon-play-circle" />
               </svg>
               <span class="desc" @click="playAll">播放全部（共{{ this.songs.length }}首）</span>
             </div>
@@ -46,7 +46,7 @@
                   </div>
                 </div>
                 <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
-                  <use xlink:href="#icon-switch"></use>
+                  <use xlink:href="#icon-switch" />
                 </svg>
               </li>
             </ul>
@@ -54,7 +54,7 @@
           <transition name="comment-show">
             <div class="comment" v-show="showComment">
               <svg class="icon i-song" aria-hidden="true" @click.stop="toggleComment">
-                <use xlink:href="#icon-close"></use>
+                <use xlink:href="#icon-close" />
               </svg>
               <h3
                 class="hot-title"
@@ -62,7 +62,7 @@
               >热门评论({{ hotComments.length }})</h3>
               <ul class="hot-list" v-show="hotComments && hotComments.length > 0">
                 <li v-for="(comment, index) in hotComments" :key="index" class="hot">
-                  <img v-lazy="comment.user.avatarUrl" alt class="pic">
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
@@ -70,7 +70,7 @@
                   <div class="likedCount">
                     <span class="like">{{ comment.likedCount }}</span>
                     <svg class="icon i-like" aria-hidden="true">
-                      <use xlink:href="#icon-like1"></use>
+                      <use xlink:href="#icon-like1" />
                     </svg>
                   </div>
                 </li>
@@ -81,7 +81,7 @@
               >最新评论({{ comments.length }})</h3>
               <ul class="hot-list" v-show="comments && comments.length > 0">
                 <li v-for="(comment, index) in comments" :key="index" class="hot">
-                  <img v-lazy="comment.user.avatarUrl" alt class="pic">
+                  <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
                     <p class="content">{{ comment.content }}</p>
@@ -89,7 +89,7 @@
                   <div class="likedCount">
                     <span class="like">{{ comment.likedCount }}</span>
                     <svg class="icon i-like" aria-hidden="true">
-                      <use xlink:href="#icon-like1"></use>
+                      <use xlink:href="#icon-like1" />
                     </svg>
                   </div>
                 </li>
@@ -204,6 +204,8 @@ export default {
   created() {
     this.probeType = 3;
     this.listenScroll = true;
+  },
+  mounted() {
     this.$nextTick(() => {
       this.imageHeight = this.$refs.bg.clientHeight;
       this.minTranslateHeight = -this.imageHeight + 44;
