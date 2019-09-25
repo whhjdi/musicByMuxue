@@ -3,25 +3,16 @@
     <h2 class="title" @click="handleClick">
       <span>{{ title }}</span>
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-right"></use>
+        <use xlink:href="#icon-right" />
       </svg>
     </h2>
     <ul class="list-wrapper">
-      <li
-        v-for="item in list"
-        :key="item.id"
-        class="list"
-        @click="selectItem(item);"
-      >
-        <img
-          v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl"
-          alt=""
-          class="pic"
-        />
+      <li v-for="item in list" :key="item.id" class="list" @click="selectItem(item);">
+        <img v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl" alt class="pic" />
         <p class="name">{{ item.name }}</p>
         <div class="number">
           <svg class="icon i-count" aria-hidden="true">
-            <use xlink:href="#icon-music"></use>
+            <use xlink:href="#icon-music" />
           </svg>
           <div class="count">{{ item.playCount | setCount }}</div>
         </div>
@@ -73,7 +64,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .recommend {
-  padding: 10px 5px 0 5px;
+  padding: 10px 10px 0 10px;
   .title {
     display: inline-block;
     margin-bottom: 5px;
@@ -92,7 +83,7 @@ export default {
     flex-wrap: wrap;
     justify-content: space-around;
     .list {
-      width: 32%;
+      width: 30%;
       margin-bottom: 20px;
       position: relative;
       .pic {

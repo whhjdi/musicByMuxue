@@ -8,7 +8,7 @@
       @click="selectItem(index);"
     >
       <svg class="icon" aria-hidden="true">
-        <use :xlink:href="item.icon"></use>
+        <use :xlink:href="item.icon" />
       </svg>
       <div class="text">{{ item.text }}</div>
     </li>

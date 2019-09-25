@@ -156,7 +156,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    padding: 0 5px;
     .title {
       flex: 1;
       text-align: center;
@@ -164,7 +164,7 @@ export default {
   }
   .scroll-wrapper {
     position: absolute;
-    top: 40px;
+    top: 60px;
     bottom: 52px;
     width: 100%;
     .scroll {

@@ -11,7 +11,7 @@
     <ul class="list-wrapper">
       <li
         v-for="(singerGroup, index) in singers"
-        class="singerGroup-item"
+        class="singerGroup-item border-bottom"
         :key="index"
         ref="singerGroup"
       >
@@ -23,8 +23,8 @@
             class="singer-item"
             @click="selectSinger(singer);"
           >
-            <img v-lazy="singer.avatar" alt="" class="pic" />
-            <div class="left  border-bottom">
+            <img v-lazy="singer.avatar" alt class="pic" />
+            <div class="left">
               <p class="name">{{ singer.name }}</p>
             </div>
           </li>
@@ -44,9 +44,7 @@
           class="item"
           :data-index="index"
           :class="{ current: currentIndex === index }"
-        >
-          {{ item }}
-        </li>
+        >{{ item }}</li>
       </ul>
       <div class="mask" v-show="showText">{{ text }}</div>
     </div>
@@ -202,14 +200,17 @@ export default {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  background: #fff;
   .list-wrapper {
+    padding: 10px;
     .singerGroup-item {
       .title {
         display: inline-block;
-        padding: 5px 15px;
+        padding: 0 15px;
         width: 100%;
         font-size: 16px;
-        background: #e9ebec;
+        background: #ffffff;
+        font-weight: 400;
       }
       .singer-item {
         display: flex;
@@ -277,12 +278,14 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
+    padding: 10px;
+    background: #ffffff;
     .fixed-title {
       display: inline-block;
-      padding: 5px 15px;
+      padding: 0 15px;
       width: 100%;
       font-size: 16px;
-      background: #e9ebec;
+      font-weight: bold;
     }
   }
 }

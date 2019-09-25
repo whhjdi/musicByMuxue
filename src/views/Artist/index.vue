@@ -1,6 +1,6 @@
 <template>
   <div class="artist">
-    <search-bar></search-bar>
+    <h2 class="artist-title border-bottom">歌手</h2>
     <div class="singer-list-wrapper">
       <singer-list :singers="singers" @selectSinger="chooseSinger" ref="singerList"></singer-list>
     </div>
@@ -175,11 +175,19 @@ export default {
   width: 100%;
   background: #fff;
   z-index: 99;
+  &-title {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
   .singer-list-wrapper {
     position: absolute;
-    top: 40px;
+    top: 60px;
     bottom: 52px;
     width: 100%;
+    background: #fff;
   }
 }
 </style>

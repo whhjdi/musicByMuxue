@@ -1,14 +1,8 @@
 <template>
   <div class="search-bar">
-    <input
-      type="text"
-      class="input"
-      @click="clickInput"
-      :placeholder="placeholder"
-      readonly
-    />
+    <input type="text" class="input" @click="clickInput" :placeholder="placeholder" readonly />
     <svg class="icon souso" aria-hidden="true">
-      <use xlink:href="#icon-sousuo"></use>
+      <use xlink:href="#icon-sousuo" />
     </svg>
   </div>
 </template>
@@ -45,6 +39,7 @@ export default {
   display: flex;
   padding: 5px;
   color: #191516;
+  margin: 10px;
   .back {
     height: 30px;
     width: 20px;
@@ -66,8 +61,8 @@ export default {
     height: 30px;
     width: 20px;
     position: absolute;
-    right: 10px;
-    top: 5px;
+    right: 30px;
+    top: 15px;
   }
 }
 </style>

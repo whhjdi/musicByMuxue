@@ -164,7 +164,7 @@ export default {
   background: #fff;
   .rank-list-wrapper {
     position: absolute;
-    top: 40px;
+    top: 60px;
     bottom: 52px;
   }
 }

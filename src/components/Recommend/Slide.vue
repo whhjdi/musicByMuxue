@@ -1,6 +1,8 @@
 <template>
   <div class="slide" ref="slide">
-    <div class="slide-group" ref="slideGroup"><slot></slot></div>
+    <div class="slide-group" ref="slideGroup">
+      <slot></slot>
+    </div>
     <div class="dots">
       <span
         class="dot"
@@ -134,10 +136,10 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     .slide-item {
-      padding: 0 5px;
       .slide-img {
         display: block;
-        width: 100%;
+        width: 90%;
+        margin: 0 auto;
         border-radius: 5px;
       }
     }

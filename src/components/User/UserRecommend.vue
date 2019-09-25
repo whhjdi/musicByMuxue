@@ -11,11 +11,9 @@
       <div class="list-wrapper" v-show="isLogin">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-play-circle"></use>
+            <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll"
-            >播放全部（共{{ userList.length }}首）</span
-          >
+          <span class="desc" @click="playAll">播放全部（共{{ userList.length }}首）</span>
         </div>
         <ul class="song-list" ref="wrapper">
           <li
@@ -28,15 +26,12 @@
             <div class="right">
               <div class="name">{{ song.name }}</div>
               <div class="singer">
-                {{ song.singer }} <span class="album">-{{ song.album }}</span>
+                {{ song.singer }}
+                <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg
-              class="icon i-switch"
-              aria-hidden="true"
-              @click.stop="showPopOver(song);"
-            >
-              <use xlink:href="#icon-switch"></use>
+            <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
+              <use xlink:href="#icon-switch" />
             </svg>
           </li>
         </ul>
@@ -45,12 +40,7 @@
         <span class="toLogin" @click="toLogin">登录</span>才能找到你喜欢的歌曲呢
       </h2>
     </Scroll>
-    <pop-menu
-      ref="popMenu"
-      @nextPlay="nextPlay"
-      @playNow="nowPlay"
-      :showDelete="false"
-    ></pop-menu>
+    <pop-menu ref="popMenu" @nextPlay="nextPlay" @playNow="nowPlay" :showDelete="false"></pop-menu>
   </div>
 </template>
 
@@ -88,7 +78,7 @@ export default {
   position: fixed;
   width: 100%;
   bottom: 52px;
-  top: 120px;
+  top: 140px;
   .void {
     position: absolute;
     top: 30%;

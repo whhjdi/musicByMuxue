@@ -10,11 +10,9 @@
       <div class="list-wrapper" v-show="userList && userList.length > 0">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-play-circle"></use>
+            <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll"
-            >播放全部（共{{ userList.length }}首）</span
-          >
+          <span class="desc" @click="playAll">播放全部（共{{ userList.length }}首）</span>
           <div class="clear" @click.stop="confirm">{{ deleteText }}</div>
         </div>
         <ul class="song-list" ref="wrapper">
@@ -28,15 +26,12 @@
             <div class="right">
               <div class="name">{{ song.name }}</div>
               <div class="singer">
-                {{ song.singer }} <span class="album">-{{ song.album }}</span>
+                {{ song.singer }}
+                <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg
-              class="icon i-switch"
-              aria-hidden="true"
-              @click.stop="showPopOver(song);"
-            >
-              <use xlink:href="#icon-switch"></use>
+            <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
+              <use xlink:href="#icon-switch" />
             </svg>
           </li>
         </ul>
@@ -50,11 +45,7 @@
       @deleteOne="deleteOne"
       :showDelete="showDelete"
     ></pop-menu>
-    <Confirm
-      text="确定要清空所有播放记录吗"
-      @deleteAll="clear"
-      ref="confirm"
-    ></Confirm>
+    <Confirm text="确定要清空所有播放记录吗" @deleteAll="clear" ref="confirm"></Confirm>
   </div>
 </template>
 
@@ -114,7 +105,7 @@ export default {
   position: fixed;
   width: 100%;
   bottom: 52px;
-  top: 120px;
+  top: 140px;
   .void {
     position: absolute;
     top: 30%;

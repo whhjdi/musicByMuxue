@@ -72,7 +72,7 @@ export default {
   .list-wrapper {
     .list {
       display: flex;
-      padding: 20px;
+      padding: 10px 20px;
       position: relative;
       justify-content: flex-start;
       align-items: center;
