@@ -37,6 +37,9 @@
                 <img :src="currentSong.picUrl" alt class="image" />
               </div>
             </div>
+            <div class="line-lyric" v-if="currentLyric && currentLyric.lines">
+              {{ currentLyric.lines[currentLineNum].txt }}
+            </div>
           </div>
           <transition name="middleR">
             <Scroll
@@ -431,21 +434,20 @@ export default {
     right: 0;
     width: 100%;
     z-index: 999;
-    background: #e7e7e7;
+    background: #f5f5f5;
     overflow: hidden;
     color: #191516;
     font-weight: 200;
     .background {
       position: absolute;
-      left: -50%;
-      top: -50%;
       width: 100%;
       height: 100%;
       opacity: 0.2;
       filter: blur(50px);
       .img {
-        width: 300%;
-        height: 300%;
+        width: 100%;
+        height: 100%;
+        transform: scale(2);
       }
     }
     .top {
@@ -480,7 +482,7 @@ export default {
           margin-bottom: 10px;
         }
         .subtitle {
-          color: rgba(148, 147, 147,0.5);
+          color: rgba(148, 147, 147, 0.5);
           font-size: 12px;
         }
       }
@@ -501,6 +503,13 @@ export default {
         width: 100%;
         height: 0;
         padding-top: 80%;
+        .line-lyric {
+          font-size: 14px;
+          width: 100%;
+          margin-top: 20px;
+          text-align: center;
+          font-weight: bold;
+        }
         .cd-wrapper {
           position: absolute;
           left: 10%;
@@ -556,7 +565,7 @@ export default {
             color: #a7a8a8;
             font-size: 14px;
             &.current {
-              color: #191516;
+              color: #fc386f;
             }
           }
           .no-lyric {

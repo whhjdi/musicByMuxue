@@ -18,13 +18,13 @@
               ref="item"
               v-for="(item, index) in sequenceList"
               :key="item.id"
-              class="list-item border-bottom"
+              class="list-item"
               :class="isPlaying(item)"
               @click="selectItem(item, index)"
             >
               <div class="text">
                 <span class="name">{{ item.name }}</span>
-                <span class="singer">-{{ item.singer }}</span>
+                <span class="singer"> - {{ item.singer }}</span>
               </div>
               <svg
                 class="icon"
@@ -176,10 +176,10 @@ export default {
     top: 40%;
     left: 0;
     right: 0;
-    background: #fff;
+     background: #fff;
     padding: 10px 20px;
     .header {
-      height: 40px;
+      height: 50px;
       line-height: 40px;
       .title {
         display: flex;
