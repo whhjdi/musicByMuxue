@@ -25,9 +25,9 @@
           <svg
             class="icon i-right"
             aria-hidden="true"
-            @click="toggleFavorite(currentSong);"
+            @click="toggleFavorite(currentSong)"
           >
-            <use xlink:href="getFavoriteIcon(currentSong)"></use>
+            <use :xlink:href="getFavoriteIcon(currentSong)"></use>
           </svg>
         </div>
         <div class="middle" @click="changeMiddle">
@@ -431,7 +431,7 @@ export default {
     right: 0;
     width: 100%;
     z-index: 999;
-    background: #eee;
+    background: #e7e7e7;
     overflow: hidden;
     color: #191516;
     font-weight: 200;
@@ -480,7 +480,7 @@ export default {
           margin-bottom: 10px;
         }
         .subtitle {
-          color: rgb(148, 147, 147);
+          color: rgba(148, 147, 147,0.5);
           font-size: 12px;
         }
       }
@@ -510,22 +510,22 @@ export default {
           .cd {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            &.play {
-              animation: rotate 20s linear infinite;
-            }
-            &.pause {
-              animation-play-state: paused;
-            }
+            border-radius: 10px;
+            /*&.play {*/
+            /*  animation: rotate 20s linear infinite;*/
+            /*}*/
+            /*&.pause {*/
+            /*  animation-play-state: paused;*/
+            /*}*/
             .image {
-              border: 15px solid rgba(255, 255, 255, 0.15);
+              border: 15px solid rgba(255, 255, 255, 0.2);
               position: absolute;
               left: 0;
               top: 0;
               box-sizing: border-box;
               width: 100%;
               height: 100%;
-              border-radius: 50%;
+              border-radius: 10px;
             }
           }
         }

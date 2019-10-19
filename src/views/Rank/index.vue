@@ -157,14 +157,18 @@ export default {
 .rank {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   bottom: 0;
+  width: 100%;
   z-index: 99;
   overflow: hidden;
   background: #fff;
   .rank-list-wrapper {
     position: absolute;
     top: 60px;
+    left: 0;
+    right: 0;
     bottom: 52px;
   }
 }

@@ -6,7 +6,7 @@
           v-for="item in topList"
           :key="`top_list_${item.id}`"
           class="list border-bottom"
-          @click="selectTopList(item);"
+          @click="selectTopList(item)"
         >
           <img v-lazy="item.coverImgUrl" alt class="pic" />
           <div class="updateFrequency">{{ item.updateFrequency }}</div>
@@ -15,7 +15,9 @@
               v-for="(song, index) in item.tracks"
               :key="song.first"
               class="song"
-            >{{ index + 1 }}.{{ song.first }}-{{ song.second }}</li>
+            >
+              {{ index + 1 }}.{{ song.first }}-{{ song.second }}
+            </li>
           </ul>
         </li>
       </ul>
@@ -25,10 +27,10 @@
           v-for="item in otherList"
           :key="`other_list_${item.id}`"
           class="other-list border-bottom"
-          @click="selectTopList(item);"
+          @click="selectTopList(item)"
         >
           <img v-lazy="item.coverImgUrl" alt class="other-pic" />
-          <div class="title">{{item.name}}</div>
+          <div class="title">{{ item.name }}</div>
         </li>
       </ul>
     </div>

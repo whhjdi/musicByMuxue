@@ -20,7 +20,7 @@
               :key="item.id"
               class="list-item border-bottom"
               :class="isPlaying(item)"
-              @click="selectItem(item, index);"
+              @click="selectItem(item, index)"
             >
               <div class="text">
                 <span class="name">{{ item.name }}</span>
@@ -29,7 +29,7 @@
               <svg
                 class="icon"
                 aria-hidden="true"
-                @click.stop="deleteItem(item);"
+                @click.stop="deleteItem(item)"
               >
                 <use xlink:href="#icon-close"></use>
               </svg>
