@@ -1,6 +1,12 @@
 <template>
   <div class="search-bar">
-    <input type="text" class="input" @click="clickInput" :placeholder="placeholder" readonly />
+    <input
+      type="text"
+      class="input"
+      @click="clickInput"
+      :placeholder="placeholder"
+      readonly
+    />
     <svg class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-sousuo" />
     </svg>

@@ -7,8 +7,17 @@
       </svg>
     </h2>
     <ul class="list-wrapper">
-      <li v-for="item in list" :key="item.id" class="list" @click="selectItem(item);">
-        <img v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl" alt class="pic" />
+      <li
+        v-for="item in list"
+        :key="item.id"
+        class="list"
+        @click="selectItem(item)"
+      >
+        <img
+          v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl"
+          alt
+          class="pic"
+        />
         <p class="name">{{ item.name }}</p>
         <div class="number">
           <svg class="icon i-count" aria-hidden="true">

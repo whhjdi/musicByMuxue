@@ -116,9 +116,10 @@ export default {
         }
       }
       this.getTopListDetail(curIndex);
-      this.$router.push({
-        path: `/rank/${item.id}`
-      });
+      item.id &&
+        this.$router.push({
+          path: `/rank/${item.id}`
+        });
     },
     getTopListDetail(idx) {
       this.setLoading(true);

@@ -9,7 +9,7 @@
               v-for="item in album"
               :key="item.albumId"
               class="item border-bottom"
-              @click="selectAlbum(item);"
+              @click="selectAlbum(item)"
             >
               <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="right">
@@ -26,7 +26,7 @@
               v-for="item in artists"
               :key="item.id"
               class="item border-bottom"
-              @click="selectSinger(item);"
+              @click="selectSinger(item)"
             >
               <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="singer">歌手：{{ item.singer }}</div>
@@ -40,7 +40,7 @@
               v-for="(song, index) in songs"
               :key="song.id"
               class="song border-bottom"
-              @click="selectSong(song);"
+              @click="selectSong(song)"
             >
               <div class="number">{{ index + 1 }}</div>
               <div class="right">
@@ -52,7 +52,7 @@
               <svg
                 class="icon i-switch"
                 aria-hidden="true"
-                @click.stop="showPopOver(song);"
+                @click.stop="showPopOver(song)"
               >
                 <use xlink:href="#icon-switch"></use>
               </svg>

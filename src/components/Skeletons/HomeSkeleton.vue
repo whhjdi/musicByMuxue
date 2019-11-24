@@ -1,5 +1,3 @@
-
-    
 <script>
 import { ContentLoader } from "vue-content-loader";
 

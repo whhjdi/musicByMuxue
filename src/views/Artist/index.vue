@@ -2,7 +2,11 @@
   <div class="artist">
     <h2 class="artist-title border-bottom">歌手</h2>
     <div class="singer-list-wrapper">
-      <singer-list :singers="singers" @selectSinger="chooseSinger" ref="singerList"></singer-list>
+      <singer-list
+        :singers="singers"
+        @selectSinger="chooseSinger"
+        ref="singerList"
+      ></singer-list>
     </div>
     <router-view
       :title="title"
@@ -23,12 +27,11 @@ import pinyin from "pinyin";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
-import SearchBar from "@/components/base/SearchNav.vue";
 const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
-  components: { SingerList, SearchBar },
+  components: { SingerList },
   props: {},
   data() {
     return {
@@ -145,9 +148,10 @@ export default {
       this.singer = singer;
       this.$NProgress.start();
       this.getDeatil(this.singer.id);
-      this.$router.push({
-        path: `/artist/${singer.id}`
-      });
+      singer.id &&
+        this.$router.push({
+          path: `/artist/${singer.id}`
+        });
     }
   },
   activated() {

@@ -13,14 +13,16 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll">播放全部（共{{ userList.length }}首）</span>
+          <span class="desc" @click="playAll"
+            >播放全部（共{{ userList.length }}首）</span
+          >
         </div>
         <ul class="song-list" ref="wrapper">
           <li
             v-for="(song, index) in userList"
             :key="index"
             class="song border-bottom"
-            @click="selectItem(song);"
+            @click="selectItem(song)"
           >
             <div class="number">{{ index + 1 }}</div>
             <div class="right">
@@ -30,7 +32,11 @@
                 <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
+            <svg
+              class="icon i-switch"
+              aria-hidden="true"
+              @click.stop="showPopOver(song)"
+            >
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
@@ -40,7 +46,12 @@
         <span class="toLogin" @click="toLogin">登录</span>才能找到你喜欢的歌曲呢
       </h2>
     </Scroll>
-    <pop-menu ref="popMenu" @nextPlay="nextPlay" @playNow="nowPlay" :showDelete="false"></pop-menu>
+    <pop-menu
+      ref="popMenu"
+      @nextPlay="nextPlay"
+      @playNow="nowPlay"
+      :showDelete="false"
+    ></pop-menu>
   </div>
 </template>
 

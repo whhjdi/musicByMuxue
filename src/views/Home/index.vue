@@ -10,16 +10,27 @@
         <div class="recommend">
           <div class="slides" v-if="this.banners && this.banners.length">
             <slide :autoPlay="true" :interval="3000" :loop="true">
-              <div v-for="banner in banners" :key="banner.imageUrl" class="slide-item">
+              <div
+                v-for="banner in banners"
+                :key="banner.imageUrl"
+                class="slide-item"
+              >
                 <img :src="banner.imageUrl" alt class="slide-img" />
               </div>
             </slide>
           </div>
           <div class="recommendSongs">
-            <recommend-list :list="recommendSongs" @setDiscList="handleDisc"></recommend-list>
+            <recommend-list
+              :list="recommendSongs"
+              @setDiscList="handleDisc"
+            ></recommend-list>
           </div>
           <div class="newSongs">
-            <recommend-list :list="newDiscs" title="最新歌单" @setDiscList="handleDisc"></recommend-list>
+            <recommend-list
+              :list="newDiscs"
+              title="最新歌单"
+              @setDiscList="handleDisc"
+            ></recommend-list>
           </div>
         </div>
       </Scroll>
@@ -88,9 +99,10 @@ export default {
       setLoading: "SET_LOADING"
     }),
     handleDisc(item) {
-      this.$router.push({
-        path: `/home/${item.id}`
-      });
+      item.id &&
+        this.$router.push({
+          path: `/home/${item["id"]}`
+        });
       this.setLoading(true);
       Recommend.getDisc(item.id).then(res => {
         this.setLoading(false);

@@ -5,7 +5,7 @@
       :key="item.text"
       class="item"
       :class="{ active: currentIndex === index }"
-      @click="selectItem(index);"
+      @click="selectItem(index)"
     >
       <svg class="icon" aria-hidden="true">
         <use :xlink:href="item.icon" />

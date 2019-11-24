@@ -176,7 +176,7 @@ export default {
     top: 40%;
     left: 0;
     right: 0;
-     background: #fff;
+    background: #fff;
     padding: 10px 20px;
     .header {
       height: 50px;

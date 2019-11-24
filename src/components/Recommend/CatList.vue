@@ -18,7 +18,7 @@
                   class="sub-item"
                   v-for="ele in item[index]"
                   :key="ele.name"
-                  @click="selectItem(ele);"
+                  @click="selectItem(ele)"
                 >
                   {{ ele.name }}
                 </li>

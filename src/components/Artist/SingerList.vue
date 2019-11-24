@@ -21,7 +21,7 @@
             v-for="singer in singerGroup.items"
             :key="singer.id"
             class="singer-item"
-            @click="selectSinger(singer);"
+            @click="selectSinger(singer)"
           >
             <img v-lazy="singer.avatar" alt class="pic" />
             <div class="left">
@@ -44,7 +44,9 @@
           class="item"
           :data-index="index"
           :class="{ current: currentIndex === index }"
-        >{{ item }}</li>
+        >
+          {{ item }}
+        </li>
       </ul>
       <div class="mask" v-show="showText">{{ text }}</div>
     </div>
@@ -133,7 +135,7 @@ export default {
       this.scrollY = pos.y;
     },
     //获取列表每个group的高度，依次相加push到数组中
-    clacHeight() {
+    calcHeight() {
       this.listHeight = [];
       const list = this.$refs.singerGroup;
       let height = 0;
@@ -151,7 +153,7 @@ export default {
   watch: {
     singers() {
       setTimeout(() => {
-        this.clacHeight();
+        this.calcHeight();
       }, 20);
     },
     // watch scrollY的变化，计算每个group的高度和newY(pos)做对比

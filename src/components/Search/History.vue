@@ -7,13 +7,13 @@
         class="item border-bottom"
         v-for="item in searchHistory"
         :key="item"
-        @click="selectItem(item);"
+        @click="selectItem(item)"
       >
         <span class="text">{{ item }}</span>
         <svg
           class="icon"
           aria-hidden="true"
-          @click.stop="deleteHistoryItem(item);"
+          @click.stop="deleteHistoryItem(item)"
         >
           <use xlink:href="#icon-close"></use>
         </svg>

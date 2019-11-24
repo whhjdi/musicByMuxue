@@ -12,12 +12,12 @@
                 <use xlink:href="#icon-play-circle"></use></svg
               >下一首播放
             </div>
-            <div class="like item border-bottom" @click="toggleFavorite(song);">
+            <div class="like item border-bottom" @click="toggleFavorite(song)">
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="getFavoriteIcon(song)"></use></svg
               >喜欢
             </div>
-            <div class="singer item border-bottom" @click="toSinger(song);">
+            <div class="singer item border-bottom" @click="toSinger(song)">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-user"></use></svg
               >歌手：{{ song.singer }}
@@ -29,7 +29,7 @@
             </div>
             <div
               class="delete item border-bottom"
-              @click="deleteOne(song);"
+              @click="deleteOne(song)"
               v-show="showDelete"
             >
               <svg class="icon" aria-hidden="true">

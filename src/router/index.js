@@ -1,11 +1,11 @@
 import Vue from "vue";
-import Router from "vue-router";
+import VueRouter from "vue-router";
 import routes from "./routes";
 import store from "@/store";
 import NProgress from "nprogress";
-Vue.use(Router);
+Vue.use(VueRouter);
 
-const router = new Router(routes);
+const router = new VueRouter(routes);
 router.beforeEach((to, from, next) => {
   if (
     !to.name ||

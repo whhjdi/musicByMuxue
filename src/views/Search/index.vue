@@ -9,7 +9,7 @@
             class="hot"
             v-for="hot in hots"
             :key="hot.first"
-            @click="setQuery(hot.first);"
+            @click="setQuery(hot.first)"
           >
             {{ hot.first }}
           </div>
@@ -122,9 +122,10 @@ export default {
     },
     setDetail(songs, id) {
       this.songsList = this.normalizeSongs(songs);
-      this.$router.push({
-        path: `/search/${id}`
-      });
+      id &&
+        this.$router.push({
+          path: `/search/${id}`
+        });
     },
     normalizeSongs(list) {
       let ret = [];

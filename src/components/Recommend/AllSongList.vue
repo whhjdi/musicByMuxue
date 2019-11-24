@@ -42,7 +42,7 @@
             v-for="(item, index) in playLists"
             :key="index"
             class="list"
-            @click="handleSongList(item);"
+            @click="handleSongList(item)"
           >
             <img :src="item.coverImgUrl" alt="" class="pic" />
             <div class="name">{{ item.name }}</div>
@@ -187,9 +187,10 @@ export default {
       this.order = "hot";
     },
     handleSongList(item) {
-      this.$router.push({
-        path: `/songslist/${item.id}`
-      });
+      item.id &&
+        this.$router.push({
+          path: `/songslist/${item.id}`
+        });
       Recommend.getDisc(item.id).then(res => {
         this.setList(res);
       });

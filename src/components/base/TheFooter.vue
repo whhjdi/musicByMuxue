@@ -11,14 +11,20 @@
           class="nav"
         >
           <svg class="icon" aria-hidden="true">
-            <use :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon" />
+            <use
+              :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon"
+            />
           </svg>
           <span>{{ nav.name }}</span>
         </router-link>
       </div>
       <div class="circle" @click="showPlayer">
         <img
-          :src="this.currentSong.picUrl?this.currentSong.picUrl:require('@/assets/default.png')"
+          :src="
+            this.currentSong.picUrl
+              ? this.currentSong.picUrl
+              : require('@/assets/default.png')
+          "
           alt
           class="circle-bg"
           :class="setClass"

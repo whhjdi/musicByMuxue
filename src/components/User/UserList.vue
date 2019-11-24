@@ -12,7 +12,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll">播放全部（共{{ userList.length }}首）</span>
+          <span class="desc" @click="playAll"
+            >播放全部（共{{ userList.length }}首）</span
+          >
           <div class="clear" @click.stop="confirm">{{ deleteText }}</div>
         </div>
         <ul class="song-list" ref="wrapper">
@@ -20,7 +22,7 @@
             v-for="(song, index) in userList"
             :key="song.id"
             class="song border-bottom"
-            @click="selectItem(song);"
+            @click="selectItem(song)"
           >
             <div class="number">{{ index + 1 }}</div>
             <div class="right">
@@ -30,7 +32,11 @@
                 <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg class="icon i-switch" aria-hidden="true" @click.stop="showPopOver(song);">
+            <svg
+              class="icon i-switch"
+              aria-hidden="true"
+              @click.stop="showPopOver(song)"
+            >
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
@@ -45,7 +51,11 @@
       @deleteOne="deleteOne"
       :showDelete="showDelete"
     ></pop-menu>
-    <Confirm text="确定要清空所有播放记录吗" @deleteAll="clear" ref="confirm"></Confirm>
+    <Confirm
+      text="确定要清空所有播放记录吗"
+      @deleteAll="clear"
+      ref="confirm"
+    ></Confirm>
   </div>
 </template>
 
