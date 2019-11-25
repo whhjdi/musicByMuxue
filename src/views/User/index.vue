@@ -5,11 +5,7 @@
       <search-nav></search-nav>
     </div>
     <div class="tab-wrapper">
-      <user-tab
-        :list="list"
-        :currentIndex="currentIndex"
-        @select="selectItem"
-      ></user-tab>
+      <user-tab :list="list" :currentIndex="currentIndex" @select="selectItem"></user-tab>
     </div>
     <div class="content">
       <div class="play-history-wrapper" v-if="currentIndex == 0">
@@ -22,11 +18,7 @@
         ></user-list>
       </div>
       <div class="like-wrapper" v-else-if="currentIndex == 1">
-        <user-list
-          :userList="favoriteList"
-          @clear="clearFavorite"
-          @deleteOne="deleteOneFavorite"
-        ></user-list>
+        <user-list :userList="favoriteList" @clear="clearFavorite" @deleteOne="deleteOneFavorite"></user-list>
       </div>
       <div class="random-wrapper" v-else-if="currentIndex == 2">
         <UserRecommend :userList="recommends"></UserRecommend>

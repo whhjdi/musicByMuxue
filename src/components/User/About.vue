@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <div class="header" v-if="isLogin">
-      <img v-lazy="userInfo.picUrl" alt="" class="pic" />
+      <img v-lazy="userInfo.picUrl" alt class="pic" />
       <h1 class="name">{{ userInfo.name }}</h1>
       <p class="id">{{ userInfo.id }}</p>
       <div class="signin" @click="signin">签到</div>
@@ -59,10 +59,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .about {
-  position: fixed;
-  width: 100%;
-  bottom: 52px;
-  top: 120px;
   .header {
     display: flex;
     justify-content: center;
