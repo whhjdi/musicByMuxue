@@ -1,12 +1,11 @@
 <template>
   <div class="artist">
-    <h2 class="artist-title border-bottom">歌手</h2>
+    <div class="header border-bottom">
+      <h2 class="artist-title">歌手</h2>
+      <SearchNav></SearchNav>
+    </div>
     <div class="singer-list-wrapper">
-      <singer-list
-        :singers="singers"
-        @selectSinger="chooseSinger"
-        ref="singerList"
-      ></singer-list>
+      <singer-list :singers="singers" @selectSinger="chooseSinger" ref="singerList"></singer-list>
     </div>
     <router-view
       :title="title"
@@ -24,6 +23,7 @@
 import Artist from "../../api/artist.js";
 import { Singer } from "../../utils";
 import pinyin from "pinyin";
+import SearchNav from "@/components/base/SearchNav";
 import SingerList from "../../components/Artist/SingerList.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { createSong } from "@/utils/index.js";
@@ -31,7 +31,7 @@ const HOT_NAME = "热门";
 const HOT_SINGER_LENGTH = 10;
 export default {
   name: "artist",
-  components: { SingerList },
+  components: { SingerList, SearchNav },
   props: {},
   data() {
     return {
@@ -179,12 +179,13 @@ export default {
   width: 100%;
   background: #fff;
   z-index: 99;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   &-title {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
     margin: 0 auto;
-    padding: 20px 0;
   }
   .singer-list-wrapper {
     position: absolute;
