@@ -1,4 +1,4 @@
-import * as types from "./mutationTypes";
+import * as types from './mutationTypes';
 import {
   playMode,
   shuffle,
@@ -11,20 +11,21 @@ import {
   saveToFavorite,
   deleteFromFavoriteList,
   deleteAllFavoriteList
-} from "@/utils/index.js";
-import { clearTimeout } from "timers";
+} from '@/utils/index.js';
+import { clearTimeout } from 'timers';
 
 // 播放
 export const selectPlay = function({ commit, state }, { list, index }) {
+  let myIndex = index;
   commit(types.SET_SEQUENCE_LIST, list);
   if (state.mode === playMode.random) {
     let randomList = shuffle(list);
     commit(types.SET_PLAY_LIST, randomList);
-    index = findIdx(randomList, list[index]);
+    myIndex = findIdx(randomList, list[myIndex]);
   } else {
     commit(types.SET_PLAY_LIST, list);
   }
-  commit(types.SET_CURRENT_INDEX, index);
+  commit(types.SET_CURRENT_INDEX, myIndex);
   commit(types.SET_FULL_SCREEN, true);
   commit(types.SET_PLAYING_STATE, true);
 };
@@ -41,7 +42,7 @@ export const randomPlay = function({ commit }, { list }) {
 };
 
 function findIdx(list, song) {
-  return list.findIndex(item => {
+  return list.findIndex((item) => {
     return item.id === song.id;
   });
 }
@@ -191,8 +192,8 @@ export const clearAllFavorite = function({ commit }, song) {
 export const setTips = function({ commit }, text) {
   commit(types.SET_SHOW_TIPS, true);
   commit(types.SET_TIP_TEXT, text);
-  clearTimeout(timer);
   let timer = setTimeout(() => {
     commit(types.SET_SHOW_TIPS, false);
+    clearTimeout(timer);
   }, 2000);
 };

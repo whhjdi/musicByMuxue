@@ -1,12 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-11-24 19:08:26
+ * @LastEditTime: 2019-12-04 13:01:28
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /musicByMuxue/src/components/base/SearchNav.vue
+ -->
 <template>
   <div class="search-bar">
-    <input
-      @click="clickInput"
-      :placeholder="placeholder"
-      type="text"
-      class="input"
-      readonly
-    />
+    <input @click="clickInput" :placeholder="placeholder" type="text" class="input" readonly />
     <svg class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-sousuo" />
     </svg>
@@ -14,27 +16,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "",
+  name: '',
   components: {},
   props: {
     placeholder: {
       type: String,
-      default: "搜歌手，搜歌曲"
+      default: '搜歌手，搜歌曲'
     }
   },
-  data() {
-    return {};
-  },
-  watch: {},
   computed: {
-    ...mapGetters(["showFooter", "query"])
+    ...mapGetters(['showFooter', 'query'])
   },
   methods: {
     clickInput() {
       this.$router.push({
-        path: "/search"
+        path: '/search'
       });
     }
   }

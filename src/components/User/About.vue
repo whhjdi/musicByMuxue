@@ -15,46 +15,38 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import Login from "@/api/login.js";
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Login from '@/api/login.js';
 export default {
-  name: "",
-  components: {},
-  props: {},
-  data() {
-    return {};
-  },
-  watch: {},
-  computed: { ...mapGetters(["userInfo", "isLogin"]) },
+  name: 'About',
+  computed: { ...mapGetters(['userInfo', 'isLogin']) },
   methods: {
     ...mapMutations({
-      setUserInfo: "SET_USER_INFO"
+      setUserInfo: 'SET_USER_INFO'
     }),
-    ...mapActions(["setTips"]),
+    ...mapActions(['setTips']),
     toLogin() {
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: '/login' });
     },
     toLogout() {
       Login.logout();
       this.setUserInfo(null);
-      this.setTips("已为您退出登录");
+      this.setTips('已为您退出登录');
     },
     signin() {
       Login.signin()
-        .then(res => {
+        .then((res) => {
           if (res.code === 200) {
-            this.setTips(String("签到成功！经验+" + res.point));
+            this.setTips(String('签到成功！经验+' + res.point));
           } else {
-            this.setTips("不要重复签到哦");
+            this.setTips('不要重复签到哦');
           }
         })
         .catch(() => {
-          this.setTips("签到失败，可能已经签到过了");
+          this.setTips('签到失败，可能已经签到过了');
         });
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

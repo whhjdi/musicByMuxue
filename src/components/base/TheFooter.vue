@@ -11,20 +11,14 @@
           class="nav"
         >
           <svg class="icon" aria-hidden="true">
-            <use
-              :xlink:href="nav.link == $route.name ? nav.iconon : nav.icon"
-            />
+            <use :xlink:href="nav.link === $route.name ? nav.iconon : nav.icon" />
           </svg>
           <span>{{ nav.name }}</span>
         </router-link>
       </div>
       <div @click="showPlayer" class="circle">
         <img
-          :src="
-            this.currentSong.picUrl
-              ? this.currentSong.picUrl
-              : require('@/assets/default.png')
-          "
+          :src="currentSong.picUrl ? currentSong.picUrl : require('@/assets/default.png')"
           :class="setClass"
           alt
           class="circle-bg"
@@ -35,42 +29,42 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from 'vuex';
 
 const navigation = [
   {
-    name: "我的",
-    icon: "#icon-wode",
-    iconon: "#icon-wodefill",
-    link: "user"
+    name: '我的',
+    icon: '#icon-wode',
+    iconon: '#icon-wodefill',
+    link: 'user'
   },
   {
-    name: "推荐",
-    icon: "#icon-home",
-    iconon: "#icon-homefill",
-    link: "home"
+    name: '推荐',
+    icon: '#icon-home',
+    iconon: '#icon-homefill',
+    link: 'home'
   },
   {
-    name: "",
-    icon: "",
-    iconon: "",
-    link: ""
+    name: '',
+    icon: '',
+    iconon: '',
+    link: ''
   },
   {
-    name: "排行",
-    icon: "#icon-fanli",
-    iconon: "#icon-fanlifill",
-    link: "rank"
+    name: '排行',
+    icon: '#icon-fanli',
+    iconon: '#icon-fanlifill',
+    link: 'rank'
   },
   {
-    name: "歌手",
-    icon: "#icon-artist",
-    iconon: "#icon-artistfill",
-    link: "artist"
+    name: '歌手',
+    icon: '#icon-artist',
+    iconon: '#icon-artistfill',
+    link: 'artist'
   }
 ];
 export default {
-  name: "",
+  name: '',
   components: {},
   props: {},
   data() {
@@ -78,17 +72,17 @@ export default {
       navigation
     };
   },
-  watch: {},
+
   computed: {
-    ...mapGetters(["currentSong", "showFooter", "fullScreen", "playing"]),
+    ...mapGetters(['currentSong', 'showFooter', 'fullScreen', 'playing']),
     setClass() {
-      return this.playing ? "play" : "";
+      return this.playing ? 'play' : '';
     }
   },
   methods: {
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN",
-      setShowFooter: "SET_SHOW_FOOTER"
+      setFullScreen: 'SET_FULL_SCREEN',
+      setShowFooter: 'SET_SHOW_FOOTER'
     }),
     showPlayer() {
       if (!this.currentSong.id) {
@@ -97,9 +91,7 @@ export default {
       this.setFullScreen(true);
       this.setShowFooter(false);
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

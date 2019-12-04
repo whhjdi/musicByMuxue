@@ -14,22 +14,22 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "",
+  name: '',
   components: {},
   props: {
     text: {
       type: String,
-      default: "正在加载"
+      default: '正在加载'
     }
   },
   data() {
     return {};
   },
-  watch: {},
+
   computed: {
-    ...mapGetters(["loading"])
+    ...mapGetters(['loading'])
   },
   created() {},
   mounted() {},

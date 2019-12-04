@@ -32,7 +32,7 @@ export const popMenuPlay = {
   methods: {
     ...mapActions(['insertSongNext', 'insertSong', 'setTips']),
     nextPlay(song) {
-      if (this.currentIndex == -1) {
+      if (this.currentIndex === -1) {
         this.insertSong(song);
         return;
       }

@@ -1,8 +1,10 @@
 // 构造歌手类，包含基本的三个属性
-import Storage from "good-storage";
+import Storage from 'good-storage';
 export class Singer {
   constructor({ id, name, avatar }) {
-    (this.id = id), (this.name = name), (this.avatar = avatar);
+    this.id = id;
+    this.name = name;
+    this.avatar = avatar;
   }
 }
 
@@ -29,13 +31,14 @@ export function createSong(musicData) {
 
 function singerName(ar) {
   let name = [];
-  name = ar.map(item => {
+  name = ar.map((item) => {
     return item.name;
   });
-  return name.join("/");
+  return name.join('/');
 }
-export function getData(el, name, val) {
-  const prefix = "data-";
+export function getData(el, aName, val) {
+  let name = aName;
+  const prefix = 'data-';
   name = prefix + name;
   if (val) {
     return el.setAttribute(name, val);
@@ -65,14 +68,14 @@ function getRandomInt(min, max) {
 }
 
 // 缓存
-const SEARCH_KEY = "__search__";
+const SEARCH_KEY = '__search__';
 const SEARCH_MAX_LENGTH = 15;
 export function cacheSearchHistory(query) {
   let searches = Storage.get(SEARCH_KEY, []);
   insertArray(
     searches,
     query,
-    item => {
+    (item) => {
       return item === query;
     },
     SEARCH_MAX_LENGTH
@@ -80,6 +83,7 @@ export function cacheSearchHistory(query) {
   Storage.set(SEARCH_KEY, searches);
   return searches;
 }
+/* eslint max-params: ["error", 4] */
 function insertArray(arr, val, compare, maxLen) {
   const index = arr.findIndex(compare);
   if (index === 0) {
@@ -101,7 +105,7 @@ export function loadSearch() {
 
 export function deleteCacheSearchHistory(query) {
   let searches = Storage.get(SEARCH_KEY, []);
-  deleteFromArray(searches, item => {
+  deleteFromArray(searches, (item) => {
     return item === query;
   });
   Storage.set(SEARCH_KEY, searches);
@@ -121,7 +125,7 @@ export function deleteAllCacheSearchHistory() {
 }
 
 // 播放记录
-const PLAY_KEY = "__play__";
+const PLAY_KEY = '__play__';
 const PLAY_MAX_LENGTH = 200;
 
 export function savePlay(song) {
@@ -129,7 +133,7 @@ export function savePlay(song) {
   insertArray(
     songs,
     song,
-    item => {
+    (item) => {
       return item.id === song.id;
     },
     PLAY_MAX_LENGTH
@@ -143,7 +147,7 @@ export function loadPlay() {
 
 export function deleteOneCachePlayHistory(song) {
   let history = Storage.get(PLAY_KEY, []);
-  deleteFromArray(history, item => {
+  deleteFromArray(history, (item) => {
     return item.id === song.id;
   });
   Storage.set(PLAY_KEY, history);
@@ -156,7 +160,7 @@ export function deleteAllCachePlayHistory() {
 
 // 收藏
 
-const FAVORITE_KEY = "__favourite__";
+const FAVORITE_KEY = '__favorite__';
 const FAVORITE_MAX_LENGTH = 200;
 
 export function loadFavorite() {
@@ -167,7 +171,7 @@ export function saveToFavorite(song) {
   insertArray(
     favoriteList,
     song,
-    item => {
+    (item) => {
       return item.id === song.id;
     },
     FAVORITE_MAX_LENGTH
@@ -177,7 +181,7 @@ export function saveToFavorite(song) {
 }
 export function deleteFromFavoriteList(song) {
   let favoriteList = Storage.get(FAVORITE_KEY, []);
-  deleteFromArray(favoriteList, item => {
+  deleteFromArray(favoriteList, (item) => {
     return item.id === song.id;
   });
   Storage.set(FAVORITE_KEY, favoriteList);

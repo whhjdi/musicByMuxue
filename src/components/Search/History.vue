@@ -10,11 +10,7 @@
         class="item border-bottom"
       >
         <span class="text">{{ item }}</span>
-        <svg
-          @click.stop="deleteHistoryItem(item)"
-          class="icon"
-          aria-hidden="true"
-        >
+        <svg @click.stop="deleteHistoryItem(item)" class="icon" aria-hidden="true">
           <use xlink:href="#icon-close"></use>
         </svg>
       </li>
@@ -23,29 +19,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "",
-  components: {},
-  props: {},
-  data() {
-    return {};
-  },
-  watch: {},
+  name: '',
   computed: {
-    ...mapGetters(["searchHistory"])
+    ...mapGetters(['searchHistory'])
   },
   created() {},
   mounted() {},
   methods: {
     deleteHistoryItem(item) {
-      this.$emit("deleteOne", item);
+      this.$emit('deleteOne', item);
     },
     selectItem(item) {
-      this.$emit("selectItem", item);
+      this.$emit('selectItem', item);
     },
     deleteAll() {
-      this.$emit("deleteAll");
+      this.$emit('deleteAll');
     }
   }
 };

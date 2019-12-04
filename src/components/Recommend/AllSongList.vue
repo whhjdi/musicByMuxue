@@ -2,7 +2,7 @@
   <div class="allSongList">
     <header class="header border-bottom">
       <svg @click="goBack" class="icon i-back" aria-hidden="true">
-        <use xlink:href="#icon-arrowleft"></use>
+        <use xlink:href="#icon-arrowleft" />
       </svg>
       <h2 class="title">歌单</h2>
     </header>
@@ -10,10 +10,10 @@
     <Scroll ref="list" :data="playLists" @scrollToEnd="loadMore" :pullup="pullup" class="scroll">
       <div>
         <div class="nav">
-          <span @click="getCatList" class="catText border"
-            >{{ catText }}
+          <span @click="getCatList" class="catText border">
+            {{ catText }}
             <svg @click="goBack" class="icon i-back" aria-hidden="true">
-              <use xlink:href="#icon-right"></use>
+              <use xlink:href="#icon-right" />
             </svg>
           </span>
           <div class="sort">
@@ -28,17 +28,17 @@
             @click="handleSongList(item)"
             class="list"
           >
-            <img :src="item.coverImgUrl" alt="" class="pic" />
+            <img :src="item.coverImgUrl" alt class="pic" />
             <div class="name">{{ item.name }}</div>
             <div class="number">
               <svg class="icon i-count" aria-hidden="true">
-                <use xlink:href="#icon-music"></use>
+                <use xlink:href="#icon-music" />
               </svg>
               <div class="count">{{ item.playCount | setNumber }}</div>
             </div>
             <div class="author">
               <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-user"></use>
+                <use xlink:href="#icon-user" />
               </svg>
               <span class="nickname">{{ item.creator.nickname }}</span>
             </div>
@@ -46,12 +46,7 @@
         </ul>
       </div>
     </Scroll>
-    <cat-list
-      ref="catList"
-      :catList="catList"
-      @selectItem="selectCat"
-      @selectAll="selectAll"
-    ></cat-list>
+    <cat-list ref="catList" :catList="catList" @selectItem="selectCat" @selectAll="selectAll"></cat-list>
     <router-view
       ref="musicList"
       :title="title"
@@ -113,6 +108,11 @@ export default {
       this.getSongList(this.catText, this.offset, newVal);
     }
   },
+  created() {
+    this.setShowFooter(false);
+    this.getSongList(this.catText, this.offset, this.order);
+  },
+
   methods: {
     ...mapMutations({
       setShowFooter: 'SET_SHOW_FOOTER'
@@ -187,12 +187,7 @@ export default {
       this.offset = 0;
       this.getSongList(this.catText, this.offset, this.order);
     }
-  },
-  created() {
-    this.setShowFooter(false);
-    this.getSongList(this.catText, this.offset, this.order);
-  },
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

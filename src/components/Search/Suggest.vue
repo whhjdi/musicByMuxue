@@ -11,7 +11,7 @@
               @click="selectAlbum(item)"
               class="item border-bottom"
             >
-              <img v-lazy="item.picUrl" alt="" class="img" />
+              <img v-lazy="item.picUrl" alt class="img" />
               <div class="right">
                 <div class="name">专辑：{{ item.name }}</div>
                 <div class="singer">{{ item.singer }}</div>
@@ -28,7 +28,7 @@
               @click="selectSinger(item)"
               class="item border-bottom"
             >
-              <img v-lazy="item.picUrl" alt="" class="img" />
+              <img v-lazy="item.picUrl" alt class="img" />
               <div class="singer">歌手：{{ item.singer }}</div>
             </li>
           </ul>
@@ -46,23 +46,16 @@
               <div class="right">
                 <div class="name">{{ song.name }}</div>
                 <div class="singer">
-                  {{ song.singer }} <span class="album">-{{ song.album }}</span>
+                  {{ song.singer }}
+                  <span class="album">-{{ song.album }}</span>
                 </div>
               </div>
-              <svg
-                @click.stop="showPopOver(song)"
-                class="icon i-switch"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-switch"></use>
+              <svg @click.stop="showPopOver(song)" class="icon i-switch" aria-hidden="true">
+                <use xlink:href="#icon-switch" />
               </svg>
             </li>
           </ul>
-          <pop-menu
-            ref="popMenu"
-            @nextPlay="nextPlay"
-            @playNow="nowPlay"
-          ></pop-menu>
+          <pop-menu ref="popMenu" @nextPlay="nextPlay" @playNow="nowPlay"></pop-menu>
         </div>
       </div>
     </Scroll>
@@ -70,13 +63,13 @@
 </template>
 
 <script>
-import Search from "@/api/search.js";
-import { mapGetters } from "vuex";
-import Scroll from "@/components/base/Scroll.vue";
-import { playListMixin, popMenuPlay } from "@/mixin.js";
-import PopMenu from "../base/PopMenu";
+import Search from '@/api/search.js';
+import { mapGetters } from 'vuex';
+import Scroll from '@/components/base/Scroll.vue';
+import { playListMixin, popMenuPlay } from '@/mixin.js';
+import PopMenu from '../base/PopMenu';
 export default {
-  name: "",
+  name: '',
   components: { Scroll, PopMenu },
   mixins: [playListMixin, popMenuPlay],
   props: {},
@@ -88,40 +81,40 @@ export default {
       songs: []
     };
   },
-  watch: {
-    query(newVal) {
-      if (newVal !== "") {
-        this.search(newVal);
-      }
-    }
-  },
   computed: {
-    ...mapGetters(["query"]),
+    ...mapGetters(['query']),
     allData() {
       return this.album.concat(this.artists, this.songs);
     }
   },
+  watch: {
+    query(newVal) {
+      if (newVal !== '') {
+        this.search(newVal);
+      }
+    }
+  },
+
   created() {},
   mounted() {},
   methods: {
     selectAlbum(item) {
-      this.$emit("handleAlbum", item);
+      this.$emit('handleAlbum', item);
     },
     selectSinger(item) {
-      this.$emit("handleSinger", item);
+      this.$emit('handleSinger', item);
     },
     selectSong(item) {
-      this.$emit("handleSong", item);
+      this.$emit('handleSong', item);
     },
     search(query) {
-      Search.getSuggest(query).then(res => {
+      Search.getSuggest(query).then((res) => {
         let suggest = res.result;
         let picUrl;
         if (suggest.albums && suggest.albums[0].artist.picUrl) {
           picUrl = suggest.albums[0].artist.picUrl;
         } else {
-          picUrl =
-            "https://ws2.sinaimg.cn/large/006tNbRwly1fy54tapw58j30yl0u0h16.jpg";
+          picUrl = 'https://ws2.sinaimg.cn/large/006tNbRwly1fy54tapw58j30yl0u0h16.jpg';
         }
         if (suggest.albums && suggest.albums.length > 0) {
           this.setAlbum(suggest.albums);
@@ -137,7 +130,7 @@ export default {
     // 可以优化
     setAlbum(album) {
       this.album = [];
-      album.forEach(item => {
+      album.forEach((item) => {
         let id = item.id;
         let name = item.name;
         let singer = item.artist.name;
@@ -147,7 +140,7 @@ export default {
     },
     setArtist(artist) {
       this.artists = [];
-      artist.forEach(item => {
+      artist.forEach((item) => {
         let id = item.id;
         let singer = item.name;
         let picUrl = item.picUrl;
@@ -156,7 +149,7 @@ export default {
     },
     setSongs(songs, picUrl) {
       this.songs = [];
-      songs.forEach(item => {
+      songs.forEach((item) => {
         let id = item.id;
         let name = item.name;
         let singer = item.artists[0].name;

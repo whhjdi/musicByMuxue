@@ -21,20 +21,14 @@
             <h1 class="title">{{ title }}</h1>
           </div>
           <div v-show="!showComment" class="song-list-wrapper">
-            <svg
-              @click.stop="toggleComment"
-              class="icon i-comment"
-              aria-hidden="true"
-            >
+            <svg @click.stop="toggleComment" class="icon i-comment" aria-hidden="true">
               <use xlink:href="#icon-comment" />
             </svg>
             <div class="control-wrapper border-bottom">
               <svg class="icon i-play" aria-hidden="true">
                 <use xlink:href="#icon-play-circle" />
               </svg>
-              <span @click="playAll" class="desc"
-                >播放全部（共{{ this.songs.length }}首）</span
-              >
+              <span @click="playAll" class="desc">播放全部（共{{ songs.length }}首）</span>
             </div>
             <ul ref="wrapper" class="song-list">
               <li
@@ -51,11 +45,7 @@
                     <span class="album">-{{ song.album }}</span>
                   </div>
                 </div>
-                <svg
-                  @click.stop="showPopOver(song)"
-                  class="icon i-switch"
-                  aria-hidden="true"
-                >
+                <svg @click.stop="showPopOver(song)" class="icon i-switch" aria-hidden="true">
                   <use xlink:href="#icon-switch" />
                 </svg>
               </li>
@@ -63,28 +53,15 @@
           </div>
           <transition name="comment-show">
             <div v-show="showComment" class="comment">
-              <svg
-                @click.stop="toggleComment"
-                class="icon i-song"
-                aria-hidden="true"
-              >
+              <svg @click.stop="toggleComment" class="icon i-song" aria-hidden="true">
                 <use xlink:href="#icon-close" />
               </svg>
               <h3
                 v-show="hotComments && hotComments.length > 0"
                 class="hot-title"
-              >
-                热门评论({{ hotComments.length }})
-              </h3>
-              <ul
-                v-show="hotComments && hotComments.length > 0"
-                class="hot-list"
-              >
-                <li
-                  v-for="(comment, index) in hotComments"
-                  :key="index"
-                  class="hot"
-                >
+              >热门评论({{ hotComments.length }})</h3>
+              <ul v-show="hotComments && hotComments.length > 0" class="hot-list">
+                <li v-for="(comment, index) in hotComments" :key="index" class="hot">
                   <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
@@ -98,15 +75,12 @@
                   </div>
                 </li>
               </ul>
-              <h3 v-show="comments && comments.length > 0" class="new-title">
-                最新评论({{ comments.length }})
-              </h3>
+              <h3
+                v-show="comments && comments.length > 0"
+                class="new-title"
+              >最新评论({{ comments.length }})</h3>
               <ul v-show="comments && comments.length > 0" class="hot-list">
-                <li
-                  v-for="(comment, index) in comments"
-                  :key="index"
-                  class="hot"
-                >
+                <li v-for="(comment, index) in comments" :key="index" class="hot">
                   <img v-lazy="comment.user.avatarUrl" alt class="pic" />
                   <div class="right border-bottom">
                     <div class="nickname">{{ comment.user.nickname }}</div>
@@ -120,12 +94,7 @@
                   </div>
                 </li>
               </ul>
-              <div
-                v-show="comments.length === 0 && hotComments.length === 0"
-                class="void"
-              >
-                暂时还没有评论
-              </div>
+              <div v-show="comments.length === 0 && hotComments.length === 0" class="void">暂时还没有评论</div>
             </div>
           </transition>
         </div>
@@ -136,13 +105,13 @@
 </template>
 
 <script>
-import Scroll from "../base/Scroll";
-import { playListMixin } from "@/mixin.js";
-import PopMenu from "./PopMenu";
-import { mapActions, mapGetters, mapMutations } from "vuex";
-import Recommend from "@/api/recommend.js";
+import Scroll from '../base/Scroll';
+import { playListMixin } from '@/mixin.js';
+import PopMenu from './PopMenu';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Recommend from '@/api/recommend.js';
 export default {
-  name: "MusicList",
+  name: 'MusicList',
   components: { Scroll, PopMenu },
   mixins: [playListMixin],
   props: {
@@ -152,7 +121,7 @@ export default {
     },
     title: {
       type: String,
-      default: "歌单"
+      default: '歌单'
     },
     picUrl: {
       type: String
@@ -164,19 +133,26 @@ export default {
   data() {
     return {
       scrollY: 0,
-      headerTitle: "",
+      headerTitle: '',
       showComment: false,
       comments: [],
       hotComments: []
     };
   },
+  computed: {
+    ...mapGetters(['currentIndex']),
+    bgStyle() {
+      return `background-image:url(${this.picUrl})`;
+    }
+  },
+
   watch: {
     scrollY(newY) {
       const percent = Math.abs(newY / this.imageHeight);
       if (newY < this.minTranslateHeight) {
         this.headerTitle = this.title;
       } else {
-        this.headerTitle = "歌单";
+        this.headerTitle = '歌单';
       }
       if (newY < 0) {
         this.$refs.header.style.background = `rgba(0,0,0, ${percent})`;
@@ -185,17 +161,21 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(["currentIndex"]),
-    bgStyle() {
-      return `background-image:url(${this.picUrl})`;
-    }
+  created() {
+    this.probeType = 3;
+    this.listenScroll = true;
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.imageHeight = this.$refs.bg.clientHeight;
+      this.minTranslateHeight = -this.imageHeight + 44;
+    });
   },
   methods: {
     ...mapMutations({
-      setLoading: "SET_LOADING"
+      setLoading: 'SET_LOADING'
     }),
-    ...mapActions(["insertSongNext", "insertSong", "randomPlay", "selectPlay"]),
+    ...mapActions(['insertSongNext', 'insertSong', 'randomPlay', 'selectPlay']),
     goBack() {
       this.$router.go(-1);
     },
@@ -203,7 +183,9 @@ export default {
       this.scrollY = pos.y;
     },
     selectItem(song, index) {
-      this.$emit("select", song, index);
+      console.log(song, index);
+
+      this.$emit('select', song, index);
     },
     playAll() {
       this.randomPlay({ list: this.songs });
@@ -223,7 +205,7 @@ export default {
     },
     toggleComment() {
       if (!this.showComment) {
-        Recommend.getComment(this.id).then(res => {
+        Recommend.getComment(this.id).then((res) => {
           console.log(res);
           this.comments = res.comments;
           this.hotComments = res.hotComments;
@@ -232,19 +214,10 @@ export default {
       this.showComment = !this.showComment;
     }
   },
-  created() {
-    this.probeType = 3;
-    this.listenScroll = true;
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.imageHeight = this.$refs.bg.clientHeight;
-      this.minTranslateHeight = -this.imageHeight + 44;
-    });
-  },
+
   beforeRouteEnter(to, from, next) {
     if (!from.name) {
-      next(vm => {
+      next((vm) => {
         if (!vm.id) {
           vm.$router.go(-1);
         }

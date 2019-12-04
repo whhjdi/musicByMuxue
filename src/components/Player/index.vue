@@ -3,31 +3,21 @@
     <transition name="normal">
       <div v-show="fullScreen" class="normal-player">
         <div class="background">
-          <img
-            :src="currentSong.picUrl"
-            alt
-            width="100%"
-            height="100%"
-            class="img"
-          />
+          <img :src="currentSong.picUrl" alt width="100%" height="100%" class="img" />
 
           <div class="filter"></div>
           <div class="filterR"></div>
         </div>
         <div class="top">
           <svg @click="goBack" class="icon i-left" aria-hidden="true">
-            <use xlink:href="#icon-down"></use>
+            <use xlink:href="#icon-down" />
           </svg>
           <div class="name">
             <h1 class="title">{{ currentSong.name }}</h1>
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
-          <svg
-            @click="toggleFavorite(currentSong)"
-            class="icon i-right"
-            aria-hidden="true"
-          >
-            <use :xlink:href="getFavoriteIcon(currentSong)"></use>
+          <svg @click="toggleFavorite(currentSong)" class="icon i-right" aria-hidden="true">
+            <use :xlink:href="getFavoriteIcon(currentSong)" />
           </svg>
         </div>
         <div @click="changeMiddle" class="middle">
@@ -37,9 +27,10 @@
                 <img :src="currentSong.picUrl" alt class="image" />
               </div>
             </div>
-            <div v-if="currentLyric && currentLyric.lines" class="line-lyric">
-              {{ currentLyric.lines[currentLineNum].txt }}
-            </div>
+            <div
+              v-if="currentLyric && currentLyric.lines"
+              class="line-lyric"
+            >{{ currentLyric.lines[currentLineNum].txt }}</div>
           </div>
           <transition name="middleR">
             <Scroll
@@ -56,9 +47,7 @@
                     :key="index"
                     :class="{ current: currentLineNum === index }"
                     class="text"
-                  >
-                    {{ line.txt }}
-                  </p>
+                  >{{ line.txt }}</p>
                 </div>
                 <p v-else class="no-lyric">{{ updatecurrentLyric }}</p>
               </div>
@@ -79,92 +68,111 @@
           </div>
           <div class="operators">
             <svg @click="changeMode" class="icon i-left" aria-hidden="true">
-              <use :xlink:href="iconMode"></use>
+              <use :xlink:href="iconMode" />
             </svg>
             <svg @click="prev" class="icon i-left" aria-hidden="true">
-              <use xlink:href="#icon-step-backward"></use>
+              <use xlink:href="#icon-step-backward" />
             </svg>
-            <svg
-              @click="togglePlaying"
-              class="icon i-center"
-              aria-hidden="true"
-            >
-              <use :xlink:href="playIcon"></use>
+            <svg @click="togglePlaying" class="icon i-center" aria-hidden="true">
+              <use :xlink:href="playIcon" />
             </svg>
             <svg @click="next" class="icon i-right" aria-hidden="true">
-              <use xlink:href="#icon-step-forward"></use>
+              <use xlink:href="#icon-step-forward" />
             </svg>
             <svg @click="showPlayList" class="icon i-right" aria-hidden="true">
-              <use xlink:href="#icon-menu"></use>
+              <use xlink:href="#icon-menu" />
             </svg>
           </div>
         </div>
       </div>
     </transition>
     <transition name="normal">
-      <div
-        v-show="!fullScreen && !showFooter"
-        @click="open"
-        class="mini-player"
-      >
+      <div v-show="!fullScreen && !showFooter" @click="open" class="mini-player">
         <div class="left">
           <img v-lazy="currentSong.picUrl" alt class="pic" />
           <div class="name">{{ currentSong.name }}</div>
           <div class="singer">{{ currentSong.singer }}</div>
         </div>
         <div class="right">
-          <svg
-            @click.stop.prevent="togglePlaying"
-            class="icon i-mini"
-            aria-hidden="true"
-          >
-            <use :xlink:href="miniIcon"></use>
+          <svg @click.stop.prevent="togglePlaying" class="icon i-mini" aria-hidden="true">
+            <use :xlink:href="miniIcon" />
           </svg>
 
           <svg @click.stop="showPlayList" class="icon" aria-hidden="true">
-            <use xlink:href="#icon-menu"></use>
+            <use xlink:href="#icon-menu" />
           </svg>
         </div>
       </div>
     </transition>
-    <audio
-      ref="audio"
-      @canplay="ready"
-      @error="error"
-      @timeupdate="updateTime"
-      @ended="ended"
-    ></audio>
+    <audio ref="audio" @canplay="ready" @error="error" @timeupdate="updateTime" @ended="ended"></audio>
     <play-list ref="playList" @modeChange="changeMode"></play-list>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import Song from "@/api/song.js";
-import ProgressBar from "../base/ProgressBar";
-import { playMode, shuffle } from "@/utils/index.js";
-import Lyric from "lyric-parser";
-import Scroll from "../base/Scroll";
-import PlayList from "./PlayList";
-import { favoriteSong } from "@/mixin.js";
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Song from '@/api/song.js';
+import ProgressBar from '../base/ProgressBar';
+import { playMode, shuffle } from '@/utils/index.js';
+import Lyric from 'lyric-parser';
+import Scroll from '../base/Scroll';
+import PlayList from './PlayList';
+import { favoriteSong } from '@/mixin.js';
 export default {
-  name: "",
+  name: '',
   components: { ProgressBar, Scroll, PlayList },
   mixins: [favoriteSong],
   props: {},
   data() {
     return {
-      url: "",
+      url: '',
       songReady: false,
       currentTime: 0,
       duration: 0,
       currentLyric: null,
       currentLineNum: 0,
-      currentShow: "cd"
+      currentShow: 'cd'
     };
+  },
+
+  computed: {
+    ...mapGetters([
+      'fullScreen',
+      'playList',
+      'currentSong',
+      'playing',
+      'currentIndex',
+      'mode',
+      'sequenceList',
+      'showFooter'
+    ]),
+    playIcon() {
+      return this.playing ? '#icon-timeout' : '#icon-play-circle';
+    },
+    miniIcon() {
+      return this.playing ? '#icon-timeout' : '#icon-play-circle';
+    },
+    percent() {
+      return this.currentTime / this.duration;
+    },
+    iconMode() {
+      return this.mode === playMode.sequence
+        ? '#icon-retweet'
+        : this.mode === playMode.loop
+        ? '#icon-danquxunhuan'
+        : '#icon-suijibofang';
+    },
+    updatecurrentLyric() {
+      if (this.noLyric) {
+        return '暂无歌词';
+      }
+      return '歌词加载中';
+    }
   },
   watch: {
     currentSong(newVal, oldVal) {
+      console.log(newVal, 'newVal', oldVal);
+
       if (newVal.id === oldVal.id) {
         return;
       }
@@ -189,56 +197,26 @@ export default {
       this.setPlayingState(true);
     }
   },
-  computed: {
-    ...mapGetters([
-      "fullScreen",
-      "playList",
-      "currentSong",
-      "playing",
-      "currentIndex",
-      "mode",
-      "sequenceList",
-      "showFooter"
-    ]),
-    playIcon() {
-      return this.playing ? "#icon-timeout" : "#icon-play-circle";
-    },
-    miniIcon() {
-      return this.playing ? "#icon-timeout" : "#icon-play-circle";
-    },
-    percent() {
-      return this.currentTime / this.duration;
-    },
-    iconMode() {
-      return this.mode === playMode.sequence
-        ? "#icon-retweet"
-        : this.mode === playMode.loop
-        ? "#icon-danquxunhuan"
-        : "#icon-suijibofang";
-    },
-    updatecurrentLyric() {
-      if (this.noLyric) {
-        return "暂无歌词";
-      }
-      return "歌词加载中";
-    }
+  created() {
+    this.move = false;
+    this.noLyric = '歌词加载中';
   },
   methods: {
-    ...mapActions(["savePlayHistory"]),
+    ...mapActions(['savePlayHistory']),
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN",
-      setPlayingState: "SET_PLAYING_STATE",
-      setCurrentIndex: "SET_CURRENT_INDEX",
-      setPlayMode: "SET_PLAYING_MODE",
-      setPlayList: "SET_PLAY_LIST",
-      setShowFooter: "SET_SHOW_FOOTER"
+      setFullScreen: 'SET_FULL_SCREEN',
+      setPlayingState: 'SET_PLAYING_STATE',
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlayMode: 'SET_PLAYING_MODE',
+      setPlayList: 'SET_PLAY_LIST',
+      setShowFooter: 'SET_SHOW_FOOTER'
     }),
     showPlayList() {
       this.$refs.playList.show();
     },
     goBack() {
       this.setFullScreen(false);
-      if (this.$route.name && this.$route.name !== "search") {
+      if (this.$route.name && this.$route.name !== 'search') {
         this.setShowFooter(true);
       }
     },
@@ -258,7 +236,7 @@ export default {
       this.playing ? audio.play() : audio.pause();
     },
     getSongUrl(id) {
-      Song.getSong(id).then(res => {
+      Song.getSong(id).then((res) => {
         this.url = res.data[0].url;
         this.getLyric(id);
       });
@@ -269,7 +247,7 @@ export default {
         this.currentLyric = null;
       }
       Song.getLyric(id)
-        .then(res => {
+        .then((res) => {
           this.currentLyric = new Lyric(res.lrc.lyric, this.handleLyric);
           this.noLyric = false;
           if (this.playing) {
@@ -278,7 +256,7 @@ export default {
             this.$refs.lyricList.scrollTo(0, 0, 1000);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.noLyric = true;
         });
@@ -342,16 +320,17 @@ export default {
       }
       this.currentTime = e.target.currentTime;
     },
-    format(interval) {
-      interval = interval | 0;
+    format(pInterval) {
+      let interval = pInterval | 0;
       const minute = (interval / 60) | 0;
       const second = this.pad(interval % 60);
       return `${minute}:${second}`;
     },
-    pad(num, n = 2) {
+    pad(pNum, n = 2) {
+      let num = pNum;
       let len = num.toString().length;
       if (len < n) {
-        num = "0" + num;
+        num = '0' + num;
         len++;
       }
       return num;
@@ -389,7 +368,7 @@ export default {
       this.setPlayList(list);
     },
     resetCurrentIndex(list) {
-      let index = list.findIndex(item => {
+      let index = list.findIndex((item) => {
         return item.id === this.currentSong.id;
       });
       this.setCurrentIndex(index);
@@ -410,18 +389,13 @@ export default {
       this.setPlayingState(true);
     },
     changeMiddle() {
-      if (this.currentShow === "cd") {
-        this.currentShow = "lyric";
+      if (this.currentShow === 'cd') {
+        this.currentShow = 'lyric';
       } else {
-        this.currentShow = "cd";
+        this.currentShow = 'cd';
       }
     }
-  },
-  created() {
-    this.move = false;
-    this.noLyric = "歌词加载中";
-  },
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

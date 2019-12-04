@@ -12,9 +12,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span @click="playAll" class="desc"
-            >播放全部（共{{ userList.length }}首）</span
-          >
+          <span @click="playAll" class="desc">播放全部（共{{ userList.length }}首）</span>
           <div @click.stop="confirm" class="clear">{{ deleteText }}</div>
         </div>
         <ul ref="wrapper" class="song-list">
@@ -32,11 +30,7 @@
                 <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg
-              @click.stop="showPopOver(song)"
-              class="icon i-switch"
-              aria-hidden="true"
-            >
+            <svg @click.stop="showPopOver(song)" class="icon i-switch" aria-hidden="true">
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
@@ -51,22 +45,18 @@
       @deleteOne="deleteOne"
       :showDelete="showDelete"
     ></pop-menu>
-    <Confirm
-      ref="confirm"
-      @deleteAll="clear"
-      text="确定要清空所有播放记录吗"
-    ></Confirm>
+    <Confirm ref="confirm" @deleteAll="clear" text="确定要清空所有播放记录吗"></Confirm>
   </div>
 </template>
 
 <script>
-import Scroll from "../base/Scroll";
-import PopMenu from "../base/PopMenu";
-import { mapGetters, mapActions } from "vuex";
-import Confirm from "../base/Confirm";
-import { popMenuPlay, userListMixin } from "@/mixin.js";
+import Scroll from '../base/Scroll';
+import PopMenu from '../base/PopMenu';
+import { mapGetters, mapActions } from 'vuex';
+import Confirm from '../base/Confirm';
+import { popMenuPlay, userListMixin } from '@/mixin.js';
 export default {
-  name: "userList",
+  name: 'userList',
   components: { Scroll, PopMenu, Confirm },
   mixins: [popMenuPlay, userListMixin],
   props: {
@@ -80,32 +70,31 @@ export default {
     },
     deleteText: {
       type: String,
-      default: "清空收藏"
+      default: '清空收藏'
     },
     tips: {
       type: String,
-      default: "哈哈哈，这里是空的呢"
+      default: '哈哈哈，这里是空的呢'
     }
   },
   data() {
     return {};
   },
-  watch: {},
   computed: {
-    ...mapGetters(["playList"])
+    ...mapGetters(['playList'])
   },
   methods: {
-    ...mapActions(["setTips"]),
+    ...mapActions(['setTips']),
     confirm() {
       this.$refs.confirm.show();
     },
     clear() {
-      this.$emit("clear");
+      this.$emit('clear');
       this.$refs.confirm.hide();
-      this.setTips("已清空");
+      this.setTips('已清空');
     },
     deleteOne(song) {
-      this.$emit("deleteOne", song);
+      this.$emit('deleteOne', song);
     }
   }
 };

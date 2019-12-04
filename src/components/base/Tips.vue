@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-09-25 15:30:21
+ * @LastEditTime: 2019-12-04 13:08:00
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /musicByMuxue/src/components/base/Tips.vue
+ -->
 <template>
   <transition name="drop">
     <div v-show="showTips" class="tips">
@@ -9,17 +17,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "",
-  components: {},
-  props: {},
-  data() {
-    return {};
-  },
-  watch: {},
+  name: '',
   computed: {
-    ...mapGetters(["showTips"])
+    ...mapGetters(['showTips'])
   },
   created() {},
   mounted() {},

@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-09-25 15:30:21
+ * @LastEditTime: 2019-12-04 13:07:24
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /musicByMuxue/src/components/Search/SearchBar.vue
+ -->
 <template>
   <div class="search-bar">
     <svg @click.stop="hideSearch" class="icon back" aria-hidden="true">
@@ -21,47 +29,45 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from 'vuex';
 export default {
-  name: "",
+  name: '',
   components: {},
   props: {
     placeholder: {
       type: String,
-      default: "搜歌手，搜歌曲"
+      default: '搜歌手，搜歌曲'
     }
   },
   data() {
     return {
-      queryArg: ""
+      queryArg: ''
     };
   },
-  watch: {},
   computed: {
-    ...mapGetters(["showFooter", "query"])
+    ...mapGetters(['showFooter', 'query'])
+  },
+  created() {
+    this.$watch('queryArg', (newQuery) => {
+      this.setQuery(newQuery);
+    });
+    this.$watch('query', (newQuery) => {
+      this.queryArg = newQuery;
+    });
   },
   methods: {
     ...mapMutations({
-      setShowSearch: "SET_SHOW_SEARCH",
-      setQuery: "SET_QUERY",
-      setShowFooter: "SET_SHOW_FOOTER"
+      setShowSearch: 'SET_SHOW_SEARCH',
+      setQuery: 'SET_QUERY',
+      setShowFooter: 'SET_SHOW_FOOTER'
     }),
     hideSearch() {
-      this.setQuery("");
+      this.setQuery('');
       this.$router.go(-1);
     },
     deleteQuery() {
-      this.setQuery("");
+      this.setQuery('');
     }
-  },
-
-  created() {
-    this.$watch("queryArg", newQuery => {
-      this.setQuery(newQuery);
-    });
-    this.$watch("query", newQuery => {
-      this.queryArg = newQuery;
-    });
   }
 };
 </script>

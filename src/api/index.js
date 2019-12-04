@@ -52,7 +52,9 @@ const urls = {
 };
 
 for (let key in urls) {
-  urls[key] = host + urls[key];
+  if (Object.prototype.hasOwnProperty.call(urls, key)) {
+    urls[key] = host + urls[key];
+  }
 }
 
 export default urls;

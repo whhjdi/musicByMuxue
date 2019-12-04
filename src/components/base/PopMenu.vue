@@ -4,9 +4,7 @@
       <div @click.stop class="list-wrapper">
         <Scroll ref="listContent" :data="scrollData" class="list-content">
           <div class="item-wrapper">
-            <div @click="play" class="header  item border-bottom">
-              歌曲：{{ song.name }}
-            </div>
+            <div @click="play" class="header  item border-bottom">歌曲：{{ song.name }}</div>
             <div @click="playNext" class="next-play item border-bottom">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use></svg
@@ -27,11 +25,7 @@
                 <use xlink:href="#icon-album"></use></svg
               >专辑：{{ song.album }}
             </div>
-            <div
-              @click="deleteOne(song)"
-              v-show="showDelete"
-              class="delete item border-bottom"
-            >
+            <div @click="deleteOne(song)" v-show="showDelete" class="delete item border-bottom">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-close"></use></svg
               >删除
@@ -44,11 +38,11 @@
 </template>
 
 <script>
-import Scroll from "../base/Scroll";
-import { favoriteSong } from "@/mixin.js";
-import { mapActions } from "vuex";
+import Scroll from '../base/Scroll';
+import { favoriteSong } from '@/mixin.js';
+import { mapActions } from 'vuex';
 export default {
-  name: "popMenu",
+  name: 'popMenu',
   components: { Scroll },
   mixins: [favoriteSong],
   props: {
@@ -71,7 +65,7 @@ export default {
   },
   watch: {},
   methods: {
-    ...mapActions(["setTips"]),
+    ...mapActions(['setTips']),
     show(song) {
       this.isShow = true;
       this.song = song;
@@ -80,20 +74,18 @@ export default {
       this.isShow = false;
     },
     playNext() {
-      this.$emit("nextPlay", this.song);
-      this.setTips("已经将一首歌曲添加到播放队列");
+      this.$emit('nextPlay', this.song);
+      this.setTips('已经将一首歌曲添加到播放队列');
     },
     play() {
-      this.$emit("playNow", this.song);
+      this.$emit('playNow', this.song);
     },
     deleteOne(song) {
       this.hide();
-      this.$emit("deleteOne", song);
-      this.setTips("已经删除一首歌曲啦");
+      this.$emit('deleteOne', song);
+      this.setTips('已经删除一首歌曲啦');
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

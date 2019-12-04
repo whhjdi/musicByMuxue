@@ -8,29 +8,18 @@
     <div v-show="!loading" class="scroll-wrapper">
       <Scroll ref="scrolls" :data="recommendSongs" class="scroll">
         <div class="recommend">
-          <div v-if="this.banners && this.banners.length" class="slides">
+          <div v-if="banners && banners.length" class="slides">
             <slide :autoPlay="true" :interval="3000" :loop="true">
-              <div
-                v-for="banner in banners"
-                :key="banner.imageUrl"
-                class="slide-item"
-              >
+              <div v-for="banner in banners" :key="banner.imageUrl" class="slide-item">
                 <img :src="banner.imageUrl" alt class="slide-img" />
               </div>
             </slide>
           </div>
           <div class="recommendSongs">
-            <recommend-list
-              :list="recommendSongs"
-              @setDiscList="handleDisc"
-            ></recommend-list>
+            <recommend-list :list="recommendSongs" @setDiscList="handleDisc"></recommend-list>
           </div>
           <div class="newSongs">
-            <recommend-list
-              :list="newDiscs"
-              @setDiscList="handleDisc"
-              title="最新歌单"
-            ></recommend-list>
+            <recommend-list :list="newDiscs" @setDiscList="handleDisc" title="最新歌单"></recommend-list>
           </div>
         </div>
       </Scroll>
@@ -48,17 +37,17 @@
 </template>
 
 <script>
-import Slide from "@/components/Recommend/Slide.vue";
-import Recommend from "@/api/recommend.js";
-import Scroll from "@/components/base/Scroll.vue";
-import RecommendList from "@/components/Recommend/RecommendList.vue";
-import { mapGetters, mapMutations } from "vuex";
-import SearchBar from "@/components/base/SearchNav.vue";
-import { songsListPlayMixin } from "@/mixin.js";
-import HomeSkeleton from "@/components/Skeletons/HomeSkeleton.vue";
+import Slide from '@/components/Recommend/Slide.vue';
+import Recommend from '@/api/recommend.js';
+import Scroll from '@/components/base/Scroll.vue';
+import RecommendList from '@/components/Recommend/RecommendList.vue';
+import { mapGetters, mapMutations } from 'vuex';
+import SearchBar from '@/components/base/SearchNav.vue';
+import { songsListPlayMixin } from '@/mixin.js';
+import HomeSkeleton from '@/components/Skeletons/HomeSkeleton.vue';
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
     Slide,
     Scroll,
@@ -78,9 +67,8 @@ export default {
       showSkeleton: false
     };
   },
-  watch: {},
   computed: {
-    ...mapGetters(["isLogin", "loading"]),
+    ...mapGetters(['isLogin', 'loading']),
     title() {
       return this.list.name;
     },
@@ -94,20 +82,33 @@ export default {
       return this.banners.concat(this.newDiscs, this.recommendSongs);
     }
   },
+  activated() {
+    this.$refs.scrolls.refresh();
+  },
+  created() {
+    this.setLoading(true);
+    this.showSkeleton = true;
+    this.getAllRecommend().then((res) => {
+      this.setLoading(false);
+      this.showSkeleton = false;
+      this.setAllRecommend(res);
+    });
+  },
   methods: {
     ...mapMutations({
-      setLoading: "SET_LOADING"
+      setLoading: 'SET_LOADING'
     }),
     handleDisc(item) {
-      item.id &&
-        this.$router.push({
-          path: `/home/${item["id"]}`
+      if (item.id) {
+        this.setLoading(true);
+        Recommend.getDisc(item.id).then((res) => {
+          this.setLoading(false);
+          this.setList(res);
+          this.$router.push({
+            path: `/home/${item.id}`
+          });
         });
-      this.setLoading(true);
-      Recommend.getDisc(item.id).then(res => {
-        this.setLoading(false);
-        this.setList(res);
-      });
+      }
     },
     getAllRecommend() {
       let p1 = Recommend.getBanner();
@@ -139,18 +140,6 @@ export default {
     setNewDisc(res) {
       this.newDiscs = res.playlists;
     }
-  },
-  activated() {
-    this.$refs.scrolls.refresh();
-  },
-  created() {
-    this.setLoading(true);
-    this.showSkeleton = true;
-    this.getAllRecommend().then(res => {
-      this.setLoading(false);
-      this.showSkeleton = false;
-      this.setAllRecommend(res);
-    });
   }
 };
 </script>

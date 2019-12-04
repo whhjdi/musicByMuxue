@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 <template>
   <div class="artist">
     <div class="header border-bottom">
@@ -20,17 +21,17 @@
 </template>
 
 <script>
-import Artist from "../../api/artist.js";
-import { Singer } from "../../utils";
-import pinyin from "pinyin";
-import SearchNav from "@/components/base/SearchNav";
-import SingerList from "../../components/Artist/SingerList.vue";
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import { createSong } from "@/utils/index.js";
-const HOT_NAME = "热门";
+import Artist from '../../api/artist.js';
+import { Singer } from '../../utils';
+import pinyin from 'pinyin';
+import SearchNav from '@/components/base/SearchNav';
+import SingerList from '../../components/Artist/SingerList.vue';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { createSong } from '@/utils/index.js';
+const HOT_NAME = '热门';
 const HOT_SINGER_LENGTH = 10;
 export default {
-  name: "artist",
+  name: 'artist',
   components: { SingerList, SearchNav },
   props: {},
   data() {
@@ -40,9 +41,8 @@ export default {
       songs: []
     };
   },
-  watch: {},
   computed: {
-    ...mapGetters(["showFooter"]),
+    ...mapGetters(['showFooter']),
     title() {
       return this.singer.name;
     },
@@ -53,10 +53,23 @@ export default {
       return this.singer.id;
     }
   },
+  activated() {
+    this.$refs.singerList.$children[0].refresh();
+  },
+  created() {
+    this.setLoading(true);
+    Artist.singer().then((res) => {
+      this.setLoading(false);
+      this.setArtists(res);
+    });
+  },
+  destroyed() {
+    this.$NProgress.remove();
+  },
   methods: {
-    ...mapActions(["selectPlay", "randomPlay"]),
+    ...mapActions(['selectPlay', 'randomPlay']),
     ...mapMutations({
-      setLoading: "SET_LOADING"
+      setLoading: 'SET_LOADING'
     }),
     selectItem(song, index) {
       this.selectPlay({ list: this.songs, index });
@@ -66,7 +79,7 @@ export default {
     },
     getDeatil(id) {
       this.setLoading(true);
-      Artist.getSingerDetail(id).then(res => {
+      Artist.getSingerDetail(id).then((res) => {
         this.setLoading(false);
         this.setSingerDetail(res);
       });
@@ -77,7 +90,7 @@ export default {
     },
     normalizeSongs(list) {
       let ret = [];
-      list.forEach(item => {
+      list.forEach((item) => {
         ret.push(createSong(item));
       });
       return ret;
@@ -88,7 +101,7 @@ export default {
       this.singers = this.normalizeSinger(singer);
     },
     setPinyin(singer) {
-      singer.forEach(item => {
+      singer.forEach((item) => {
         let lowerPy = pinyin(item.name[0], {
           style: pinyin.STYLE_FIRST_LETTER
         });
@@ -131,12 +144,15 @@ export default {
       });
       let ret = [];
       let hot = [];
+
       for (let key in map) {
-        let val = map[key];
-        if (val.title === key) {
-          ret.push(val);
-        } else if (val.title === HOT_NAME) {
-          hot.push(val);
+        if (Object.prototype.hasOwnProperty.call(map, key)) {
+          let val = map[key];
+          if (val.title === key) {
+            ret.push(val);
+          } else if (val.title === HOT_NAME) {
+            hot.push(val);
+          }
         }
       }
       ret.sort((a, b) => {
@@ -153,20 +169,6 @@ export default {
           path: `/artist/${singer.id}`
         });
     }
-  },
-  activated() {
-    this.$refs.singerList.$children[0].refresh();
-  },
-  created() {
-    this.setLoading(true);
-    Artist.singer().then(res => {
-      this.setLoading(false);
-      this.setArtists(res);
-    });
-  },
-  mounted() {},
-  destroyed() {
-    this.$NProgress.remove();
   }
 };
 </script>

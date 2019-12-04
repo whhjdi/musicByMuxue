@@ -25,38 +25,38 @@
 
 <script>
 const RANK_LIST = [
-  "云音乐新歌榜",
-  "云音乐热歌榜",
-  "网易原创歌曲榜",
-  "云音乐飙升榜",
-  "云音乐电音榜",
-  "UK排行榜周榜",
-  "美国Billboard周榜",
-  "KTV嗨榜",
-  "iTunes榜",
-  "Hit FM Top榜",
-  "日本Oricon周榜",
-  "韩国Melon排行榜周榜",
-  "韩国Mnet排行榜周榜",
-  "韩国Melon原声周榜",
-  "中国TOP排行榜(港台榜)",
-  "中国TOP排行榜(内地榜)",
-  "香港电台中文歌曲龙虎榜",
-  "华语金曲榜",
-  "中国嘻哈榜",
-  "法国 NRJ EuroHot 30周榜",
-  "台湾Hito排行榜",
-  "Beatport全球电子舞曲榜",
-  "云音乐ACG音乐榜",
-  "云音乐嘻哈榜"
+  '云音乐新歌榜',
+  '云音乐热歌榜',
+  '网易原创歌曲榜',
+  '云音乐飙升榜',
+  '云音乐电音榜',
+  'UK排行榜周榜',
+  '美国Billboard周榜',
+  'KTV嗨榜',
+  'iTunes榜',
+  'Hit FM Top榜',
+  '日本Oricon周榜',
+  '韩国Melon排行榜周榜',
+  '韩国Mnet排行榜周榜',
+  '韩国Melon原声周榜',
+  '中国TOP排行榜(港台榜)',
+  '中国TOP排行榜(内地榜)',
+  '香港电台中文歌曲龙虎榜',
+  '华语金曲榜',
+  '中国嘻哈榜',
+  '法国 NRJ EuroHot 30周榜',
+  '台湾Hito排行榜',
+  'Beatport全球电子舞曲榜',
+  '云音乐ACG音乐榜',
+  '云音乐嘻哈榜'
 ];
-import { createSong } from "@/utils";
-import Rank from "@/api/rank.js";
-import RankList from "@/components/Rank/RankList.vue";
-import { mapMutations, mapActions } from "vuex";
-import SearchBar from "@/components/base/SearchNav.vue";
+import { createSong } from '@/utils';
+import Rank from '@/api/rank.js';
+import RankList from '@/components/Rank/RankList.vue';
+import { mapMutations, mapActions } from 'vuex';
+import SearchBar from '@/components/base/SearchNav.vue';
 export default {
-  name: "rank",
+  name: 'rank',
   components: { RankList, SearchBar },
   props: {},
   data() {
@@ -78,14 +78,20 @@ export default {
       return this.topDetailList.id;
     }
   },
-  watch: {},
+  activated() {
+    this.$refs.rankList.$children[0].refresh();
+  },
+  created() {
+    this.setLoading(true);
+    this.getTopList();
+  },
   methods: {
-    ...mapActions(["selectPlay", "randomPlay"]),
+    ...mapActions(['selectPlay', 'randomPlay']),
     ...mapMutations({
-      setLoading: "SET_LOADING"
+      setLoading: 'SET_LOADING'
     }),
     getTopList() {
-      Rank.getTopList().then(res => {
+      Rank.getTopList().then((res) => {
         this.setLoading(false);
         this.setTopList(res);
       });
@@ -94,8 +100,8 @@ export default {
       let topList = res.list;
       let newList = [];
       let otherList = [];
-      topList.forEach(item1 => {
-        RANK_LIST.forEach(item2 => {
+      topList.forEach((item1) => {
+        RANK_LIST.forEach((item2) => {
           if (item1.name === item2) {
             if (item1.tracks && item1.tracks.length > 0) {
               newList.push(item1);
@@ -123,7 +129,7 @@ export default {
     },
     getTopListDetail(idx) {
       this.setLoading(true);
-      Rank.getTopListDetail(idx).then(res => {
+      Rank.getTopListDetail(idx).then((res) => {
         this.setLoading(false);
         this.topDetailList = res.playlist;
         let songs = this.topDetailList.tracks;
@@ -132,7 +138,7 @@ export default {
     },
     normalizeSongs(list) {
       let ret = [];
-      list.forEach(item => {
+      list.forEach((item) => {
         ret.push(createSong(item));
       });
       return ret;
@@ -143,15 +149,7 @@ export default {
     playAll() {
       this.randomPlay({ list: this.songs });
     }
-  },
-  activated() {
-    this.$refs.rankList.$children[0].refresh();
-  },
-  created() {
-    this.setLoading(true);
-    this.getTopList();
-  },
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

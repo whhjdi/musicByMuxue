@@ -44,9 +44,7 @@
           :data-index="index"
           :class="{ current: currentIndex === index }"
           class="item"
-        >
-          {{ item }}
-        </li>
+        >{{ item }}</li>
       </ul>
       <div v-show="showText" class="mask">{{ text }}</div>
     </div>
@@ -149,13 +147,14 @@ export default {
       let firstTouch = e.touches[0];
       this.touch.y2 = firstTouch.pageY;
       let delta = ((this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT) | 0;
-      let anthorindex = parseInt(this.touch.anthorIndex) + delta;
+      let anthorindex = window.parseInt(this.touch.anthorIndex) + delta;
       this.scrollTo(anthorindex, 0);
     },
     onTouchEnd() {
       this.showText = false;
     },
-    scrollTo(index, time) {
+    scrollTo(pIndex, time) {
+      let index = pIndex;
       if (!index && index !== 0) {
         return;
       }

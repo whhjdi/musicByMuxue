@@ -24,37 +24,36 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from "vuex";
-import Login from "@/api/login.js";
+import { mapMutations, mapGetters, mapActions } from 'vuex';
+import Login from '@/api/login.js';
 export default {
-  name: "",
+  name: '',
   components: {},
   props: {},
   data() {
     return {
-      userName: "",
-      userPassword: ""
+      userName: '',
+      userPassword: ''
     };
   },
-  watch: {},
   computed: {
-    ...mapGetters(["isLogin"])
+    ...mapGetters(['isLogin'])
   },
   methods: {
     ...mapMutations({
-      setUserInfo: "SET_USER_INFO",
-      setShowFooter: "SET_SHOW_FOOTER"
+      setUserInfo: 'SET_USER_INFO',
+      setShowFooter: 'SET_SHOW_FOOTER'
     }),
-    ...mapActions(["setTips"]),
+    ...mapActions(['setTips']),
     handleLogin() {
-      Login.login(this.userName, this.userPassword).then(res => {
+      Login.login(this.userName, this.userPassword).then((res) => {
         let info = {
           name: res.profile.nickname,
           id: res.profile.userId,
           picUrl: res.profile.avatarUrl
         };
         this.setUserInfo(info);
-        this.setTips("登录成功,正在为您跳转");
+        this.setTips('登录成功,正在为您跳转');
         Login.refreshLogin();
         setTimeout(() => {
           this.$router.go(-1);
@@ -89,7 +88,7 @@ export default {
   header {
     height: 50%;
     width: 100%;
-    background-image: url("https://ws1.sinaimg.cn/large/006tNbRwly1fy8nbg7vmbj31400u0e0l.jpg");
+    background-image: url('https://ws1.sinaimg.cn/large/006tNbRwly1fy8nbg7vmbj31400u0e0l.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;

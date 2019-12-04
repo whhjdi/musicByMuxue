@@ -5,12 +5,7 @@
       <div>
         <h3 class="title">热门搜索</h3>
         <div v-show="!query" class="hots border-bottom">
-          <div
-            v-for="hot in hots"
-            :key="hot.first"
-            @click="setQuery(hot.first)"
-            class="hot"
-          >
+          <div v-for="hot in hots" :key="hot.first" @click="setQuery(hot.first)" class="hot">
             {{ hot.first }}
           </div>
         </div>
@@ -47,18 +42,18 @@
 </template>
 
 <script>
-import SearchBar from "@/components/Search/SearchBar.vue";
-import Search from "@/api/search.js";
-import Suggest from "@/components/Search/Suggest.vue";
-import History from "@/components/Search/History.vue";
-import Artist from "@/api/artist.js";
-import { createSong } from "@/utils";
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import Confirm from "@/components/base/Confirm.vue";
-import Scroll from "@/components/base/Scroll.vue";
-import { playListMixin } from "@/mixin.js";
+import SearchBar from '@/components/Search/SearchBar.vue';
+import Search from '@/api/search.js';
+import Suggest from '@/components/Search/Suggest.vue';
+import History from '@/components/Search/History.vue';
+import Artist from '@/api/artist.js';
+import { createSong } from '@/utils';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Confirm from '@/components/base/Confirm.vue';
+import Scroll from '@/components/base/Scroll.vue';
+import { playListMixin } from '@/mixin.js';
 export default {
-  name: "Search",
+  name: 'Search',
   components: { SearchBar, Suggest, History, Confirm, Scroll },
   mixins: [playListMixin],
   props: {},
@@ -69,17 +64,8 @@ export default {
       list: {}
     };
   },
-  watch: {
-    query(newVal) {
-      if (!newVal) {
-        setTimeout(() => {
-          this.$refs.list.refresh();
-        }, 20);
-      }
-    }
-  },
   computed: {
-    ...mapGetters(["query", "searchHistory"]),
+    ...mapGetters(['query', 'searchHistory']),
     title() {
       return this.list.name;
     },
@@ -93,29 +79,44 @@ export default {
       return this.hots.concat(this.searchHistory);
     }
   },
+  watch: {
+    query(newVal) {
+      if (!newVal) {
+        setTimeout(() => {
+          this.$refs.list.refresh();
+        }, 20);
+      }
+    }
+  },
+  created() {
+    Search.getHotSearch().then((res) => {
+      this.hots = res.result.hots;
+    });
+  },
+
   methods: {
     ...mapMutations({
-      setQuery: "SET_QUERY"
+      setQuery: 'SET_QUERY'
     }),
     ...mapActions([
-      "randomPlay",
-      "insertSong",
-      "insertSongNext",
-      "saveSearchHistory",
-      "deleteSearchHistory",
-      "deleteAllSearchHistory"
+      'randomPlay',
+      'insertSong',
+      'insertSongNext',
+      'saveSearchHistory',
+      'deleteSearchHistory',
+      'deleteAllSearchHistory'
     ]),
     showConfirm() {
       this.$refs.confirm.show();
     },
     getAlbumDetail(id) {
-      Search.getAlbumDetail(id).then(res => {
+      Search.getAlbumDetail(id).then((res) => {
         let songs = res.songs;
         this.setDetail(songs, id);
       });
     },
     getDeatil(id) {
-      Artist.getSingerDetail(id).then(res => {
+      Artist.getSingerDetail(id).then((res) => {
         let songs = res.hotSongs;
         this.setDetail(songs, id);
       });
@@ -129,7 +130,7 @@ export default {
     },
     normalizeSongs(list) {
       let ret = [];
-      list.forEach(item => {
+      list.forEach((item) => {
         ret.push(createSong(item));
       });
       return ret;
@@ -153,13 +154,7 @@ export default {
     selectItem(song) {
       this.insertSong(song);
     }
-  },
-  created() {
-    Search.getHotSearch().then(res => {
-      this.hots = res.result.hots;
-    });
-  },
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

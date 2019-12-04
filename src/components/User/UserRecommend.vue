@@ -13,9 +13,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span @click="playAll" class="desc"
-            >播放全部（共{{ userList.length }}首）</span
-          >
+          <span @click="playAll" class="desc">播放全部（共{{ userList.length }}首）</span>
         </div>
         <ul ref="wrapper" class="song-list">
           <li
@@ -32,11 +30,7 @@
                 <span class="album">-{{ song.album }}</span>
               </div>
             </div>
-            <svg
-              @click.stop="showPopOver(song)"
-              class="icon i-switch"
-              aria-hidden="true"
-            >
+            <svg @click.stop="showPopOver(song)" class="icon i-switch" aria-hidden="true">
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
@@ -46,22 +40,17 @@
         <span @click="toLogin" class="toLogin">登录</span>才能找到你喜欢的歌曲呢
       </h2>
     </Scroll>
-    <pop-menu
-      ref="popMenu"
-      @nextPlay="nextPlay"
-      @playNow="nowPlay"
-      :showDelete="false"
-    ></pop-menu>
+    <pop-menu ref="popMenu" @nextPlay="nextPlay" @playNow="nowPlay" :showDelete="false"></pop-menu>
   </div>
 </template>
 
 <script>
-import Scroll from "../base/Scroll";
-import PopMenu from "../base/PopMenu";
-import { mapGetters } from "vuex";
-import { popMenuPlay, userListMixin } from "@/mixin.js";
+import Scroll from '../base/Scroll';
+import PopMenu from '../base/PopMenu';
+import { mapGetters } from 'vuex';
+import { popMenuPlay, userListMixin } from '@/mixin.js';
 export default {
-  name: "userList",
+  name: 'userList',
   components: { Scroll, PopMenu },
   mixins: [popMenuPlay, userListMixin],
   props: {
@@ -73,13 +62,13 @@ export default {
   data() {
     return {};
   },
-  watch: {},
+
   computed: {
-    ...mapGetters(["isLogin"])
+    ...mapGetters(['isLogin'])
   },
   methods: {
     toLogin() {
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: '/login' });
     }
   }
 };

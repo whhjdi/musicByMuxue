@@ -4,11 +4,12 @@
       <div @click.stop class="list-wrapper">
         <div class="header border-bottom">
           <h2 class="title">
-            <span @click="changeMode" class="text"
-              ><svg class="icon i-mode" aria-hidden="true">
-                <use :xlink:href="iconMode"></use></svg
-              >{{ modeText }}</span
-            >
+            <span @click="changeMode" class="text">
+              <svg class="icon i-mode" aria-hidden="true">
+                <use :xlink:href="iconMode" />
+              </svg>
+              {{ modeText }}
+            </span>
             <span @click="showConfirm" class="clear">清空列表</span>
           </h2>
         </div>
@@ -24,41 +25,51 @@
             >
               <div class="text">
                 <span class="name">{{ item.name }}</span>
-                <span class="singer"> - {{ item.singer }}</span>
+                <span class="singer">- {{ item.singer }}</span>
               </div>
-              <svg
-                @click.stop="deleteItem(item)"
-                class="icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-close"></use>
+              <svg @click.stop="deleteItem(item)" class="icon" aria-hidden="true">
+                <use xlink:href="#icon-close" />
               </svg>
             </li>
           </transition-group>
         </Scroll>
       </div>
-      <Confirm
-        ref="confirm"
-        @deleteAll="confirmClear"
-        text="是否清空播放列表"
-      ></Confirm>
+      <Confirm ref="confirm" @deleteAll="confirmClear" text="是否清空播放列表"></Confirm>
     </div>
   </transition>
 </template>
 
 <script>
-import Scroll from "../base/Scroll";
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import { playMode } from "@/utils";
-import Confirm from "../base/Confirm";
+import Scroll from '../base/Scroll';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { playMode } from '@/utils';
+import Confirm from '../base/Confirm';
 export default {
-  name: "",
+  name: '',
   components: { Scroll, Confirm },
   props: {},
   data() {
     return {
       isShow: false
     };
+  },
+
+  computed: {
+    ...mapGetters(['sequenceList', 'mode', 'currentSong', 'playList']),
+    iconMode() {
+      return this.mode === playMode.sequence
+        ? '#icon-retweet'
+        : this.mode === playMode.loop
+        ? '#icon-danquxunhuan'
+        : '#icon-suijibofang';
+    },
+    modeText() {
+      return this.mode === playMode.sequence
+        ? '顺序播放'
+        : this.mode === playMode.loop
+        ? '单曲循环'
+        : '随机播放';
+    }
   },
   watch: {
     currentSong(newSong, oldSong) {
@@ -68,29 +79,12 @@ export default {
       this.scrollToCurSong(newSong);
     }
   },
-  computed: {
-    ...mapGetters(["sequenceList", "mode", "currentSong", "playList"]),
-    iconMode() {
-      return this.mode === playMode.sequence
-        ? "#icon-retweet"
-        : this.mode === playMode.loop
-        ? "#icon-danquxunhuan"
-        : "#icon-suijibofang";
-    },
-    modeText() {
-      return this.mode === playMode.sequence
-        ? "顺序播放"
-        : this.mode === playMode.loop
-        ? "单曲循环"
-        : "随机播放";
-    }
-  },
   methods: {
-    ...mapActions(["deleteSong", "clearSong", "setTips"]),
+    ...mapActions(['deleteSong', 'clearSong', 'setTips']),
     ...mapMutations({
-      setCurrentIndex: "SET_CURRENT_INDEX",
-      setShowFooter: "SET_SHOW_FOOTER",
-      setFullScreen: "SET_FULL_SCREEN"
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setShowFooter: 'SET_SHOW_FOOTER',
+      setFullScreen: 'SET_FULL_SCREEN'
     }),
     show() {
       this.isShow = true;
@@ -103,21 +97,22 @@ export default {
       this.isShow = false;
     },
     changeMode() {
-      this.$emit("modeChange");
+      this.$emit('modeChange');
     },
     isPlaying(item) {
-      return this.currentSong.id === item.id ? "on" : "";
+      return this.currentSong.id === item.id ? 'on' : '';
     },
-    selectItem(item, index) {
+    selectItem(item, pIndex) {
+      let index = pIndex;
       if (this.mode === playMode.random) {
-        index = this.playList.findIndex(song => {
+        index = this.playList.findIndex((song) => {
           return song.id === item.id;
         });
       }
       this.setCurrentIndex(index);
     },
     scrollToCurSong(current) {
-      const index = this.sequenceList.findIndex(song => {
+      const index = this.sequenceList.findIndex((song) => {
         return current.id === song.id;
       });
       this.$refs.listContent.scrollToElement(this.$refs.item[index], 300);
@@ -134,15 +129,13 @@ export default {
     confirmClear() {
       this.clearSong();
       this.hide();
-      this.setTips("已经清空播放列表啦");
+      this.setTips('已经清空播放列表啦');
       this.setFullScreen(false);
-      if (this.$route.name && this.$route.name !== "search") {
+      if (this.$route.name && this.$route.name !== 'search') {
         this.setShowFooter(true);
       }
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

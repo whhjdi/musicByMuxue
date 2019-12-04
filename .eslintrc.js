@@ -4,7 +4,7 @@ module.exports = {
     // 您的环境变量（包含多个预定义的全局变量）
     // Your environments (which contains several predefined global variables)
     //
-    browser: true,
+    // browser: true,
     node: true
     // mocha: true,
     // jest: true,
