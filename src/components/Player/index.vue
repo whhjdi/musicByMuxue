@@ -171,8 +171,6 @@ export default {
   },
   watch: {
     currentSong(newVal, oldVal) {
-      console.log(newVal, 'newVal', oldVal);
-
       if (newVal.id === oldVal.id) {
         return;
       }

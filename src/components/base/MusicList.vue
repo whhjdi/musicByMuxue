@@ -183,8 +183,6 @@ export default {
       this.scrollY = pos.y;
     },
     selectItem(song, index) {
-      console.log(song, index);
-
       this.$emit('select', song, index);
     },
     playAll() {
@@ -206,7 +204,6 @@ export default {
     toggleComment() {
       if (!this.showComment) {
         Recommend.getComment(this.id).then((res) => {
-          console.log(res);
           this.comments = res.comments;
           this.hotComments = res.hotComments;
         });
