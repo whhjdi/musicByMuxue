@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-09-25 15:30:21
+ * @LastEditTime: 2019-12-04 12:14:02
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /musicByMuxue/src/components/Rank/TopListDetail.vue
+ -->
 <template>
   <transition name="slide">
     <div class="top-list">
@@ -25,12 +33,6 @@ export default {
       songs: []
     };
   },
-  watch: {
-    list(newVal) {
-      let songs = newVal.tracks;
-      this.songs = this.normalizeSongs(songs);
-    }
-  },
   computed: {
     title() {
       return this.list.name;
@@ -39,6 +41,14 @@ export default {
       return this.list.coverImgUrl;
     }
   },
+  watch: {
+    list(newVal) {
+      let songs = newVal.tracks;
+      this.songs = this.normalizeSongs(songs);
+    }
+  },
+  created() {},
+  mounted() {},
   methods: {
     normalizeSongs(list) {
       let ret = [];
@@ -47,9 +57,7 @@ export default {
       });
       return ret;
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

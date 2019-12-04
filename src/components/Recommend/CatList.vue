@@ -1,24 +1,24 @@
 <template>
   <transition name="slide-up">
-    <div class="allSongList" v-show="showCatList">
+    <div v-show="showCatList" class="allSongList">
       <header class="header border-bottom">
-        <svg class="icon i-back" aria-hidden="true" @click="goBack">
+        <svg @click="goBack" class="icon i-back" aria-hidden="true">
           <use xlink:href="#icon-arrowleft"></use>
         </svg>
         <h2 class="title">歌单分类</h2>
       </header>
-      <Scroll class="scroll" :data="catList" ref="list">
+      <Scroll ref="list" :data="catList" class="scroll">
         <div class="wrapper">
-          <div class="all border" @click="selectAll">全部歌单</div>
+          <div @click="selectAll" class="all border">全部歌单</div>
           <ul class="list-wrapper">
             <li v-for="(item, index) in catList" :key="index" class="list">
               <div class="sub">{{ item.name }}</div>
               <ul class="sub-wrapper border-bottom">
                 <li
-                  class="sub-item"
                   v-for="ele in item[index]"
                   :key="ele.name"
                   @click="selectItem(ele)"
+                  class="sub-item"
                 >
                   {{ ele.name }}
                 </li>
@@ -49,8 +49,10 @@ export default {
       showCatList: false
     };
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     show() {
       this.showCatList = true;
@@ -69,9 +71,7 @@ export default {
       this.$emit("selectAll");
       this.hide();
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

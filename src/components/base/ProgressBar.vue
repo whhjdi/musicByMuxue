@@ -1,13 +1,13 @@
 <template>
-  <div class="progress-bar" ref="progressBar" @click="progressClick">
+  <div ref="progressBar" @click="progressClick" class="progress-bar">
     <div class="bar-inner">
-      <div class="progress" ref="progress"></div>
+      <div ref="progress" class="progress"></div>
       <div
-        class="progress-btn-wrapper"
         ref="btn"
         @touchstart.prevent="progressTouchStart"
         @touchmove.prevent="progressTouchmove"
         @touchend.prevent="progressTouchend"
+        class="progress-btn-wrapper"
       >
         <div class="progress-btn"></div>
       </div>
@@ -28,6 +28,7 @@ export default {
   data() {
     return {};
   },
+  computed: {},
   watch: {
     percent(newVal) {
       if (newVal > 0 && !this.touch.inited) {
@@ -37,7 +38,10 @@ export default {
       }
     }
   },
-  computed: {},
+  created() {
+    this.touch = {};
+  },
+  mounted() {},
   methods: {
     progressTouchStart(e) {
       this.touch.inited = true;
@@ -80,11 +84,7 @@ export default {
       const percent = this.$refs.progress.clientWidth / barWidth;
       this.$emit("percentChangeEnd", percent);
     }
-  },
-  created() {
-    this.touch = {};
-  },
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

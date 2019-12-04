@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll" ref="wrapper"><slot></slot></div>
+  <div ref="wrapper" class="scroll"><slot></slot></div>
 </template>
 
 <script>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {};
   },
+  computed: {},
   watch: {
     data() {
       setTimeout(() => {
@@ -39,7 +40,12 @@ export default {
       }, 20);
     }
   },
-  computed: {},
+  created() {},
+  mounted() {
+    setTimeout(() => {
+      this.initScroll();
+    }, 20);
+  },
   methods: {
     initScroll() {
       if (!this.$refs.wrapper) {
@@ -80,12 +86,6 @@ export default {
     scrollToElement() {
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments);
     }
-  },
-  created() {},
-  mounted() {
-    setTimeout(() => {
-      this.initScroll();
-    }, 20);
   }
 };
 </script>

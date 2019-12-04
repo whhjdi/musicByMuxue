@@ -1,20 +1,20 @@
 <template>
   <div class="search-bar">
-    <svg class="icon back" aria-hidden="true" @click.stop="hideSearch">
+    <svg @click.stop="hideSearch" class="icon back" aria-hidden="true">
       <use xlink:href="#icon-left"></use>
     </svg>
     <input
+      ref="input"
+      v-model="queryArg"
+      :placeholder="placeholder"
       type="text"
       class="input"
-      v-model="queryArg"
-      ref="input"
-      :placeholder="placeholder"
       autofocus
     />
-    <svg class="icon souso" aria-hidden="true" v-if="!query">
+    <svg v-if="!query" class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-sousuo"></use>
     </svg>
-    <svg class="icon souso" aria-hidden="true" v-else @click="deleteQuery">
+    <svg v-else @click="deleteQuery" class="icon souso" aria-hidden="true">
       <use xlink:href="#icon-close"></use>
     </svg>
   </div>

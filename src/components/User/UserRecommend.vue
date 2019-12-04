@@ -1,28 +1,28 @@
 <template>
   <div class="user-list">
     <Scroll
+      ref="list"
       :data="userList"
       :probe-type="probeType"
       :listenscroll="listenScroll"
-      class="wrapper"
-      ref="list"
       v-show="userList"
+      class="wrapper"
     >
-      <div class="list-wrapper" v-show="isLogin">
+      <div v-show="isLogin" class="list-wrapper">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll"
+          <span @click="playAll" class="desc"
             >播放全部（共{{ userList.length }}首）</span
           >
         </div>
-        <ul class="song-list" ref="wrapper">
+        <ul ref="wrapper" class="song-list">
           <li
             v-for="(song, index) in userList"
             :key="index"
-            class="song border-bottom"
             @click="selectItem(song)"
+            class="song border-bottom"
           >
             <div class="number">{{ index + 1 }}</div>
             <div class="right">
@@ -33,17 +33,17 @@
               </div>
             </div>
             <svg
+              @click.stop="showPopOver(song)"
               class="icon i-switch"
               aria-hidden="true"
-              @click.stop="showPopOver(song)"
             >
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
         </ul>
       </div>
-      <h2 class="void" v-show="!isLogin">
-        <span class="toLogin" @click="toLogin">登录</span>才能找到你喜欢的歌曲呢
+      <h2 v-show="!isLogin" class="void">
+        <span @click="toLogin" class="toLogin">登录</span>才能找到你喜欢的歌曲呢
       </h2>
     </Scroll>
     <pop-menu

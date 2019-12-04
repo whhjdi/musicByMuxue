@@ -1,19 +1,19 @@
 <template>
   <div class="history">
     <h3 class="title">搜索历史</h3>
-    <p class="delete" @click.stop="deleteAll">清空历史</p>
+    <p @click.stop="deleteAll" class="delete">清空历史</p>
     <transition-group tag="ul" name="list" class="list">
       <li
-        class="item border-bottom"
         v-for="item in searchHistory"
         :key="item"
         @click="selectItem(item)"
+        class="item border-bottom"
       >
         <span class="text">{{ item }}</span>
         <svg
+          @click.stop="deleteHistoryItem(item)"
           class="icon"
           aria-hidden="true"
-          @click.stop="deleteHistoryItem(item)"
         >
           <use xlink:href="#icon-close"></use>
         </svg>
@@ -35,6 +35,8 @@ export default {
   computed: {
     ...mapGetters(["searchHistory"])
   },
+  created() {},
+  mounted() {},
   methods: {
     deleteHistoryItem(item) {
       this.$emit("deleteOne", item);
@@ -45,9 +47,7 @@ export default {
     deleteAll() {
       this.$emit("deleteAll");
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

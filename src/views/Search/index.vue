@@ -1,15 +1,15 @@
 <template>
   <div class="search">
     <search-bar ref="searchbar"></search-bar>
-    <Scroll :data="shortCut" class="shortcut" ref="list">
+    <Scroll ref="list" :data="shortCut" class="shortcut">
       <div>
         <h3 class="title">热门搜索</h3>
-        <div class="hots border-bottom" v-show="!query">
+        <div v-show="!query" class="hots border-bottom">
           <div
-            class="hot"
             v-for="hot in hots"
             :key="hot.first"
             @click="setQuery(hot.first)"
+            class="hot"
           >
             {{ hot.first }}
           </div>
@@ -30,11 +30,11 @@
     ></Suggest>
     <transition name="slide-left">
       <router-view
+        ref="musicList"
         :title="title"
         :songs="songsList"
         :picUrl="picUrl"
         :id="id"
-        ref="musicList"
         @select="selectItem"
       ></router-view>
     </transition>

@@ -1,28 +1,28 @@
 <template>
   <div class="user-list">
     <Scroll
+      ref="list"
       :data="userList"
       :probe-type="probeType"
       :listenscroll="listenScroll"
       class="wrapper"
-      ref="list"
     >
-      <div class="list-wrapper" v-show="userList && userList.length > 0">
+      <div v-show="userList && userList.length > 0" class="list-wrapper">
         <div class="control-wrapper border-bottom">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-play-circle" />
           </svg>
-          <span class="desc" @click="playAll"
+          <span @click="playAll" class="desc"
             >播放全部（共{{ userList.length }}首）</span
           >
-          <div class="clear" @click.stop="confirm">{{ deleteText }}</div>
+          <div @click.stop="confirm" class="clear">{{ deleteText }}</div>
         </div>
-        <ul class="song-list" ref="wrapper">
+        <ul ref="wrapper" class="song-list">
           <li
             v-for="(song, index) in userList"
             :key="song.id"
-            class="song border-bottom"
             @click="selectItem(song)"
+            class="song border-bottom"
           >
             <div class="number">{{ index + 1 }}</div>
             <div class="right">
@@ -33,16 +33,16 @@
               </div>
             </div>
             <svg
+              @click.stop="showPopOver(song)"
               class="icon i-switch"
               aria-hidden="true"
-              @click.stop="showPopOver(song)"
             >
               <use xlink:href="#icon-switch" />
             </svg>
           </li>
         </ul>
       </div>
-      <h2 class="void" v-show="userList.length === 0">{{ tips }}</h2>
+      <h2 v-show="userList.length === 0" class="void">{{ tips }}</h2>
     </Scroll>
     <pop-menu
       ref="popMenu"
@@ -52,9 +52,9 @@
       :showDelete="showDelete"
     ></pop-menu>
     <Confirm
-      text="确定要清空所有播放记录吗"
-      @deleteAll="clear"
       ref="confirm"
+      @deleteAll="clear"
+      text="确定要清空所有播放记录吗"
     ></Confirm>
   </div>
 </template>

@@ -1,14 +1,14 @@
 <template>
-  <div class="home" ref="home">
+  <div ref="home" class="home">
     <nav>
       <h2 class="title">沐雪music</h2>
       <search-bar></search-bar>
     </nav>
     <home-skeleton v-show="showSkeleton"></home-skeleton>
-    <div class="scroll-wrapper" v-show="!loading">
-      <Scroll :data="recommendSongs" ref="scrolls" class="scroll">
+    <div v-show="!loading" class="scroll-wrapper">
+      <Scroll ref="scrolls" :data="recommendSongs" class="scroll">
         <div class="recommend">
-          <div class="slides" v-if="this.banners && this.banners.length">
+          <div v-if="this.banners && this.banners.length" class="slides">
             <slide :autoPlay="true" :interval="3000" :loop="true">
               <div
                 v-for="banner in banners"
@@ -28,21 +28,21 @@
           <div class="newSongs">
             <recommend-list
               :list="newDiscs"
-              title="最新歌单"
               @setDiscList="handleDisc"
+              title="最新歌单"
             ></recommend-list>
           </div>
         </div>
       </Scroll>
     </div>
     <router-view
+      ref="musicList"
       :title="title"
       :picUrl="picUrl"
       :songs="songs"
       :id="discId"
       @select="selectItem"
       @play="playAll"
-      ref="musicList"
     ></router-view>
   </div>
 </template>

@@ -8,7 +8,7 @@
       <user-tab :list="list" :currentIndex="currentIndex" @select="selectItem"></user-tab>
     </div>
     <div class="content">
-      <div class="play-history-wrapper" v-if="currentIndex == 0">
+      <div v-if="currentIndex === 0" class="play-history-wrapper">
         <user-list
           :userList="playHistory"
           @clear="clearHistory"
@@ -17,13 +17,17 @@
           deleteText="清空历史"
         ></user-list>
       </div>
-      <div class="like-wrapper" v-else-if="currentIndex == 1">
-        <user-list :userList="favoriteList" @clear="clearFavorite" @deleteOne="deleteOneFavorite"></user-list>
+      <div v-else-if="currentIndex === 1" class="like-wrapper">
+        <user-list
+          :userList="favoriteList"
+          @clear="clearFavorite"
+          @deleteOne="deleteOneFavorite"
+        ></user-list>
       </div>
-      <div class="random-wrapper" v-else-if="currentIndex == 2">
+      <div v-else-if="currentIndex === 2" class="random-wrapper">
         <UserRecommend :userList="recommends"></UserRecommend>
       </div>
-      <div class="about-wrapper" v-else>
+      <div v-else class="about-wrapper">
         <About></About>
       </div>
     </div>
@@ -31,59 +35,77 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import SearchNav from "@/components/base/SearchNav";
-import UserTab from "@/components/User/UserTab.vue";
-import UserList from "@/components/User/UserList";
-import UserRecommend from "@/components/User/UserRecommend";
-import About from "@/components/User/About";
-import Recommend from "@/api/recommend.js";
-import Login from "@/api/login.js";
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import SearchNav from '@/components/base/SearchNav';
+import UserTab from '@/components/User/UserTab.vue';
+import UserList from '@/components/User/UserList';
+import UserRecommend from '@/components/User/UserRecommend';
+import About from '@/components/User/About';
+import Recommend from '@/api/recommend.js';
+import Login from '@/api/login.js';
 export default {
-  name: "user",
+  name: 'user',
   components: { SearchNav, UserTab, UserList, UserRecommend, About },
   props: {},
   data() {
     return {
       list: [
-        { text: "最近播放", icon: "#icon-history" },
-        { text: "收藏夹", icon: "#icon-like" },
-        { text: "个性推荐", icon: "#icon-listen" },
-        { text: "关于 ", icon: "#icon-playlist" }
+        { text: '最近播放', icon: '#icon-history' },
+        { text: '收藏夹', icon: '#icon-like' },
+        { text: '个性推荐', icon: '#icon-listen' },
+        { text: '关于 ', icon: '#icon-playlist' }
       ],
       currentIndex: 0,
       recommends: []
     };
   },
+  computed: {
+    ...mapGetters(['playHistory', 'favoriteList', 'isLogin', 'userInfo']),
+    title() {
+      return !this.isLogin ? '你好呀' : `${this.userInfo.name}`;
+    }
+  },
   watch: {
     currentIndex(newVal) {
       if (newVal === 2 && this.recommends.length === 0) {
         Recommend.getRecommend()
-          .then(res => {
+          .then((res) => {
             this.setRecommends(res);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       }
     }
   },
-  computed: {
-    ...mapGetters(["playHistory", "favoriteList", "isLogin", "userInfo"]),
-    title() {
-      return !this.isLogin ? "你好呀" : `${this.userInfo.name}`;
-    }
+  created() {
+    Login.getLoginStatus()
+      .then((res) => {
+        if (res.code === 200) {
+          let profile = res.profile;
+
+          let info = {
+            name: profile.nickname,
+            id: profile.userId,
+            picUrl: profile.avatarUrl
+          };
+          this.setUserInfo(info);
+        }
+      })
+      .catch((err) => {
+        console.log(err + '还没有登录');
+      });
   },
   methods: {
     ...mapMutations({
-      setUserInfo: "SET_USER_INFO",
-      setLoading: "SET_LOADING"
+      setUserInfo: 'SET_USER_INFO',
+      setLoading: 'SET_LOADING'
     }),
     ...mapActions([
-      "clearPlayHistory",
-      "deleteOnePlayHistory",
-      "cancelFavorite",
-      "clearAllFavorite"
+      'clearPlayHistory',
+      'deleteOnePlayHistory',
+      'cancelFavorite',
+      'clearAllFavorite'
     ]),
     selectItem(index) {
       this.currentIndex = index;
@@ -102,35 +124,16 @@ export default {
     },
     setRecommends(res) {
       let list = res.recommend;
-      list.forEach(item => {
+      list.forEach((item) => {
         let id = item.id;
         let name = item.name;
         let picUrl = item.album.picUrl;
         let album = item.album.name;
         let albumId = item.album.id;
-        let singer = item.artists ? item.artists[0].name : "";
+        let singer = item.artists ? item.artists[0].name : '';
         this.recommends.push({ id, name, picUrl, album, albumId, singer });
       });
     }
-  },
-
-  created() {
-    Login.getLoginStatus()
-      .then(res => {
-        if (res.code === 200) {
-          let profile = res.profile;
-
-          let info = {
-            name: profile.nickname,
-            id: profile.userId,
-            picUrl: profile.avatarUrl
-          };
-          this.setUserInfo(info);
-        }
-      })
-      .catch(err => {
-        console.log(err + "还没有登录");
-      });
   }
 };
 </script>

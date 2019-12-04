@@ -14,7 +14,7 @@ import {
 } from "@/utils/index.js";
 import { clearTimeout } from "timers";
 
-//播放
+// 播放
 export const selectPlay = function({ commit, state }, { list, index }) {
   commit(types.SET_SEQUENCE_LIST, list);
   if (state.mode === playMode.random) {
@@ -29,7 +29,7 @@ export const selectPlay = function({ commit, state }, { list, index }) {
   commit(types.SET_PLAYING_STATE, true);
 };
 
-//随机播放
+// 随机播放
 export const randomPlay = function({ commit }, { list }) {
   commit(types.SET_PLAYING_MODE, playMode.random);
   commit(types.SET_SEQUENCE_LIST, list);
@@ -45,17 +45,17 @@ function findIdx(list, song) {
     return item.id === song.id;
   });
 }
-//插入到下一首播放
+// 插入到下一首播放
 export const insertSongNext = function({ commit, state }, song) {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
   let currentIndex = state.currentIndex;
 
   let currentSong = playList[currentIndex];
-  //查找播放列表中是否有当前歌曲
+  // 查找播放列表中是否有当前歌曲
   let fdIndex = findIdx(playList, song);
 
-  //插入歌曲到列表中
+  // 插入歌曲到列表中
   let newIndex = currentIndex + 1;
 
   playList.splice(newIndex, 0, song);
@@ -84,17 +84,17 @@ export const insertSongNext = function({ commit, state }, song) {
   commit(types.SET_CURRENT_INDEX, currentIndex);
   commit(types.SET_PLAYING_STATE, true);
 };
-//插入播放列表直接播放
+// 插入播放列表直接播放
 export const insertSong = function({ commit, state }, song) {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
   let currentIndex = state.currentIndex;
 
   let currentSong = playList[currentIndex];
-  //查找播放列表中是否有当前歌曲
+  // 查找播放列表中是否有当前歌曲
   let fdIndex = findIdx(playList, song);
 
-  //插入歌曲到列表中
+  // 插入歌曲到列表中
   currentIndex++;
 
   playList.splice(currentIndex, 0, song);
@@ -125,7 +125,7 @@ export const insertSong = function({ commit, state }, song) {
   commit(types.SET_PLAYING_STATE, true);
 };
 
-//搜索历史
+// 搜索历史
 export const saveSearchHistory = function({ commit }, query) {
   commit(types.SET_SEARCH_HISTORY, cacheSearchHistory(query));
 };
@@ -165,7 +165,7 @@ export const clearSong = function({ commit }) {
   commit(types.SET_PLAYING_STATE, false);
 };
 
-//播放历史
+// 播放历史
 export const savePlayHistory = function({ commit }, song) {
   commit(types.SET_PLAY_HISTORY, savePlay(song));
 };
@@ -176,7 +176,7 @@ export const deleteOnePlayHistory = function({ commit }, song) {
   commit(types.SET_PLAY_HISTORY, deleteOneCachePlayHistory(song));
 };
 
-//收藏
+// 收藏
 
 export const saveToFavoriteList = function({ commit }, song) {
   commit(types.SET_FAVORITE_LIST, saveToFavorite(song));

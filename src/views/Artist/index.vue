@@ -5,16 +5,16 @@
       <SearchNav></SearchNav>
     </div>
     <div class="singer-list-wrapper">
-      <singer-list :singers="singers" @selectSinger="chooseSinger" ref="singerList"></singer-list>
+      <singer-list ref="singerList" :singers="singers" @selectSinger="chooseSinger"></singer-list>
     </div>
     <router-view
+      ref="musicList"
       :title="title"
       :songs="songs"
       :picUrl="picUrl"
       :id="id"
       @select="selectItem"
       @play="playAll"
-      ref="musicList"
     ></router-view>
   </div>
 </template>

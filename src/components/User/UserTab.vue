@@ -3,9 +3,9 @@
     <li
       v-for="(item, index) in list"
       :key="item.text"
-      class="item"
       :class="{ active: currentIndex === index }"
       @click="selectItem(index)"
+      class="item"
     >
       <svg class="icon" aria-hidden="true">
         <use :xlink:href="item.icon" />
@@ -32,15 +32,15 @@ export default {
   data() {
     return {};
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     selectItem(index) {
       this.$emit("select", index);
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

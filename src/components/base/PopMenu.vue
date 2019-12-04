@@ -1,23 +1,23 @@
 <template>
   <transition name="slide">
-    <div class="pop-menu" v-show="isShow" @click="hide" @click.stop>
-      <div class="list-wrapper" @click.stop>
-        <Scroll class="list-content" ref="listContent" :data="scrollData">
+    <div v-show="isShow" @click="hide" @click.stop class="pop-menu">
+      <div @click.stop class="list-wrapper">
+        <Scroll ref="listContent" :data="scrollData" class="list-content">
           <div class="item-wrapper">
-            <div class="header  item border-bottom" @click="play">
+            <div @click="play" class="header  item border-bottom">
               歌曲：{{ song.name }}
             </div>
-            <div class="next-play item border-bottom" @click="playNext">
+            <div @click="playNext" class="next-play item border-bottom">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-play-circle"></use></svg
               >下一首播放
             </div>
-            <div class="like item border-bottom" @click="toggleFavorite(song)">
+            <div @click="toggleFavorite(song)" class="like item border-bottom">
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="getFavoriteIcon(song)"></use></svg
               >喜欢
             </div>
-            <div class="singer item border-bottom" @click="toSinger(song)">
+            <div @click="toSinger(song)" class="singer item border-bottom">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-user"></use></svg
               >歌手：{{ song.singer }}
@@ -28,9 +28,9 @@
               >专辑：{{ song.album }}
             </div>
             <div
-              class="delete item border-bottom"
               @click="deleteOne(song)"
               v-show="showDelete"
+              class="delete item border-bottom"
             >
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-close"></use></svg
@@ -63,13 +63,13 @@ export default {
       song: []
     };
   },
-  watch: {},
   computed: {
     scrollData() {
       let arr = [this.song];
       return arr;
     }
   },
+  watch: {},
   methods: {
     ...mapActions(["setTips"]),
     show(song) {

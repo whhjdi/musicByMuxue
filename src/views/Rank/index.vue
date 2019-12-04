@@ -4,20 +4,20 @@
       <search-bar></search-bar>
       <div class="rank-list-wrapper">
         <rank-list
+          ref="rankList"
           :topList="topList"
           :otherList="otherList"
           @selectTopList="chooseItem"
-          ref="rankList"
         ></rank-list>
       </div>
       <router-view
+        ref="musicList"
         :title="title"
         :songs="songs"
         :picUrl="picUrl"
         :id="id"
         @select="selectItem"
         @play="playAll"
-        ref="musicList"
       ></router-view>
     </div>
   </transition>
@@ -67,7 +67,6 @@ export default {
       topDetailList: []
     };
   },
-  watch: {},
   computed: {
     title() {
       return this.topDetailList.name;
@@ -79,6 +78,7 @@ export default {
       return this.topDetailList.id;
     }
   },
+  watch: {},
   methods: {
     ...mapActions(["selectPlay", "randomPlay"]),
     ...mapMutations({

@@ -2,23 +2,23 @@
   <div class="login">
     <header><h1 class="title">欢迎使用沐雪MUSIC</h1></header>
     <div class="form">
-      <svg class="icon i-back" aria-hidden="true" @click="goBack">
+      <svg @click="goBack" class="icon i-back" aria-hidden="true">
         <use xlink:href="#icon-arrowleft"></use>
       </svg>
       <h2 class="text">登录</h2>
       <input
+        v-model="userName"
         class="input border-bottom"
         type="text"
         placeholder="请输入手机号"
-        v-model="userName"
       />
       <input
+        v-model="userPassword"
         class="input border-bottom"
         type="password"
         placeholder="请输入密码"
-        v-model="userPassword"
       />
-      <div class="button" @click="handleLogin">登录</div>
+      <div @click="handleLogin" class="button">登录</div>
     </div>
   </div>
 </template>

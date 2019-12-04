@@ -1,48 +1,32 @@
 <template>
   <div class="allSongList">
     <header class="header border-bottom">
-      <svg class="icon i-back" aria-hidden="true" @click="goBack">
+      <svg @click="goBack" class="icon i-back" aria-hidden="true">
         <use xlink:href="#icon-arrowleft"></use>
       </svg>
       <h2 class="title">歌单</h2>
     </header>
 
-    <Scroll
-      class="scroll"
-      :data="playLists"
-      @scrollToEnd="loadMore"
-      :pullup="pullup"
-      ref="list"
-    >
+    <Scroll ref="list" :data="playLists" @scrollToEnd="loadMore" :pullup="pullup" class="scroll">
       <div>
         <div class="nav">
-          <span class="catText border" @click="getCatList"
+          <span @click="getCatList" class="catText border"
             >{{ catText }}
-            <svg class="icon i-back" aria-hidden="true" @click="goBack">
+            <svg @click="goBack" class="icon i-back" aria-hidden="true">
               <use xlink:href="#icon-right"></use>
             </svg>
           </span>
           <div class="sort">
-            <span
-              class="new"
-              :class="{ active: order === 'new' }"
-              @click="orderNew"
-              >最新</span
-            >|
-            <span
-              class="hot"
-              :class="{ active: order === 'hot' }"
-              @click="orderHot"
-              >最热</span
-            >
+            <span :class="{ active: order === 'new' }" @click="orderNew" class="new">最新</span>|
+            <span :class="{ active: order === 'hot' }" @click="orderHot" class="hot">最热</span>
           </div>
         </div>
         <ul class="list-wrapper">
           <li
             v-for="(item, index) in playLists"
             :key="index"
-            class="list"
             @click="handleSongList(item)"
+            class="list"
           >
             <img :src="item.coverImgUrl" alt="" class="pic" />
             <div class="name">{{ item.name }}</div>
@@ -63,41 +47,41 @@
       </div>
     </Scroll>
     <cat-list
-      :catList="catList"
       ref="catList"
+      :catList="catList"
       @selectItem="selectCat"
       @selectAll="selectAll"
     ></cat-list>
     <router-view
+      ref="musicList"
       :title="title"
       :picUrl="picUrl"
       :songs="songs"
       :id="discId"
       @select="selectItem"
       @play="playAll"
-      ref="musicList"
     ></router-view>
   </div>
 </template>
 
 <script>
-import Recommend from "@/api/recommend.js";
-import CatList from "./CatList";
-import Scroll from "../base/Scroll";
-import { mapMutations } from "vuex";
-import { songsListPlayMixin, playListMixin } from "@/mixin.js";
+import Recommend from '@/api/recommend.js';
+import CatList from './CatList';
+import Scroll from '../base/Scroll';
+import { mapMutations } from 'vuex';
+import { songsListPlayMixin, playListMixin } from '@/mixin.js';
 export default {
-  name: "allSongList",
+  name: 'allSongList',
   components: { Scroll, CatList },
-  mixins: [songsListPlayMixin, playListMixin],
   filters: {
     setNumber(val) {
       if (val < 10000) {
-        return "<1万";
+        return '<1万';
       }
       return `${Math.ceil(val / 10000)}万`;
     }
   },
+  mixins: [songsListPlayMixin, playListMixin],
   props: {},
   data() {
     return {
@@ -105,18 +89,13 @@ export default {
       playLists: [],
       before: 0,
       hasMore: true,
-      catText: "全部",
+      catText: '全部',
       catList: [],
       offset: 0,
-      order: "hot",
+      order: 'hot',
       list: [],
       songs: []
     };
-  },
-  watch: {
-    order(newVal) {
-      this.getSongList(this.catText, this.offset, newVal);
-    }
   },
   computed: {
     title() {
@@ -129,28 +108,31 @@ export default {
       return this.list.id;
     }
   },
+  watch: {
+    order(newVal) {
+      this.getSongList(this.catText, this.offset, newVal);
+    }
+  },
   methods: {
     ...mapMutations({
-      setShowFooter: "SET_SHOW_FOOTER"
+      setShowFooter: 'SET_SHOW_FOOTER'
     }),
     loadMore() {
       if (!this.hasMore) {
         return;
       }
-      Recommend.getAllSongList(this.catText, this.offset, this.order).then(
-        res => {
-          let playLists = res.playlists;
-          this.offset = this.offset + 10;
-          this.hasMore = res.more;
-          this.playLists = this.playLists.concat(playLists);
-        }
-      );
+      Recommend.getAllSongList(this.catText, this.offset, this.order).then((res) => {
+        let playLists = res.playlists;
+        this.offset = this.offset + 10;
+        this.hasMore = res.more;
+        this.playLists = this.playLists.concat(playLists);
+      });
     },
     goBack() {
       this.$router.go(-1);
     },
     getCatList() {
-      Recommend.getCatList().then(res => {
+      Recommend.getCatList().then((res) => {
         this.categories = Object.values(res.categories);
         this.sub = res.sub;
         this.$refs.catList.show();
@@ -162,7 +144,7 @@ export default {
         key.forEach((ele, idx) => {
           let obj = { name: ele };
           obj[idx] = [];
-          sub.forEach(item => {
+          sub.forEach((item) => {
             if (item.category === idx) {
               obj[idx].push(item);
             }
@@ -173,7 +155,7 @@ export default {
       });
     },
     getSongList(tag, offset, order) {
-      Recommend.getAllSongList(tag, offset, order).then(res => {
+      Recommend.getAllSongList(tag, offset, order).then((res) => {
         let playLists = res.playlists;
         this.offset = this.offset + 10;
         this.playLists = playLists;
@@ -181,17 +163,17 @@ export default {
       });
     },
     orderNew() {
-      this.order = "new";
+      this.order = 'new';
     },
     orderHot() {
-      this.order = "hot";
+      this.order = 'hot';
     },
     handleSongList(item) {
       item.id &&
         this.$router.push({
           path: `/songslist/${item.id}`
         });
-      Recommend.getDisc(item.id).then(res => {
+      Recommend.getDisc(item.id).then((res) => {
         this.setList(res);
       });
     },
@@ -201,7 +183,7 @@ export default {
       this.getSongList(item.name, this.offset, this.order);
     },
     selectAll() {
-      this.catText = "全部";
+      this.catText = '全部';
       this.offset = 0;
       this.getSongList(this.catText, this.offset, this.order);
     }

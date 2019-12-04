@@ -5,17 +5,13 @@
         <li
           v-for="item in topList"
           :key="`top_list_${item.id}`"
-          class="list border-bottom"
           @click="selectTopList(item)"
+          class="list border-bottom"
         >
           <img v-lazy="item.coverImgUrl" alt class="pic" />
           <div class="updateFrequency">{{ item.updateFrequency }}</div>
           <ul class="song-list">
-            <li
-              v-for="(song, index) in item.tracks"
-              :key="song.first"
-              class="song"
-            >
+            <li v-for="(song, index) in item.tracks" :key="song.first" class="song">
               {{ index + 1 }}.{{ song.first }}-{{ song.second }}
             </li>
           </ul>
@@ -26,8 +22,8 @@
         <li
           v-for="item in otherList"
           :key="`other_list_${item.id}`"
-          class="other-list border-bottom"
           @click="selectTopList(item)"
+          class="other-list border-bottom"
         >
           <img v-lazy="item.coverImgUrl" alt class="other-pic" />
           <div class="title">{{ item.name }}</div>
@@ -38,9 +34,9 @@
 </template>
 
 <script>
-import Scroll from "@/components/base/Scroll.vue";
+import Scroll from '@/components/base/Scroll.vue';
 export default {
-  name: "",
+  name: '',
   components: { Scroll },
   props: {
     topList: {
@@ -55,15 +51,15 @@ export default {
   data() {
     return {};
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     selectTopList(index) {
-      this.$emit("selectTopList", index);
+      this.$emit('selectTopList', index);
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

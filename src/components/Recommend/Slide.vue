@@ -1,14 +1,14 @@
 <template>
-  <div class="slide" ref="slide">
-    <div class="slide-group" ref="slideGroup">
+  <div ref="slide" class="slide">
+    <div ref="slideGroup" class="slide-group">
       <slot></slot>
     </div>
     <div class="dots">
       <span
-        class="dot"
         v-for="(dot, index) in dots"
         :key="index"
         :class="{ active: currentIndex === index }"
+        class="dot"
       ></span>
     </div>
   </div>
@@ -39,8 +39,26 @@ export default {
       currentIndex: 0
     };
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {
+    setTimeout(() => {
+      this.setSlideWidth();
+      this.initDots();
+      this.initSlide();
+      if (this.autoPlay) {
+        this.play();
+      }
+    }, 20);
+    window.addEventListener("resize", () => {
+      if (!this.slideScroll) {
+        return;
+      }
+      this.setSlideWidth(true);
+      this.slideScroll.refresh();
+    });
+  },
   methods: {
     initDots() {
       this.dots = new Array(this.children.length);
@@ -69,7 +87,7 @@ export default {
           threshold: 0.3,
           speed: 400
         },
-        bounce: true //当滚动超过边缘的时候会有一小段回弹动画。设置为 true 则开启动画。
+        bounce: true // 当滚动超过边缘的时候会有一小段回弹动画。设置为 true 则开启动画。
       });
       this.onScrollEnd();
       this.onTouchEnd();
@@ -106,24 +124,6 @@ export default {
         this.slideScroll.next();
       }, this.interval);
     }
-  },
-  created() {},
-  mounted() {
-    setTimeout(() => {
-      this.setSlideWidth();
-      this.initDots();
-      this.initSlide();
-      if (this.autoPlay) {
-        this.play();
-      }
-    }, 20);
-    window.addEventListener("resize", () => {
-      if (!this.slideScroll) {
-        return;
-      }
-      this.setSlideWidth(true);
-      this.slideScroll.refresh();
-    });
   }
 };
 </script>

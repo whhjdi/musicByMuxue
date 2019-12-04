@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" v-show="loading">
+  <div v-show="loading" class="loading">
     <div class="mask">
       <div class="spinner">
         <div class="rect1"></div>
@@ -31,9 +31,9 @@ export default {
   computed: {
     ...mapGetters(["loading"])
   },
-  methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
+  methods: {}
 };
 </script>
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <h2 class="title" @click="handleClick">
+    <h2 @click="handleClick" class="title">
       <span>{{ title }}</span>
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-right" />
@@ -10,8 +10,8 @@
       <li
         v-for="item in list"
         :key="item.id"
-        class="list"
         @click="selectItem(item)"
+        class="list"
       >
         <img
           v-lazy="item.picUrl ? item.picUrl : item.coverImgUrl"
@@ -55,8 +55,10 @@ export default {
   data() {
     return {};
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     handleClick() {
       this.$router.push({
@@ -66,9 +68,7 @@ export default {
     selectItem(item) {
       this.$emit("setDiscList", item);
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

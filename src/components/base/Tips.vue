@@ -1,6 +1,6 @@
 <template>
   <transition name="drop">
-    <div class="tips" v-show="showTips">
+    <div v-show="showTips" class="tips">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-tips"></use></svg
       ><slot></slot>
@@ -21,9 +21,9 @@ export default {
   computed: {
     ...mapGetters(["showTips"])
   },
-  methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
+  methods: {}
 };
 </script>
 <style lang="scss" scoped>

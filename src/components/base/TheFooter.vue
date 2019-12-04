@@ -1,6 +1,6 @@
 <template>
   <transition name="normal">
-    <div class="footer" v-show="showFooter && !fullScreen">
+    <div v-show="showFooter && !fullScreen" class="footer">
       <div class="footer-wrapper">
         <router-link
           :to="nav.link"
@@ -18,16 +18,16 @@
           <span>{{ nav.name }}</span>
         </router-link>
       </div>
-      <div class="circle" @click="showPlayer">
+      <div @click="showPlayer" class="circle">
         <img
           :src="
             this.currentSong.picUrl
               ? this.currentSong.picUrl
               : require('@/assets/default.png')
           "
+          :class="setClass"
           alt
           class="circle-bg"
-          :class="setClass"
         />
       </div>
     </div>

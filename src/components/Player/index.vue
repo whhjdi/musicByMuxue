@@ -1,7 +1,7 @@
 <template>
-  <div class="player" v-show="playList.length > 0">
+  <div v-show="playList.length > 0" class="player">
     <transition name="normal">
-      <div class="normal-player" v-show="fullScreen">
+      <div v-show="fullScreen" class="normal-player">
         <div class="background">
           <img
             :src="currentSong.picUrl"
@@ -15,7 +15,7 @@
           <div class="filterR"></div>
         </div>
         <div class="top">
-          <svg class="icon i-left" aria-hidden="true" @click="goBack">
+          <svg @click="goBack" class="icon i-left" aria-hidden="true">
             <use xlink:href="#icon-down"></use>
           </svg>
           <div class="name">
@@ -23,44 +23,44 @@
             <h2 class="subtitle">{{ currentSong.singer }}</h2>
           </div>
           <svg
+            @click="toggleFavorite(currentSong)"
             class="icon i-right"
             aria-hidden="true"
-            @click="toggleFavorite(currentSong)"
           >
             <use :xlink:href="getFavoriteIcon(currentSong)"></use>
           </svg>
         </div>
-        <div class="middle" @click="changeMiddle">
-          <div class="middle-l" v-show="currentShow === 'cd'">
-            <div class="cd-wrapper" ref="cdWrapper">
-              <div class="cd" :class="playing ? 'play' : 'pause'">
+        <div @click="changeMiddle" class="middle">
+          <div v-show="currentShow === 'cd'" class="middle-l">
+            <div ref="cdWrapper" class="cd-wrapper">
+              <div :class="playing ? 'play' : 'pause'" class="cd">
                 <img :src="currentSong.picUrl" alt class="image" />
               </div>
             </div>
-            <div class="line-lyric" v-if="currentLyric && currentLyric.lines">
+            <div v-if="currentLyric && currentLyric.lines" class="line-lyric">
               {{ currentLyric.lines[currentLineNum].txt }}
             </div>
           </div>
           <transition name="middleR">
             <Scroll
-              class="middle-r"
               ref="lyricList"
               :data="currentLyric && currentLyric.lines"
               v-show="currentShow === 'lyric'"
+              class="middle-r"
             >
               <div class="lyric-wrapper">
                 <div v-if="currentLyric">
                   <p
-                    class="text"
                     ref="lyricLine"
                     v-for="(line, index) in currentLyric.lines"
                     :key="index"
                     :class="{ current: currentLineNum === index }"
+                    class="text"
                   >
                     {{ line.txt }}
                   </p>
                 </div>
-                <p class="no-lyric" v-else>{{ updatecurrentLyric }}</p>
+                <p v-else class="no-lyric">{{ updatecurrentLyric }}</p>
               </div>
             </Scroll>
           </transition>
@@ -78,23 +78,23 @@
             <span class="time time-r">{{ format(duration) }}</span>
           </div>
           <div class="operators">
-            <svg class="icon i-left" aria-hidden="true" @click="changeMode">
+            <svg @click="changeMode" class="icon i-left" aria-hidden="true">
               <use :xlink:href="iconMode"></use>
             </svg>
-            <svg class="icon i-left" aria-hidden="true" @click="prev">
+            <svg @click="prev" class="icon i-left" aria-hidden="true">
               <use xlink:href="#icon-step-backward"></use>
             </svg>
             <svg
+              @click="togglePlaying"
               class="icon i-center"
               aria-hidden="true"
-              @click="togglePlaying"
             >
               <use :xlink:href="playIcon"></use>
             </svg>
-            <svg class="icon i-right" aria-hidden="true" @click="next">
+            <svg @click="next" class="icon i-right" aria-hidden="true">
               <use xlink:href="#icon-step-forward"></use>
             </svg>
-            <svg class="icon i-right" aria-hidden="true" @click="showPlayList">
+            <svg @click="showPlayList" class="icon i-right" aria-hidden="true">
               <use xlink:href="#icon-menu"></use>
             </svg>
           </div>
@@ -103,9 +103,9 @@
     </transition>
     <transition name="normal">
       <div
-        class="mini-player"
         v-show="!fullScreen && !showFooter"
         @click="open"
+        class="mini-player"
       >
         <div class="left">
           <img v-lazy="currentSong.picUrl" alt class="pic" />
@@ -114,14 +114,14 @@
         </div>
         <div class="right">
           <svg
+            @click.stop.prevent="togglePlaying"
             class="icon i-mini"
             aria-hidden="true"
-            @click.stop.prevent="togglePlaying"
           >
             <use :xlink:href="miniIcon"></use>
           </svg>
 
-          <svg class="icon" aria-hidden="true" @click.stop="showPlayList">
+          <svg @click.stop="showPlayList" class="icon" aria-hidden="true">
             <use xlink:href="#icon-menu"></use>
           </svg>
         </div>

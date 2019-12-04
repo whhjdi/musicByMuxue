@@ -1,35 +1,35 @@
 <template>
   <transition name="fade">
-    <div class="playList" v-show="isShow" @click="hide">
-      <div class="list-wrapper" @click.stop>
+    <div v-show="isShow" @click="hide" class="playList">
+      <div @click.stop class="list-wrapper">
         <div class="header border-bottom">
           <h2 class="title">
-            <span class="text" @click="changeMode"
+            <span @click="changeMode" class="text"
               ><svg class="icon i-mode" aria-hidden="true">
                 <use :xlink:href="iconMode"></use></svg
               >{{ modeText }}</span
             >
-            <span class="clear" @click="showConfirm">清空列表</span>
+            <span @click="showConfirm" class="clear">清空列表</span>
           </h2>
         </div>
-        <Scroll :data="sequenceList" class="list-content" ref="listContent">
+        <Scroll ref="listContent" :data="sequenceList" class="list-content">
           <transition-group tag="ul" name="list">
             <li
               ref="item"
               v-for="(item, index) in sequenceList"
               :key="item.id"
-              class="list-item"
               :class="isPlaying(item)"
               @click="selectItem(item, index)"
+              class="list-item"
             >
               <div class="text">
                 <span class="name">{{ item.name }}</span>
                 <span class="singer"> - {{ item.singer }}</span>
               </div>
               <svg
+                @click.stop="deleteItem(item)"
                 class="icon"
                 aria-hidden="true"
-                @click.stop="deleteItem(item)"
               >
                 <use xlink:href="#icon-close"></use>
               </svg>
@@ -39,8 +39,8 @@
       </div>
       <Confirm
         ref="confirm"
-        text="是否清空播放列表"
         @deleteAll="confirmClear"
+        text="是否清空播放列表"
       ></Confirm>
     </div>
   </transition>

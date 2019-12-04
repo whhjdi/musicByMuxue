@@ -1,6 +1,6 @@
 <template>
   <transition name="show">
-    <div class="confirm" v-show="showConfirm" @click.stop>
+    <div v-show="showConfirm" @click.stop class="confirm">
       <div class="confirm-wrapper">
         <div class="confirm-content">
           <p class="text">{{ text }}</p>
@@ -39,8 +39,10 @@ export default {
       showConfirm: false
     };
   },
-  watch: {},
   computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     show() {
       this.showConfirm = true;
@@ -55,9 +57,7 @@ export default {
       this.$emit("deleteAll");
       this.hide();
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

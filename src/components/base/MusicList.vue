@@ -1,30 +1,30 @@
 <template>
   <transition name="slide-left">
-    <div class="music-list" ref="musicList">
+    <div ref="musicList" class="music-list">
       <header ref="header">
-        <svg class="icon i-back" aria-hidden="true" @click="goBack">
+        <svg @click="goBack" class="icon i-back" aria-hidden="true">
           <use xlink:href="#icon-arrowleft" />
         </svg>
         <h1 class="title">{{ headerTitle }}</h1>
       </header>
       <Scroll
+        ref="list"
         :data="songs"
         @scroll="scroll"
         :probe-type="probeType"
         :listenscroll="listenScroll"
         class="wrapper"
-        ref="list"
       >
         <div class="list-wrapper">
-          <div class="bg" :style="bgStyle" ref="bg">
+          <div ref="bg" :style="bgStyle" class="bg">
             <div class="filter"></div>
             <h1 class="title">{{ title }}</h1>
           </div>
-          <div class="song-list-wrapper" v-show="!showComment">
+          <div v-show="!showComment" class="song-list-wrapper">
             <svg
+              @click.stop="toggleComment"
               class="icon i-comment"
               aria-hidden="true"
-              @click.stop="toggleComment"
             >
               <use xlink:href="#icon-comment" />
             </svg>
@@ -32,16 +32,16 @@
               <svg class="icon i-play" aria-hidden="true">
                 <use xlink:href="#icon-play-circle" />
               </svg>
-              <span class="desc" @click="playAll"
+              <span @click="playAll" class="desc"
                 >播放全部（共{{ this.songs.length }}首）</span
               >
             </div>
-            <ul class="song-list" ref="wrapper">
+            <ul ref="wrapper" class="song-list">
               <li
                 v-for="(song, index) in songs"
                 :key="song.id"
-                class="song border-bottom"
                 @click="selectItem(song, index)"
+                class="song border-bottom"
               >
                 <div class="number">{{ index + 1 }}</div>
                 <div class="right">
@@ -52,9 +52,9 @@
                   </div>
                 </div>
                 <svg
+                  @click.stop="showPopOver(song)"
                   class="icon i-switch"
                   aria-hidden="true"
-                  @click.stop="showPopOver(song)"
                 >
                   <use xlink:href="#icon-switch" />
                 </svg>
@@ -62,23 +62,23 @@
             </ul>
           </div>
           <transition name="comment-show">
-            <div class="comment" v-show="showComment">
+            <div v-show="showComment" class="comment">
               <svg
+                @click.stop="toggleComment"
                 class="icon i-song"
                 aria-hidden="true"
-                @click.stop="toggleComment"
               >
                 <use xlink:href="#icon-close" />
               </svg>
               <h3
-                class="hot-title"
                 v-show="hotComments && hotComments.length > 0"
+                class="hot-title"
               >
                 热门评论({{ hotComments.length }})
               </h3>
               <ul
-                class="hot-list"
                 v-show="hotComments && hotComments.length > 0"
+                class="hot-list"
               >
                 <li
                   v-for="(comment, index) in hotComments"
@@ -98,10 +98,10 @@
                   </div>
                 </li>
               </ul>
-              <h3 class="new-title" v-show="comments && comments.length > 0">
+              <h3 v-show="comments && comments.length > 0" class="new-title">
                 最新评论({{ comments.length }})
               </h3>
-              <ul class="hot-list" v-show="comments && comments.length > 0">
+              <ul v-show="comments && comments.length > 0" class="hot-list">
                 <li
                   v-for="(comment, index) in comments"
                   :key="index"
@@ -121,8 +121,8 @@
                 </li>
               </ul>
               <div
-                class="void"
                 v-show="comments.length === 0 && hotComments.length === 0"
+                class="void"
               >
                 暂时还没有评论
               </div>

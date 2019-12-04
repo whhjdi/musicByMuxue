@@ -1,10 +1,10 @@
 <template>
   <div class="search-bar">
     <input
-      type="text"
-      class="input"
       @click="clickInput"
       :placeholder="placeholder"
+      type="text"
+      class="input"
       readonly
     />
     <svg class="icon souso" aria-hidden="true">

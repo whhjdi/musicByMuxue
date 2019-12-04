@@ -1,4 +1,4 @@
-//构造歌手类，包含基本的三个属性
+// 构造歌手类，包含基本的三个属性
 import Storage from "good-storage";
 export class Singer {
   constructor({ id, name, avatar }) {
@@ -6,7 +6,7 @@ export class Singer {
   }
 }
 
-//构造歌曲类,包含基本的5个属性
+// 构造歌曲类,包含基本的5个属性
 export class MySong {
   constructor({ id, singer, name, album, picUrl }) {
     this.id = id;
@@ -16,7 +16,7 @@ export class MySong {
     this.picUrl = picUrl;
   }
 }
-//生成歌曲
+// 生成歌曲
 export function createSong(musicData) {
   return new MySong({
     id: musicData.id,
@@ -64,7 +64,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-//缓存
+// 缓存
 const SEARCH_KEY = "__search__";
 const SEARCH_MAX_LENGTH = 15;
 export function cacheSearchHistory(query) {
@@ -97,7 +97,7 @@ function insertArray(arr, val, compare, maxLen) {
 export function loadSearch() {
   return Storage.get(SEARCH_KEY, []);
 }
-//删除某条缓存
+// 删除某条缓存
 
 export function deleteCacheSearchHistory(query) {
   let searches = Storage.get(SEARCH_KEY, []);
@@ -114,13 +114,13 @@ function deleteFromArray(arr, compare) {
     arr.splice(index, 1);
   }
 }
-//删除所有缓存
+// 删除所有缓存
 export function deleteAllCacheSearchHistory() {
   Storage.remove(SEARCH_KEY, []);
   return [];
 }
 
-//播放记录
+// 播放记录
 const PLAY_KEY = "__play__";
 const PLAY_MAX_LENGTH = 200;
 
@@ -154,7 +154,7 @@ export function deleteAllCachePlayHistory() {
   return [];
 }
 
-//收藏
+// 收藏
 
 const FAVORITE_KEY = "__favourite__";
 const FAVORITE_MAX_LENGTH = 200;

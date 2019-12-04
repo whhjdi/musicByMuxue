@@ -1,15 +1,15 @@
 <template>
   <div class="suggest">
-    <Scroll :data="allData" class="scroll-wrapper" ref="list">
+    <Scroll ref="list" :data="allData" class="scroll-wrapper">
       <div class="list-detail">
-        <div class="album" v-show="album && album.length > 0">
+        <div v-show="album && album.length > 0" class="album">
           <ul class="list">
             <h3 class="title">专辑</h3>
             <li
               v-for="item in album"
               :key="item.albumId"
-              class="item border-bottom"
               @click="selectAlbum(item)"
+              class="item border-bottom"
             >
               <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="right">
@@ -19,28 +19,28 @@
             </li>
           </ul>
         </div>
-        <div class="artists" v-show="artists && artists.length > 0">
+        <div v-show="artists && artists.length > 0" class="artists">
           <ul class="list">
             <h3 class="title">歌手</h3>
             <li
               v-for="item in artists"
               :key="item.id"
-              class="item border-bottom"
               @click="selectSinger(item)"
+              class="item border-bottom"
             >
               <img v-lazy="item.picUrl" alt="" class="img" />
               <div class="singer">歌手：{{ item.singer }}</div>
             </li>
           </ul>
         </div>
-        <div class="songs" v-show="songs && songs.length > 0">
-          <ul class="song-list" ref="wrapper">
+        <div v-show="songs && songs.length > 0" class="songs">
+          <ul ref="wrapper" class="song-list">
             <h3 class="title">歌曲</h3>
             <li
               v-for="(song, index) in songs"
               :key="song.id"
-              class="song border-bottom"
               @click="selectSong(song)"
+              class="song border-bottom"
             >
               <div class="number">{{ index + 1 }}</div>
               <div class="right">
@@ -50,9 +50,9 @@
                 </div>
               </div>
               <svg
+                @click.stop="showPopOver(song)"
                 class="icon i-switch"
                 aria-hidden="true"
-                @click.stop="showPopOver(song)"
               >
                 <use xlink:href="#icon-switch"></use>
               </svg>
@@ -101,6 +101,8 @@ export default {
       return this.album.concat(this.artists, this.songs);
     }
   },
+  created() {},
+  mounted() {},
   methods: {
     selectAlbum(item) {
       this.$emit("handleAlbum", item);
@@ -132,7 +134,7 @@ export default {
         }
       });
     },
-    //可以优化
+    // 可以优化
     setAlbum(album) {
       this.album = [];
       album.forEach(item => {
@@ -162,9 +164,7 @@ export default {
         this.songs.push({ id, name, singer, picUrl, album });
       });
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style lang="scss" scoped>

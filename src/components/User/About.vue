@@ -1,15 +1,15 @@
 <template>
   <div class="about">
-    <div class="header" v-if="isLogin">
+    <div v-if="isLogin" class="header">
       <img v-lazy="userInfo.picUrl" alt class="pic" />
       <h1 class="name">{{ userInfo.name }}</h1>
       <p class="id">{{ userInfo.id }}</p>
-      <div class="signin" @click="signin">签到</div>
-      <div class="toLogout" v-show="isLogin" @click="toLogout">退出登录</div>
+      <div @click="signin" class="signin">签到</div>
+      <div v-show="isLogin" @click="toLogout" class="toLogout">退出登录</div>
     </div>
-    <div class="content" v-else>
+    <div v-else class="content">
       <h2 class="text">您还没有登录，赶快去登录吧</h2>
-      <div class="toLogin" v-show="!isLogin" @click="toLogin">登录</div>
+      <div v-show="!isLogin" @click="toLogin" class="toLogin">登录</div>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
       Login.signin()
         .then(res => {
           if (res.code === 200) {
-            this.setTips("签到成功！经验+" + res.point + "");
+            this.setTips(String("签到成功！经验+" + res.point));
           } else {
             this.setTips("不要重复签到哦");
           }
