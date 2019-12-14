@@ -3,21 +3,25 @@
     <header><h1 class="title">欢迎使用沐雪MUSIC</h1></header>
     <div class="form">
       <svg @click="goBack" class="icon i-back" aria-hidden="true">
-        <use xlink:href="#icon-arrowleft"></use>
+        <use xlink:href="#icon-arrowleft" />
       </svg>
       <h2 class="text">登录</h2>
-      <input
-        v-model="userName"
-        class="input border-bottom"
-        type="text"
-        placeholder="请输入手机号"
-      />
-      <input
-        v-model="userPassword"
-        class="input border-bottom"
-        type="password"
-        placeholder="请输入密码"
-      />
+      <label>
+        <input
+          v-model="userName"
+          class="input border-bottom"
+          type="text"
+          placeholder="请输入手机号"
+        />
+      </label>
+      <label>
+        <input
+          v-model="userPassword"
+          class="input border-bottom"
+          type="password"
+          placeholder="请输入密码"
+        />
+      </label>
       <div @click="handleLogin" class="button">登录</div>
     </div>
   </div>

@@ -12,10 +12,7 @@
           <svg @click="goBack" class="icon i-left" aria-hidden="true">
             <use xlink:href="#icon-down" />
           </svg>
-          <div class="name">
-            <h1 class="title">{{ currentSong.name }}</h1>
-            <h2 class="subtitle">{{ currentSong.singer }}</h2>
-          </div>
+
           <svg @click="toggleFavorite(currentSong)" class="icon i-right" aria-hidden="true">
             <use :xlink:href="getFavoriteIcon(currentSong)" />
           </svg>
@@ -27,31 +24,38 @@
                 <img :src="currentSong.picUrl" alt class="image" />
               </div>
             </div>
-            <div
-              v-if="currentLyric && currentLyric.lines"
-              class="line-lyric"
-            >{{ currentLyric.lines[currentLineNum].txt }}</div>
+            <div class="other">
+              <h1 class="title">{{ currentSong.name }}</h1>
+              <h2 class="subtitle">{{ currentSong.singer }}</h2>
+              <div v-if="currentLyric && currentLyric.lines" class="line-lyric">
+                {{ currentLyric.lines[currentLineNum].txt }}
+              </div>
+            </div>
           </div>
           <transition name="middleR">
-            <Scroll
-              ref="lyricList"
-              :data="currentLyric && currentLyric.lines"
-              v-show="currentShow === 'lyric'"
-              class="middle-r"
-            >
-              <div class="lyric-wrapper">
-                <div v-if="currentLyric">
-                  <p
-                    ref="lyricLine"
-                    v-for="(line, index) in currentLyric.lines"
-                    :key="index"
-                    :class="{ current: currentLineNum === index }"
-                    class="text"
-                  >{{ line.txt }}</p>
-                </div>
-                <p v-else class="no-lyric">{{ updatecurrentLyric }}</p>
+            <div  v-show="currentShow === 'lyric'" class="t-wrapper">
+              <div class="title-wrapper">
+                <h1 class="title">{{ currentSong.name }}</h1>
+                <h2 class="subtitle">{{ currentSong.singer }}</h2>
               </div>
-            </Scroll>
+
+              <Scroll ref="lyricList" :data="currentLyric && currentLyric.lines" class="middle-r">
+                <div class="lyric-wrapper">
+                  <div v-if="currentLyric">
+                    <p
+                      ref="lyricLine"
+                      v-for="(line, index) in currentLyric.lines"
+                      :key="index"
+                      :class="{ current: currentLineNum === index }"
+                      class="text"
+                    >
+                      {{ line.txt }}
+                    </p>
+                  </div>
+                  <p v-else class="no-lyric">{{ updatecurrentLyric }}</p>
+                </div>
+              </Scroll>
+            </div>
           </transition>
         </div>
         <div class="bottom">
@@ -104,7 +108,13 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" @canplay="ready" @error="error" @timeupdate="updateTime" @ended="ended"></audio>
+    <audio
+      ref="audio"
+      @canplay="ready"
+      @error="error"
+      @timeupdate="updateTime"
+      @ended="ended"
+    ></audio>
     <play-list ref="playList" @modeChange="changeMode"></play-list>
   </div>
 </template>
@@ -464,23 +474,38 @@ export default {
       align-items: center;
       position: fixed;
       width: 100%;
-      top: 80px;
+      top: 40px;
       bottom: 170px;
       white-space: nowrap;
       font-size: 0;
       .middle-l {
         display: inline-block;
-        vertical-align: top;
         position: relative;
+        top: -60px;
         width: 100%;
         height: 0;
         padding-top: 80%;
-        .line-lyric {
+        .other {
+          width: 300px;
+          margin-left: 40px;
           font-size: 14px;
-          width: 100%;
           margin-top: 20px;
-          text-align: center;
-          font-weight: bold;
+          text-align: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          .title {
+            font-weight: bold;
+          }
+          .subtitle {
+            margin-top: 10px;
+          }
+          .line-lyric {
+            width: 100%;
+            margin-top: 20px;
+            text-align: left;
+            font-weight: bold;
+          }
         }
         .cd-wrapper {
           position: absolute;
@@ -499,52 +524,78 @@ export default {
             /*  animation-play-state: paused;*/
             /*}*/
             .image {
-              border: 15px solid rgba(255, 255, 255, 0.2);
+              // border: 15px solid rgba(255, 255, 255, 0.2);
               position: absolute;
               left: 0;
               top: 0;
               box-sizing: border-box;
               width: 100%;
               height: 100%;
-              border-radius: 10px;
+              border-radius: 20px;
             }
           }
         }
       }
-      .middle-r {
+      .t-wrapper {
         display: inline-block;
         position: absolute;
-        top: 0;
-        vertical-align: top;
+        top: 0px;
+        // vertical-align: top;
         width: 100%;
         height: 100%;
-        overflow: hidden;
-        &.middleR-enter-active,
-        &.middleR-leave-active {
-          transition: all 0.3s;
-        }
-        &.middleR-enter,
-        &.middleR-leave-to {
-          opacity: 0;
-        }
-        .lyric-wrapper {
+        .title-wrapper {
+          position: relative;
+          top: 20px;
+          font-size: 16px;
+          color: #0e0f0f;
+          margin-left: 20px;
           width: 80%;
           margin: 0 auto;
           overflow: hidden;
-          text-align: center;
-          .text {
-            line-height: 40px;
-            color: #a7a8a8;
+          text-align: left;
+          .subtitle {
             font-size: 14px;
-            &.current {
-              color: #fc386f;
-            }
+            margin-top: 10px;
           }
-          .no-lyric {
-            line-height: 40px;
-            margin-top: 60%;
-            color: #191516;
-            font-size: 16px;
+        }
+        .middle-r {
+          display: inline-block;
+          position: absolute;
+          top: 90px;
+          // vertical-align: top;
+          width: 100%;
+          height: calc(100%-100px);
+          overflow: hidden;
+          &.middleR-enter-active,
+          &.middleR-leave-active {
+            transition: all 0.3s;
+          }
+          &.middleR-enter,
+          &.middleR-leave-to {
+            opacity: 0;
+          }
+
+          .lyric-wrapper {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: left;
+            .text {
+              line-height: 40px;
+              color: #0e0f0f;
+              font-size: 14px;
+              transition: all 0.3s ease;
+              &.current {
+                color: #fc386f;
+                font-size: 20px;
+              }
+            }
+            .no-lyric {
+              line-height: 40px;
+              margin-top: 60%;
+              color: #191516;
+              font-size: 16px;
+            }
           }
         }
       }
